@@ -467,46 +467,18 @@ class IscDhclient(DhcpClient):
         return static_routes
 
     @staticmethod
-    def get_dhclient_d():
-        # find lease files directory
-        supported_dirs = [
-            "/var/lib/dhclient",
-            "/var/lib/dhcp",
-            "/var/lib/NetworkManager",
-        ]
-        for d in supported_dirs:
-            if os.path.exists(d) and len(os.listdir(d)) > 0:
-                LOG.debug("Using %s lease directory", d)
-                return d
-        return None
-
-    @staticmethod
-    def get_latest_lease(lease_d=None):
-        # find latest lease file
-        if lease_d is None:
-            lease_d = IscDhclient.get_dhclient_d()
-        if not lease_d:
+    def get_latest_lease(lease_dir, lease_file_regex):
+        if not lease_dir:
             return None
-        lease_files = os.listdir(lease_d)
+        lease_files = os.listdir(lease_dir)
         latest_mtime = -1
         latest_file = None
 
-        # lease files are named inconsistently across distros.
-        # We assume that 'dhclient6' indicates ipv6 and ignore it.
-        # ubuntu:
-        #   dhclient.<iface>.leases, dhclient.leases, dhclient6.leases
-        # centos6:
-        #   dhclient-<iface>.leases, dhclient6.leases
-        # centos7: ('--' is not a typo)
-        #   dhclient--<iface>.lease, dhclient6.leases
+        fregex = re.compile(lease_file_regex)
         for fname in lease_files:
-            if fname.startswith("dhclient6"):
-                # avoid files that start with dhclient6 assuming dhcpv6.
+            if not re.search(fregex, fname):
                 continue
-            if not (fname.endswith((".lease", ".leases"))):
-                continue
-
-            abs_path = os.path.join(lease_d, fname)
+            abs_path = os.path.join(lease_dir, fname)
             mtime = os.path.getmtime(abs_path)
             if mtime > latest_mtime:
                 latest_mtime = mtime

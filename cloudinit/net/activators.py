@@ -5,6 +5,7 @@ from typing import Dict, Iterable, List, Optional, Type, Union
 
 from cloudinit import subp, util
 from cloudinit.net.eni import available as eni_available
+from cloudinit.net.ifconfig import available as ifconfig_available
 from cloudinit.net.netplan import available as netplan_available
 from cloudinit.net.network_manager import available as nm_available
 from cloudinit.net.network_state import NetworkState
@@ -99,6 +100,31 @@ class IfUpDownActivator(NetworkActivator):
         Return True is successful, otherwise return False
         """
         cmd = ["ifdown", device_name]
+        return _alter_interface(cmd, device_name)
+
+
+class IfConfigActivator(NetworkActivator):
+    @staticmethod
+    def available(target: Optional[str] = None) -> bool:
+        """Return true if ifconfig can be used on this system."""
+        return ifconfig_available(target=target)
+
+    @staticmethod
+    def bring_up_interface(device_name: str) -> bool:
+        """Bring up interface using ifconfig <dev> up.
+
+        Return True is successful, otherwise return False
+        """
+        cmd = ["ifconfig", device_name, "up"]
+        return _alter_interface(cmd, device_name)
+
+    @staticmethod
+    def bring_down_interface(device_name: str) -> bool:
+        """Bring up interface using ifconfig <dev> down.
+
+        Return True is successful, otherwise return False
+        """
+        cmd = ["ifconfig", device_name, "down"]
         return _alter_interface(cmd, device_name)
 
 
@@ -217,6 +243,7 @@ class NetworkdActivator(NetworkActivator):
 # version to encompass both seems overkill at this point
 DEFAULT_PRIORITY = [
     "eni",
+    "ifconfig",
     "netplan",
     "network-manager",
     "networkd",
@@ -224,6 +251,7 @@ DEFAULT_PRIORITY = [
 
 NAME_TO_ACTIVATOR: Dict[str, Type[NetworkActivator]] = {
     "eni": IfUpDownActivator,
+    "ifconfig": IfConfigActivator,
     "netplan": NetplanActivator,
     "network-manager": NetworkManagerActivator,
     "networkd": NetworkdActivator,

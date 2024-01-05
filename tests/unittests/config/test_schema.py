@@ -23,6 +23,7 @@ from cloudinit.config.schema import (
     VERSIONED_USERDATA_SCHEMA_FILE,
     MetaSchema,
     SchemaProblem,
+    SchemaType,
     SchemaValidationError,
     annotated_cloudconfig_file,
     get_jsonschema_validator,
@@ -40,6 +41,7 @@ from cloudinit.distros import OSFAMILIES
 from cloudinit.safeyaml import load, load_with_marks
 from cloudinit.settings import FREQUENCIES
 from cloudinit.sources import DataSourceNotFoundException
+from cloudinit.templater import JinjaSyntaxParsingException
 from cloudinit.util import load_file, write_file
 from tests.hypothesis import given
 from tests.hypothesis_jsonschema import from_schema
@@ -245,7 +247,6 @@ class TestGetSchema:
             {"$ref": "#/$defs/cc_locale"},
             {"$ref": "#/$defs/cc_lxd"},
             {"$ref": "#/$defs/cc_mcollective"},
-            {"$ref": "#/$defs/cc_migrator"},
             {"$ref": "#/$defs/cc_mounts"},
             {"$ref": "#/$defs/cc_ntp"},
             {"$ref": "#/$defs/cc_package_update_upgrade_install"},
@@ -825,6 +826,41 @@ class TestValidateCloudConfigFile:
             f"Empty 'cloud-config' found at {cloud_config_file}."
             " Nothing to validate" in out
         )
+
+    @pytest.mark.parametrize("annotate", (True, False))
+    def test_validateconfig_file_raises_jinja_syntax_error(
+        self, annotate, tmpdir, mocker, capsys
+    ):
+        """ """
+        # will throw error because of space between last two }'s
+        invalid_jinja_template = "## template: jinja\na:b\nc:{{ d } }"
+        mocker.patch("os.path.exists", return_value=True)
+        mocker.patch(
+            "cloudinit.util.load_file",
+            return_value=invalid_jinja_template,
+        )
+        mocker.patch(
+            "cloudinit.handlers.jinja_template.load_file",
+            return_value='{"c": "d"}',
+        )
+        config_file = tmpdir.join("my.yaml")
+        config_file.write(invalid_jinja_template)
+        with pytest.raises(SystemExit) as context_manager:
+            validate_cloudconfig_file(config_file.strpath, {}, annotate)
+        assert 1 == context_manager.value.code
+
+        _out, err = capsys.readouterr()
+        expected = (
+            "Error:\n"
+            "Failed to render templated user-data. "
+            + JinjaSyntaxParsingException.format_error_message(
+                syntax_error="unexpected '}'",
+                line_number=3,
+                line_content="c:{{ d } }",
+            )
+            + "\n"
+        )
+        assert expected == err
 
 
 class TestSchemaDocMarkdown:
@@ -1762,6 +1798,110 @@ class TestMain:
         assert f"Valid schema {myyaml}\n" == out
 
     @pytest.mark.parametrize(
+        "update_path_content_by_key, expected_keys",
+        (
+            pytest.param(
+                {},
+                {
+                    "ud_key": "cloud_config",
+                    "vd_key": "vendor_cloud_config",
+                    "vd2_key": "vendor2_cloud_config",
+                    "net_key": "network_config",
+                },
+                id="prefer_processed_data_when_present_and_non_empty",
+            ),
+            pytest.param(
+                {
+                    "cloud_config": "",
+                    "vendor_cloud_config": "",
+                    "vendor2_cloud_config": "",
+                },
+                {
+                    "ud_key": "userdata_raw",
+                    "vd_key": "vendordata_raw",
+                    "vd2_key": "vendordata2_raw",
+                    "net_key": "network_config",
+                },
+                id="prefer_raw_data_when_processed_is_empty",
+            ),
+            pytest.param(
+                {"cloud_config": "", "userdata_raw": ""},
+                {
+                    "ud_key": "cloud_config",
+                    "vd_key": "vendor_cloud_config",
+                    "vd2_key": "vendor2_cloud_config",
+                    "net_key": "network_config",
+                },
+                id="prefer_processed_vd_file_path_when_raw_and_processed_empty",
+            ),
+        ),
+    )
+    @mock.patch(M_PATH + "read_cfg_paths")
+    @mock.patch(M_PATH + "os.getuid", return_value=0)
+    def test_main_processed_data_preference_over_raw_data(
+        self,
+        _read_cfg_paths,
+        _getuid,
+        read_cfg_paths,
+        update_path_content_by_key,
+        expected_keys,
+        paths,
+        capsys,
+    ):
+        """"""
+        paths.get_ipath = paths.get_ipath_cur
+        read_cfg_paths.return_value = paths
+        path_content_by_key = {
+            "cloud_config": "#cloud-config\n{}",
+            "vendor_cloud_config": "#cloud-config\n{}",
+            "vendor2_cloud_config": "#cloud-config\n{}",
+            "vendordata_raw": "#cloud-config\n{}",
+            "vendordata2_raw": "#cloud-config\n{}",
+            "network_config": "{version: 1, config: []}",
+            "userdata_raw": "#cloud-config\n{}",
+        }
+        expected_paths = dict(
+            (key, paths.get_ipath_cur(expected_keys[key]))
+            for key in expected_keys
+        )
+        path_content_by_key.update(update_path_content_by_key)
+        for path_key, path_content in path_content_by_key.items():
+            write_file(paths.get_ipath_cur(path_key), path_content)
+        data_types = "user-data, vendor-data, vendor2-data, network-config"
+        ud_msg = "  Valid schema user-data"
+        if (
+            not path_content_by_key["cloud_config"]
+            and not path_content_by_key["userdata_raw"]
+        ):
+            ud_msg = (
+                f"Empty 'cloud-config' found at {expected_paths['ud_key']}."
+                " Nothing to validate."
+            )
+
+        expected = dedent(
+            f"""\
+        Found cloud-config data types: {data_types}
+
+        1. user-data at {expected_paths["ud_key"]}:
+        {ud_msg}
+
+        2. vendor-data at {expected_paths['vd_key']}:
+          Valid schema vendor-data
+
+        3. vendor2-data at {expected_paths['vd2_key']}:
+          Valid schema vendor2-data
+
+        4. network-config at {expected_paths['net_key']}:
+          Valid schema network-config
+        """
+        )
+        myargs = ["mycmd", "--system"]
+        with mock.patch("sys.argv", myargs):
+            main()
+        out, _err = capsys.readouterr()
+        assert expected == out
+
+    @pytest.mark.parametrize(
         "net_config,net_output,error_raised",
         (
             pytest.param(
@@ -1880,7 +2020,7 @@ def _get_meta_doc_examples(file_glob="cloud-config*.txt"):
 
 class TestSchemaDocExamples:
     schema = get_schema()
-    net_schema = get_schema(schema_type="network-config")
+    net_schema = get_schema(schema_type=SchemaType.NETWORK_CONFIG)
 
     @pytest.mark.parametrize("example_path", _get_meta_doc_examples())
     @skipUnlessJsonSchema()
@@ -1953,7 +2093,7 @@ VALID_BOND_CONFIG = {
 
 @skipUnlessJsonSchema()
 class TestNetworkSchema:
-    net_schema = get_schema(schema_type="network-config")
+    net_schema = get_schema(schema_type=SchemaType.NETWORK_CONFIG)
 
     @pytest.mark.parametrize(
         "src_config, expectation",
@@ -2323,9 +2463,9 @@ apt_reboot_if_required: Default: ``false``. Deprecated in version 22.2.\
 
                     """  # noqa: E501
                 ),
-                "",
-                does_not_raise(),
-                id="root_annotate_unique_errors_no_exception",
+                """Error: Invalid schema: user-data\n\n""",
+                pytest.raises(SystemExit),
+                id="root_annotate_errors_with_exception",
             ),
             pytest.param(
                 0,
@@ -2414,7 +2554,7 @@ apt_reboot_if_required: Default: ``false``. Deprecated in version 22.2.\
                 False,
                 dedent(
                     """\
-                    Invalid UNKNOWN_CONFIG_HEADER {cfg_file}
+                    Invalid user-data {cfg_file}
                     """  # noqa: E501
                 ),
                 dedent(
@@ -2422,7 +2562,7 @@ apt_reboot_if_required: Default: ``false``. Deprecated in version 22.2.\
                     Error: Cloud config schema errors: format-l1.c1: Unrecognized user-data header in {cfg_file}: "#bogus-config".
                     Expected first line to be one of: #!, ## template: jinja, #cloud-boothook, #cloud-config, #cloud-config-archive, #cloud-config-jsonp, #include, #include-once, #part-handler
 
-                    Error: Invalid schema: UNKNOWN_CONFIG_HEADER
+                    Error: Invalid schema: user-data
 
                     """  # noqa: E501
                 ),

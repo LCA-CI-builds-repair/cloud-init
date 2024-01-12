@@ -71,20 +71,18 @@ class TestParseDHCPServerFromLeaseFile:
                     "dhcp-server-identifier"
                 )
         else:
-            with pytest.raises(FileNotFoundError):
-                dhclient.get_newest_lease("eth0").get("dhcp-server-identifier")
+            assert None is dhclient.get_newest_lease("eth0").get(
+                "dhcp-server-identifier"
+            )
 
 
 class TestParseDHCPLeasesFile(CiTestCase):
     def test_parse_empty_lease_file_errors(self):
         """get_newest_lease errors when file content is empty."""
-        with self.assertRaises(InvalidDHCPLeaseFileError) as context_manager:
-            client = IscDhclient()
-            client.lease_file = self.tmp_path("leases")
-            ensure_file(client.lease_file)
-            client.get_newest_lease("eth0")
-        error = context_manager.exception
-        self.assertIn("Cannot parse dhcp lease file", str(error))
+        client = IscDhclient()
+        client.lease_file = self.tmp_path("leases")
+        ensure_file(client.lease_file)
+        assert not client.get_newest_lease("eth0")
 
     def test_parse_malformed_lease_file_content_errors(self):
         """IscDhclient.get_newest_lease errors when file content isn't
@@ -93,10 +91,7 @@ class TestParseDHCPLeasesFile(CiTestCase):
         client = IscDhclient()
         client.lease_file = self.tmp_path("leases")
         write_file(client.lease_file, "hi mom.")
-        with self.assertRaises(InvalidDHCPLeaseFileError) as context_manager:
-            client.get_newest_lease("eth0")
-        error = context_manager.exception
-        self.assertIn("Cannot parse dhcp lease file", str(error))
+        assert not client.get_newest_lease("eth0")
 
     def test_parse_multiple_leases(self):
         """IscDhclient().get_newest_lease returns the latest lease

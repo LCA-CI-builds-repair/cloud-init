@@ -203,7 +203,7 @@ class IscDhclient(DhcpClient):
     @staticmethod
     def parse_leases(lease_content) -> List[Dict]:
         lease_regex = re.compile(r"lease {(?P<lease>.*?)}\n", re.DOTALL)
-        dhcp_leases = []
+        dhcp_leases: List[Dict] = []
         if len(lease_content) == 0:
             return dhcp_leases
         for lease in lease_regex.findall(lease_content):
@@ -226,14 +226,13 @@ class IscDhclient(DhcpClient):
         @raises: InvalidDHCPLeaseFileError on empty of unparseable leasefile
             content.
         """
-        content = util.load_file(self.lease_file)
-        if content:
-            dhcp_leases = self.parse_leases(content)
-            if dhcp_leases:
-                return dhcp_leases[-1]
-        raise InvalidDHCPLeaseFileError(
-            f"Cannot parse dhcp lease file. No leases found {self.lease_file}"
-        )
+        with suppress(FileNotFoundError):
+            content = util.load_file(self.lease_file)
+            if content:
+                dhcp_leases = self.parse_leases(content)
+                if dhcp_leases:
+                    return dhcp_leases[-1]
+        return {}
 
     def dhcp_discovery(
         self,
@@ -350,7 +349,10 @@ class IscDhclient(DhcpClient):
             )
         if dhcp_log_func is not None:
             dhcp_log_func(out, err)
-        return self.get_newest_lease(distro)
+        lease = self.get_newest_lease(distro)
+        if lease:
+            return lease
+        raise InvalidDHCPLeaseFileError()
 
     @staticmethod
     def parse_static_routes(routes: str) -> List[Tuple[str, str]]:
@@ -494,7 +496,21 @@ class IscDhclient(DhcpClient):
             # Lease file found, skipping falling back
             if latest_file:
                 return latest_file
-        return None
+
+    def get_key_from_latest_lease(self, distro, key: str):
+        lease_file = self.get_latest_lease(
+            distro.dhclient_lease_directory, distro.dhclient_lease_file_regex
+        )
+        if lease_file:
+            with suppress(FileNotFoundError):
+                content = util.load_file(lease_file)
+                if content:
+                    leases = self.parse_leases(content)
+                    if leases:
+                        for lease in reversed(leases):
+                            server = lease.get(key)
+                            if server:
+                                return server
 
 
 class Dhcpcd(DhcpClient):
@@ -543,7 +559,11 @@ class Dhcpcd(DhcpClient):
                     interface,
                 ]
             )
-            return self.get_newest_lease(distro)
+            lease = self.get_newest_lease(distro)
+            if lease:
+                return lease
+            raise NoDHCPLeaseError("No lease found")
+
         except subp.ProcessExecutionError as error:
             LOG.debug(
                 "dhclient exited with code: %s stderr: %r stdout: %r",
@@ -604,7 +624,7 @@ class Dhcpcd(DhcpClient):
         return lease
 
     def get_newest_lease(self, distro) -> Dict[str, Any]:
-        """Return a list of leases
+        """Return a lease
 
         Return a list of dicts of dhcp options. Each dict contains key value
         pairs a specific lease in order from oldest to newest.

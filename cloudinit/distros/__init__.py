@@ -147,7 +147,6 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     resolve_conf_fn = "/etc/resolv.conf"
 
     osfamily: str
-    dhcp_client_priority = [dhcp.IscDhclient, dhcp.Dhcpcd, dhcp.Udhcpc]
     # Directory where the distro stores their DHCP leases.
     # The children classes should override this with their dhcp leases
     # directory
@@ -170,7 +169,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         self.net_ops = iproute2.Iproute2
         self._runner = helpers.Runners(paths)
         self.package_managers: List[PackageManager] = []
-        self._selected_dhcp_client = None
+        self._dhcp_client = None
 
     def _unpickle(self, ci_pkl_version: int) -> None:
         """Perform deserialization fixes for Distro."""
@@ -277,19 +276,28 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
 
     @property
     def dhcp_client(self) -> dhcp.DhcpClient:
-        """distros set priority list, select based on this order which to use
+        """access the distro's preferred dhcp client
 
-        If the priority dhcp client isn't found, fall back to lower in list.
+        if no client has been selected yet select one - uses
+        self.dhcp_client_priority, which may be overriden in each distro's
+        object to eliminate checking for clients which will not be provided
+        by the distro
         """
-        if self._selected_dhcp_client:
-            return self._selected_dhcp_client
+        if self._dhcp_client:
+            return self._dhcp_client
+        self._select_dhcp_client()
+        return self._dhcp_client
+
+    def _select_dhcp_client(self) -> dhcp.DhcpClient:
+        if self._dhcp_client:
+            return self._dhcp_client
         for client in self.dhcp_client_priority:
             try:
-                self._selected_dhcp_client = client()
+                self._dhcp_client = client()
                 LOG.debug("DHCP client selected: %s", client.client_name)
-                return self._selected_dhcp_client
+                return self._dhcp_client
             except (dhcp.NoDHCPLeaseMissingDhclientError,):
-                LOG.warning("DHCP client not found: %s", client.client_name)
+                LOG.debug("DHCP client not found: %s", client.client_name)
         raise dhcp.NoDHCPLeaseMissingDhclientError()
 
     @property

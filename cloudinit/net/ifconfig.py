@@ -2,6 +2,8 @@
 
 import logging
 
+from cloudinit import subp
+
 LOG = logging.getLogger(__name__)
 
 

@@ -411,7 +411,8 @@ class TestDHCPDiscoveryClean(CiTestCase):
     @mock.patch("cloudinit.net.dhcp.subp.subp")
     @mock.patch("cloudinit.net.dhcp.subp.which")
     def test_dhcp_client_failover(self, m_which, m_subp, m_remove, m_fallback):
-        """Log and do nothing when nic is absent and no fallback is found."""
+        """Log and do nothing when nic is absent and no fallback client is
+        found."""
         m_subp.side_effect = [
             ("", ""),
             subp.ProcessExecutionError(exit_code=-5),
@@ -423,6 +424,14 @@ class TestDHCPDiscoveryClean(CiTestCase):
 
         self.assertIn(
             "DHCP client not found: dhclient",
+            self.logs.getvalue(),
+        )
+        self.assertIn(
+            "DHCP client not found: dhcpcd",
+            self.logs.getvalue(),
+        )
+        self.assertIn(
+            "DHCP client not found: udhcpc",
             self.logs.getvalue(),
         )
 
@@ -523,7 +532,7 @@ class TestDHCPDiscoveryClean(CiTestCase):
         m_wait.return_value = [PID_F]  # Return the missing pidfile wait for
         m_getppid.return_value = 1  # Indicate that dhclient has daemonized
         self.assertEqual(
-            [], IscDhclient().dhcp_discovery("eth9", distro=MockDistro())
+            {}, IscDhclient().dhcp_discovery("eth9", distro=MockDistro())
         )
         self.assertEqual(
             mock.call([PID_F, LEASE_F], maxwait=5, naplen=0.01),
@@ -1101,16 +1110,13 @@ class TestISCDHClient(CiTestCase):
         ),
     )
     @mock.patch("os.path.getmtime", return_value=123.45)
-    def test_get_latest_lease_rhel(self, *_):
+    def test_get_newest_lease_file_from_distro_rhel(self, *_):
         """
         Test that an rhel style lease has been found
         """
         self.assertEqual(
             "/var/lib/NetworkManager/dhclient-0-u-u-i-d-enp2s0f0.lease",
-            IscDhclient.get_latest_lease(
-                rhel.Distro.dhclient_lease_directory,
-                rhel.Distro.dhclient_lease_file_regex,
-            ),
+            IscDhclient.get_newest_lease_file_from_distro(rhel.Distro),
         )
 
     @mock.patch(
@@ -1123,16 +1129,13 @@ class TestISCDHClient(CiTestCase):
         ),
     )
     @mock.patch("os.path.getmtime", return_value=123.45)
-    def test_get_latest_lease_amazonlinux(self, *_):
+    def test_get_newest_lease_file_from_distro_amazonlinux(self, *_):
         """
         Test that an amazon style lease has been found
         """
         self.assertEqual(
             "/var/lib/dhcp/dhclient--eth0.leases",
-            IscDhclient.get_latest_lease(
-                amazon.Distro.dhclient_lease_directory,
-                amazon.Distro.dhclient_lease_file_regex,
-            ),
+            IscDhclient.get_newest_lease_file_from_distro(amazon.Distro),
         )
 
     @mock.patch(
@@ -1145,16 +1148,13 @@ class TestISCDHClient(CiTestCase):
         ),
     )
     @mock.patch("os.path.getmtime", return_value=123.45)
-    def test_get_latest_lease_freebsd(self, *_):
+    def test_get_newest_lease_file_from_distro_freebsd(self, *_):
         """
         Test that an freebsd style lease has been found
         """
         self.assertEqual(
             "/var/db/dhclient.leases.vtynet0",
-            IscDhclient.get_latest_lease(
-                freebsd.Distro.dhclient_lease_directory,
-                freebsd.Distro.dhclient_lease_file_regex,
-            ),
+            IscDhclient.get_newest_lease_file_from_distro(freebsd.Distro),
         )
 
     @mock.patch(
@@ -1167,40 +1167,13 @@ class TestISCDHClient(CiTestCase):
         ),
     )
     @mock.patch("os.path.getmtime", return_value=123.45)
-    def test_get_latest_lease_debian(self, *_):
+    def test_get_newest_lease_file_from_distro_debian(self, *_):
         """
         Test that an debian style lease has been found
         """
         self.assertEqual(
             "/var/lib/dhcp/dhclient.eth0.leases",
-            IscDhclient.get_latest_lease(
-                debian.Distro.dhclient_lease_directory,
-                debian.Distro.dhclient_lease_file_regex,
-            ),
-        )
-
-    @mock.patch(
-        "os.listdir",
-        return_value=(
-            "some_file",
-            "!@#$-eth0.lease",
-            "some_other_file",
-        ),
-    )
-    @mock.patch("os.path.getmtime", return_value=123.45)
-    def test_no_distro_hints_fallback(self, *_):
-        """
-        This tests a situation where Distro doesn't provide
-        hints for dhclient leases.
-        The code should resort to hardcoded lease location
-        """
-        # Provide lease_dir and regex as None
-        self.assertEqual(
-            os.path.join(DHCLIENT_FALLBACK_LEASE_DIR, "!@#$-eth0.lease"),
-            IscDhclient.get_latest_lease(
-                None,
-                None,
-            ),
+            IscDhclient.get_newest_lease_file_from_distro(debian.Distro),
         )
 
     # If argument to listdir is '/var/lib/NetworkManager'
@@ -1220,9 +1193,8 @@ class TestISCDHClient(CiTestCase):
         """
         self.assertEqual(
             os.path.join(DHCLIENT_FALLBACK_LEASE_DIR, "!@#$-eth0.lease"),
-            IscDhclient.get_latest_lease(
-                rhel.Distro.dhclient_lease_directory,
-                rhel.Distro.dhclient_lease_file_regex,
+            IscDhclient.get_newest_lease_file_from_distro(
+                rhel.Distro("", {}, {})
             ),
         )
 
@@ -1235,17 +1207,14 @@ class TestISCDHClient(CiTestCase):
         ),
     )
     @mock.patch("os.path.getmtime", return_value=123.45)
-    def test_get_latest_lease_notfound(self, *_):
+    def test_get_newest_lease_file_from_distro_notfound(self, *_):
         """
         Test the case when no leases were found
         """
         # Any Distro would suffice for the absense test, choose Centos then.
         self.assertEqual(
             None,
-            IscDhclient.get_latest_lease(
-                centos.Distro.dhclient_lease_directory,
-                centos.Distro.dhclient_lease_file_regex,
-            ),
+            IscDhclient.get_newest_lease_file_from_distro(centos.Distro),
         )
 
 

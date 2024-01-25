@@ -76,15 +76,16 @@ class TestCloudStackHostname(CiTestCase):
             )
         )
 
-        # Mock cloudinit.net.dhcp.get_latest_lease() method \
+        # Mock cloudinit.net.dhcp.get_newest_lease_file_from_distro() method \
         # result since we don't have a DHCP client running
-        isc_dhclient_get_latest_lease = mock.MagicMock(
+        isc_dhclient_get_newest_lease_file_from_distro = mock.MagicMock(
             return_value="/var/lib/NetworkManager/dhclient-u-u-i-d-eth0.lease"
         )
         self.patches.enter_context(
             mock.patch(
-                DHCP_MOD_PATH + ".IscDhclient.get_latest_lease",
-                isc_dhclient_get_latest_lease,
+                DHCP_MOD_PATH
+                + ".IscDhclient.get_newest_lease_file_from_distro",
+                isc_dhclient_get_newest_lease_file_from_distro,
             )
         )
 
@@ -245,7 +246,8 @@ class TestCloudStackHostname(CiTestCase):
 
         self.patches.enter_context(
             mock.patch(
-                MOD_PATH + ".dhcp.IscDhclient.get_latest_lease",
+                MOD_PATH
+                + ".dhcp.IscDhclient.get_newest_lease_file_from_distro",
                 return_value=True,
             )
         )
@@ -320,7 +322,7 @@ class TestCloudStackPasswordFetching(CiTestCase):
         self.patches.enter_context(mock.patch("{0}.uhelp".format(mod_name)))
         default_gw = "192.201.20.0"
 
-        get_latest_lease = mock.MagicMock(return_value=None)
+        get_newest_lease_file_from_distro = mock.MagicMock(return_value=None)
         self.patches.enter_context(
             mock.patch(
                 DHCP_MOD_PATH + ".IscDhclient.get_newest_lease",
@@ -336,8 +338,9 @@ class TestCloudStackPasswordFetching(CiTestCase):
         )
         self.patches.enter_context(
             mock.patch(
-                DHCP_MOD_PATH + ".IscDhclient.get_latest_lease",
-                get_latest_lease,
+                DHCP_MOD_PATH
+                + ".IscDhclient.get_newest_lease_file_from_distro",
+                get_newest_lease_file_from_distro,
             )
         )
 

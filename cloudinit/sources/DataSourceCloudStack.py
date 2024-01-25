@@ -318,10 +318,10 @@ def get_vr_address(distro):
         if latest_lease:
             LOG.debug(
                 "Found SERVER_ADDRESS '%s' via ephemeral %s lease ",
-                latest_address,
+                latest_lease,
                 distro.dhcp_client.client_name,
             )
-            return latest_address
+            return latest_lease
 
     # No virtual router found, fallback to default gateway
     LOG.debug("No DHCP found, using default gateway")

@@ -339,6 +339,12 @@ class TestNetworkManagerActivatorBringUp:
     def test_bring_up_interface_no_nm_conn(
         self, m_exists, m_isfile, m_plugin, m_subp
     ):
+        self.assertRaises(
+            errors.Error,
+            activators.NetworkManagerActivator.bring_up_interface,
+            "eth0",
+        )
+    ):
         """
         There is no network manager connection file but ifcfg-rh plugin is
         present and ifcfg interface config files are also present. In this

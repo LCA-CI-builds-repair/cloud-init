@@ -241,12 +241,12 @@ class TestCloudStackHostname(CiTestCase):
             mock.patch(
                 DHCP_MOD_PATH + ".networkd_get_option_from_leases",
                 get_networkd_domain,
-            )
-        )
+import responses
 
-        self.patches.enter_context(
-            mock.patch(
-                MOD_PATH
+from cloudinit import helpers
+from cloudinit.sources import DataSourceEc2 as ec2
+from tests.unittests import helpers as test_helpers
+
                 + ".dhcp.IscDhclient.get_newest_lease_file_from_distro",
                 return_value=True,
             )

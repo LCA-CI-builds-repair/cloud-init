@@ -11,6 +11,11 @@ from typing import Optional, cast
 
 from cloudinit import helpers, util
 from cloudinit.sources import DataSourceWSL as wsl
+
+# Ignore unused import warning
+# pylint: disable=unused-import
+
+# pylint: enable=unused-import
 from tests.unittests.helpers import CiTestCase, mock
 
 INSTANCE_NAME = "Noble-MLKit"

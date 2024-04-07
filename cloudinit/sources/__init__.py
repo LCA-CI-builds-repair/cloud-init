@@ -607,19 +607,19 @@ class DataSource(CloudInitPickleMixin, metaclass=abc.ABCMeta):
             self.vendordata2 = self.ud_proc.process(self.get_vendordata2_raw())
         return self.vendordata2
 
-    @property
-    def fallback_interface(self):
-        """Determine the network interface used during local network config."""
-        if self._fallback_interface is None:
-            self._fallback_interface = net.find_fallback_nic()
-            if self._fallback_interface is None:
-                LOG.warning(
-                    "Did not find a fallback interface on %s.", self.cloud_name
-                )
-        return self._fallback_interface
+@property
+def fallback\_interface(self):
+"Determine the network interface used during local network config."
+if self.\_fallback\_interface is None:
+self.\_fallback\_interface = net.find\_fallback\_nic()
+if self.\_fallback\_interface is None:
+LOG.warning(
+"Did not find a fallback interface on %s.", self.cloud\_name
+)
+return self.\_fallback\_interface
 
-    @property
-    def platform_type(self):
+@property
+def platform\_type(self):
         if not hasattr(self, "_platform_type"):
             # Handle upgrade path where pickled datasource has no _platform.
             self._platform_type = self.dsname.lower()

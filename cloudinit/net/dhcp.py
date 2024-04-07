@@ -172,12 +172,13 @@ def networkd_get_option_from_leases(keyname, leases_d=None):
 
 
 class DhcpClient(abc.ABC):
-    client_name = ""
-    max_wait = 5
+class DHCPClient:
+client\_name = "dhclient"
+max\_wait = 5
 
-    @classmethod
-    def kill_dhcp_client(cls):
-        subp.subp(["pkill", cls.client_name], rcs=[0, 1])
+@classmethod
+def kill\_dhcp\_client(cls):
+subp.subp([“pkill”, cls.client\_name], rcs=[0, 1])
 
     @classmethod
     def clear_leases(cls):

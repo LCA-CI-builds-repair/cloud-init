@@ -5,12 +5,13 @@ import signal
 from textwrap import dedent
 
 import pytest
-import responses
+    import responses
 
-from cloudinit.net.dhcp import (
-    InvalidDHCPLeaseFileError,
-    IscDhclient,
-    NoDHCPLeaseError,
+    from cloudinit.net.dhcp import (
+        InvalidDHCPLeaseFileError,
+        IscDhclient,
+        NoDHCPLeaseError,
+    )
     NoDHCPLeaseInterfaceError,
     NoDHCPLeaseMissingDhclientError,
     Udhcpc,

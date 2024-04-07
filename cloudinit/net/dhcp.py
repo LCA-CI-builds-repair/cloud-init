@@ -172,7 +172,7 @@ def networkd_get_option_from_leases(keyname, leases_d=None):
 
 
 class DhcpClient(abc.ABC):
-    client_name = ""
+    client_name = "dhclient"
     max_wait = 5
 
     @classmethod

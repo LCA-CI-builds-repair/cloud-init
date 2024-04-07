@@ -13,6 +13,13 @@ from cloudinit import helpers
 from cloudinit.sources import DataSourceEc2 as ec2
 from tests.unittests import helpers as test_helpers
 
+
+class TestDataSourceEc2(test_helpers.TestCase):
+    """Test ec2 data source."""
+
+    def setUp(self):
+        super().setUp()
+        self.sources = helpers.Sources(module_paths=["cloudinit.sources"])
 DYNAMIC_METADATA = {
     "instance-identity": {
         "document": json.dumps(

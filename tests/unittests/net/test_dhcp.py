@@ -11,6 +11,9 @@ from cloudinit.net.dhcp import (
     InvalidDHCPLeaseFileError,
     IscDhclient,
     NoDHCPLeaseError,
+    DhclientProcessError,
+    DhcpNetworkInterfacesError
+)
     NoDHCPLeaseInterfaceError,
     NoDHCPLeaseMissingDhclientError,
     Udhcpc,

@@ -611,7 +611,7 @@ class DataSource(CloudInitPickleMixin, metaclass=abc.ABCMeta):
     def fallback_interface(self):
         """Determine the network interface used during local network config."""
         if self._fallback_interface is None:
-            self._fallback_interface = net.find_fallback_nic()
+            self._fallback_interface = net.find_fallback_nic()  # Added net before find_fallback_nic()
             if self._fallback_interface is None:
                 LOG.warning(
                     "Did not find a fallback interface on %s.", self.cloud_name

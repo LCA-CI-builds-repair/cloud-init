@@ -246,7 +246,10 @@ class TestCloudStackHostname(CiTestCase):
 
         self.patches.enter_context(
             mock.patch(
-                MOD_PATH
+                cloudinit.sources.CLOUDSTACK + ".uuid.uuid4",
+                return_value=uuid.UUID("00000000-0000-0000-0000-000000000000"),
+            )
+        )  # Added cloudinit.sources before CLOUDSTACK
                 + ".dhcp.IscDhclient.get_newest_lease_file_from_distro",
                 return_value=True,
             )

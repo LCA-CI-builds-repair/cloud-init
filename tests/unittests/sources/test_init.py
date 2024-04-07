@@ -9,6 +9,18 @@ from cloudinit import importer, util
 from cloudinit.event import EventScope, EventType
 from cloudinit.helpers import Paths
 from cloudinit.sources import (
+    DataSourceCGP,
+    DataSourceCLI,
+    DataSourceLocal,
+    DataSourceMaas,
+    DataSourceMAASLocal,
+    DataSourceOpenStack,
+    DataSourceOpenStackLocal,
+    DataSourceOVF,
+    DataSourceSmartOS,
+    DataSourceUbuntuOne,
+    DataSourceUrl,
+)
     EXPERIMENTAL_TEXT,
     METADATA_UNKNOWN,
     REDACT_SENSITIVE_VALUE,

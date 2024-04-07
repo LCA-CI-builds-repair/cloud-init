@@ -16,7 +16,6 @@ from io import StringIO
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import configobj
-
 from cloudinit import subp, temp_utils, util
 from cloudinit.net import (
     find_fallback_nic,
@@ -24,6 +23,7 @@ from cloudinit.net import (
     get_ib_interface_hwaddr,
     get_interface_mac,
     is_ib_interface,
+)
 )
 
 LOG = logging.getLogger(__name__)

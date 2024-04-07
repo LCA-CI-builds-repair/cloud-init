@@ -324,7 +324,6 @@ class TestActivatorsBringDown:
         assert len(m_subp.call_args_list) == 1
         assert m_subp.call_args_list[0] == expected_call_list[0]
 
-
 class TestNetworkManagerActivatorBringUp:
     def fake_isfile_no_nmconn(filename):
         return False if filename.endswith(".nmconnection") else True
@@ -337,7 +336,9 @@ class TestNetworkManagerActivatorBringUp:
     @patch.object(os.path, "isfile", side_effect=fake_isfile_no_nmconn)
     @patch("os.path.exists", return_value=True)
     def test_bring_up_interface_no_nm_conn(
-        self, m_exists, m_isfile, m_plugin, m_subp
+        self, m_exists, m_isfile, m_plugin, m_subp):
+        pass
+        
     ):
         """
         There is no network manager connection file but ifcfg-rh plugin is

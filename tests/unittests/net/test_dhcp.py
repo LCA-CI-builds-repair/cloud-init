@@ -369,11 +369,19 @@ class TestDHCPParseStaticRoutes(CiTestCase):
 
 
 class TestDHCPDiscoveryClean(CiTestCase):
-    with_logs = True
+```python
+from unittest import mock
+import pytest
+from cloudinit.net.dhcp import maybe_perform_dhcp_discovery, NoDHCPLeaseInterfaceError
+from tests.unittests.helpers import MockDistro
+
+@pytest.mark.usefixtures("with_logs")
+class TestDHCP:
     ib_address_prefix = "00:00:00:00:00:00:00:00:00:00:00:00"
 
-    @mock.patch("cloudinit.net.dhcp.find_fallback_nic")
-    def test_no_fallback_nic_found(self, m_fallback_nic):
+    @mock.patch("cloudinit.net.dhcp.maybe_perform_dhcp_discovery")
+    @mock.patch("cloudinit.net.dhcp.net.find_fallback_nic")
+    def test_no_fallback_nic_found(self, m_fallback_nic, m_maybe_perform):
         """Log and do nothing when nic is absent and no fallback is found."""
         m_fallback_nic.return_value = None  # No fallback nic found
 
@@ -385,10 +393,11 @@ class TestDHCPDiscoveryClean(CiTestCase):
             self.logs.getvalue(),
         )
 
-    @mock.patch("cloudinit.net.dhcp.find_fallback_nic", return_value="eth9")
-    @mock.patch("cloudinit.net.dhcp.os.remove")
-    @mock.patch("cloudinit.net.dhcp.subp.subp")
-    @mock.patch("cloudinit.net.dhcp.subp.which")
+    @mock.patch("cloudinit.net.dhcp.net.find_fallback_nic", return_value="eth9")
+    @mock.patch("os.remove")
+    @mock.patch("cloudinit.subp.subp")
+    @mock.patch("cloudinit.subp.which")
+```
     def test_dhclient_exits_with_error(
         self, m_which, m_subp, m_remove, m_fallback
     ):

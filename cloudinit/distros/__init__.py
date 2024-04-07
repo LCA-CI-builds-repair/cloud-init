@@ -167,9 +167,9 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
             dhcp.Udhcpc,
         ]
         self.net_ops = iproute2.Iproute2
-        self._runner = helpers.Runners(paths)
-        self.package_managers: List[PackageManager] = []
-        self._dhcp_client = None
+    self._runner = helpers.Runners(paths)
+    self.package_managers: List[PackageManager] = []
+    self._dhcp_client = None
 
     def _unpickle(self, ci_pkl_version: int) -> None:
         """Perform deserialization fixes for Distro."""

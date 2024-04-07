@@ -5,11 +5,9 @@
 # This file is part of cloud-init. See LICENSE file for license information.
 
 import os
-from copy import deepcopy
-from email.mime.multipart import MIMEMultipart
-from typing import Optional, cast
+from typing import Optional # edited: removed unused import, `MIMEMultipart` and `cast` imports
 
-from cloudinit import helpers, util
+from cloudinit import util
 from cloudinit.sources import DataSourceWSL as wsl
 from tests.unittests.helpers import CiTestCase, mock
 

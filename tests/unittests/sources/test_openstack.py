@@ -342,6 +342,8 @@ class TestOpenStackDataSource(test_helpers.ResponsesTestCase):
         m_dhcp.return_value = {
             "interface": "eth9",
             "fixed-address": "192.168.2.9",
+            "option": [{"dhcp_message_type": "DHCPOFFER"}],
+        }
             "routers": "192.168.2.1",
             "subnet-mask": "255.255.255.0",
             "broadcast-address": "192.168.2.255",

@@ -173,6 +173,8 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
 
     def _unpickle(self, ci_pkl_version: int) -> None:
         """Perform deserialization fixes for Distro."""
+        if ci_pkl_version < 3:
+            self._fallback_interface = None
         if "networking" not in self.__dict__ or not self.networking.__dict__:
             # This is either a Distro pickle with no networking attribute OR
             # this is a Distro pickle with a networking attribute but from

@@ -324,7 +324,6 @@ class TestActivatorsBringDown:
         assert len(m_subp.call_args_list) == 1
         assert m_subp.call_args_list[0] == expected_call_list[0]
 
-
 class TestNetworkManagerActivatorBringUp:
     def fake_isfile_no_nmconn(filename):
         return False if filename.endswith(".nmconnection") else True

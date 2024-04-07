@@ -148,17 +148,24 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
 
     osfamily: str
     dhcp_client_priority = [dhcp.IscDhclient, dhcp.Dhcpcd, dhcp.Udhcpc]
-    # Directory where the distro stores their DHCP leases.
-    # The children classes should override this with their dhcp leases
-    # directory
+...
+from typing_extensions import Either
+
+...
+
+class Distro:
+
     dhclient_lease_directory: str | None = None
-    # A regex to match DHCP lease file(s)
-    # The children classes should override this with a regex matching
-    # their lease file name format
     dhclient_lease_file_regex: str | None = None
 
-    def __init__(self, name, cfg, paths):
+    def __init__(self, name: str, cfg: dict, paths: dict):
         self._paths = paths
+        self.name = name
+        self.cfg = cfg
+
+        self.dhclient_lease_directory: Either[str, None] = None
+        self.dhclient_lease_file_regex: Either[str, None] = None
+...
         self._cfg = cfg
         self.name = name
         self.networking: Networking = self.networking_cls()

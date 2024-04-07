@@ -296,22 +296,24 @@ def get_vr_address(distro=None):
         lease_file = dhcp.IscDhclient.get_latest_lease(
             distro.dhclient_lease_directory, distro.dhclient_lease_file_regex
         )
-    else:
-        LOG.debug("Distro object is not defined, skipping leasefile search")
+...
+
+def find_latest_address(lease_file: Either[str, None]) -> Optional[str]:
+    ...
 
     if not lease_file:
         LOG.debug("No lease file found, using default gateway")
         return get_default_gateway()
 
-    lease_file = dhcp.IscDhclient.parse_dhcp_server_from_lease_file(lease_file)
+    if isinstance(lease_file, str):
+        lease_file = dhcp.IscDhclient.parse_dhcp_server_from_lease_file(lease_file)
+
     if not latest_address:
         # No virtual router found, fallback on default gateway
         LOG.debug("No DHCP found, using default gateway")
         return get_default_gateway()
     return latest_address
-
-
-# Used to match classes to dependencies
+...
 datasources = [
     (DataSourceCloudStack, (sources.DEP_FILESYSTEM, sources.DEP_NETWORK)),
 ]

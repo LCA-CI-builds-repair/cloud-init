@@ -620,6 +620,12 @@ class DataSource(CloudInitPickleMixin, metaclass=abc.ABCMeta):
 
     @property
     def platform_type(self):
+        """Get the platform type of the source.
+
+        Returns:
+            str: The platform type of the source.
+        """
+        return self.cloud_name
         if not hasattr(self, "_platform_type"):
             # Handle upgrade path where pickled datasource has no _platform.
             self._platform_type = self.dsname.lower()

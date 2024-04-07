@@ -247,6 +247,22 @@ class TestCloudStackHostname(CiTestCase):
         self.patches.enter_context(
             mock.patch(
                 MOD_PATH
+            )
+        )
+
+        self.patches.enter_context(
+            mock.patch(
+                "cloudinit.sources.DataSources.validate_sources",
+                return_value=[],
+            )
+        )
+
+        self.patches.enter_context(
+            mock.patch(
+                "cloudinit.sources.DataSourceOpenStackLocal.get_instance_metadata",
+                return_value={},
+            )
+        )
                 + ".dhcp.IscDhclient.get_newest_lease_file_from_distro",
                 return_value=True,
             )

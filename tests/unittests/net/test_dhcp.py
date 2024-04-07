@@ -389,6 +389,18 @@ class TestDHCPDiscoveryClean(CiTestCase):
     @mock.patch("cloudinit.net.dhcp.os.remove")
     @mock.patch("cloudinit.net.dhcp.subp.subp")
     @mock.patch("cloudinit.net.dhcp.subp.which")
+    def test_dhcp_discovery(self, m_which, m_subp, m_os_remove, m_fallback_nic):
+        """Test the dhcp_discovery function."""
+        m_which.return_value = "/bin/dhclient"  # Dummy path
+        m_subp.return_value = (1, "Dummy output")
+        m_os_remove.return_value = True
+        m_fallback_nic.return_value = "eth9"  # Monkey patch for dhcp
+
+        self.assertEqual(
+            maybe_perform_dhcp_discovery(MockDistro()),
+            (None, None, None),
+            "Unexpected return value from maybe_perform_dhcp_discovery",
+        )
     def test_dhclient_exits_with_error(
         self, m_which, m_subp, m_remove, m_fallback
     ):

@@ -9,6 +9,11 @@ from cloudinit import importer, util
 from cloudinit.event import EventScope, EventType
 from cloudinit.helpers import Paths
 from cloudinit.sources import (
+    DataSourceCloudstack,
+    DataSourceOpenStackLocal,
+    DataSourceOpenStackService,
+    DataSourceVmware,
+)
     EXPERIMENTAL_TEXT,
     METADATA_UNKNOWN,
     REDACT_SENSITIVE_VALUE,

@@ -241,7 +241,6 @@ class TestCloudStackHostname(CiTestCase):
             mock.patch(
                 DHCP_MOD_PATH + ".networkd_get_option_from_leases",
                 get_networkd_domain,
-            )
         )
 
         self.patches.enter_context(

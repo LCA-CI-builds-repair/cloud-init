@@ -167,12 +167,12 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
             dhcp.Udhcpc,
         ]
         self.net_ops = iproute2.Iproute2
-        self._runner = helpers.Runners(paths)
-        self.package_managers: List[PackageManager] = []
-        self._dhcp_client = None
 
     def _unpickle(self, ci_pkl_version: int) -> None:
         """Perform deserialization fixes for Distro."""
+        self._runner = helpers.Runners(paths)
+        self.package_managers: List[PackageManager] = []
+        self._dhcp_client = None
         if "networking" not in self.__dict__ or not self.networking.__dict__:
             # This is either a Distro pickle with no networking attribute OR
             # this is a Distro pickle with a networking attribute but from

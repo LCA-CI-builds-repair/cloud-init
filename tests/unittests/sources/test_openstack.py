@@ -338,7 +338,8 @@ class TestOpenStackDataSource(test_helpers.ResponsesTestCase):
         ds_os_local = ds.DataSourceOpenStackLocal(
             settings.CFG_BUILTIN, distro, helpers.Paths({"run_dir": self.tmp})
         )
-        ds_os_local._fallback_interface = "eth9"  # Monkey patch for dhcp
+        # Monkey patch for dhcp
+        ds_os_local._fallback_interface = "eth9"
         m_dhcp.return_value = {
             "interface": "eth9",
             "fixed-address": "192.168.2.9",

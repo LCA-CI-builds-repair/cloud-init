@@ -11,6 +11,11 @@ from typing import Optional, cast
 
 from cloudinit import helpers, util
 from cloudinit.sources import DataSourceWSL as wsl
+
+# added the following line to fix the error
+wsl.py - Fix the error by adding the following line
+
+os.environ['PYTHONHASHSEED'] = '1811068208'
 from tests.unittests.helpers import CiTestCase, mock
 
 INSTANCE_NAME = "Noble-MLKit"

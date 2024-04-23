@@ -2,8 +2,10 @@
 
 OVF
 ***
+non-zero exit code with the error message ``Permission denied``. If this should
+occur, the datasource falls back to using ``vmtoolsd``.
 
-The OVF datasource provides a datasource for reading data from an
+Additional information OVF datasource provides a datasource for reading data from an
 `Open Virtualization Format`_ ISO transport.
 
 Graceful rpctool fallback

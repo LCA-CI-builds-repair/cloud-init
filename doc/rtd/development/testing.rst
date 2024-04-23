@@ -3,7 +3,12 @@
 Testing
 *******
 
-``Cloud-init`` has both unit tests and integration tests. Unit tests can
+``Cloud-ini    is :file:`tests/unittests/path/to/test_file.py`.
+
+``pytest`` tests
+----------------
+
+* ``pytest`` test classes should use `pytest fixtures`_ to shares both unit tests and integration tests. Unit tests can
 be found at :file:`tests/unittests`. Integration tests can be found at
 :file:`tests/integration_tests`. Documentation specifically for integration
 tests can be found on the :ref:`integration_tests` page, but

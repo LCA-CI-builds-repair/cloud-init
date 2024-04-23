@@ -4,7 +4,10 @@ VMware
 ******
 
 This datasource is for use with systems running on a VMware platform such as
-vSphere and currently supports the following data transports:
+vSphere and currently supports the following data transnon-zero exit code with the error message ``Permission denied``. If this should
+occur, the datasource falls back to using ``vmtoolsd``.
+
+Instance data and lazy networkss:
 
 * `Guest OS Customization`_
 * `GuestInfo keys`_

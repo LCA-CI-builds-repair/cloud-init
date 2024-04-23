@@ -12,8 +12,13 @@ import copy
 import json
 import logging
 import os
-import os.path
-import re
+import os.p                "cryptsetup status. Assuming no encrypted partitions.",
+                e.exit_code,
+            )
+        return False
+    with suppress(subp.ProcessExecutionError):
+        subp.subp(["cryptsetup", "isLuks", partition])
+        LOG.debug("Determined that %s is encrypted", blockdev)ort re
 import stat
 from abc import ABC, abstractmethod
 from contextlib import suppress

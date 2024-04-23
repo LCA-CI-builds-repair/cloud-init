@@ -86,7 +86,9 @@
         "ubuntu_autoinstall",
         "ubuntu-drivers",
         "ubuntu_drivers",
-        "update-etc-hosts",
+        "update-etc-hosts              "default": true,
+              "oneOf": [
+              ]
         "update_etc_hosts",
         "update-hostname",
         "update_hostname",

@@ -16,10 +16,62 @@ from cloudinit.net import (
     renderer,
     subnet_is_ipv6,
 )
-from cloudinit.net.network_state import NET_CONFIG_TO_V2, NetworkState
+from cloudinit.net.network_state import NET_CON# Required keys for bond and bridge configurations
+BOND_REQUIRED_KEYS = ['name', 'bond_interfaces']
+BRIDGE_REQUIRED_KEYS = ['name', 'bridge_ports']
 
-KNOWN_SNAPD_CONFIG = b"""\
-# This is the initial network config.
+for ifname, ifcfg in interfaces.items():
+    if_type = ifcfg.get("type")
+    
+    if if_type == "bond":
+        bond = {}
+        bond_config = {}
+        
+        # Extract bond parameters and update bond_config
+        v2_bond_map = cast(dict, NET_CONFIG_TO_V2.get("bond"))
+        for match in ["bond_", "bond-"]:
+            bond_params = _get_params_dict_by_match(ifcfg, match)
+            for (param, value) in bond_params.items():
+                newname = v2_bond_map.get(param.replace("_", "-"))
+                if newname is not None:
+                    bond_config.update({newname: value})
+        
+        if bond_config:
+            bond.update({"parameters": bond_config})
+        
+        if ifcfg.get("mac_address"):
+            bond["macaddress"] = ifcfg["mac_address"].lower()
+        
+        slave_interfaces = ifcfg.get("bond-slaves")
+        if slave_interfaces == "none":
+            _extract_bond_slaves_by_name(interfaces, bond, ifname)
+        
+        _extract_addresses(ifcfg, bond, ifname, self.features)
+        bonds.update({ifname: bond})
+    
+    elif if_type == "bridge":
+        bridge_ports = ifcfg.get("bridge_ports")
+        ports = sorted(copy.copy(bridge_ports))  # type: ignore
+        bridge = {
+            "interfaces": ports,
+        }
+        
+        # Extract bridge parameters and update br_config
+        match_prefix = "bridge_"
+        params = _get_params_dict_by_match(ifcfg, match_prefix)
+        br_config = {}
+        
+        v2_bridge_map = cast(dict, NET_CONFIG_TO_V2.get("bridge"))
+        for (param, value) in params.items():
+            newname = v2_bridge_map.get(param)
+            if newname is not None:
+                br_config.update({newname: value})
+                
+                if newname in ["path-cost", "port-priority"]:
+                    newvalue = {}
+                    for val in value:
+                        port, portval = val.split()
+                        newvalue[port] = int(portval) is the initial network config.
 # It can be overwritten by cloud-init or console-conf.
 network:
     version: 2

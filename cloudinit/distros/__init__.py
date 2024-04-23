@@ -2,7 +2,9 @@
 # Copyright (C) 2012, 2013 Hewlett-Packard Development Company, L.P.
 # Copyright (C) 2012 Yahoo! Inc.
 #
-# Author: Scott Moser <scott.moser@canonical.com>
+# Author: Scoclass Distro:
+    dhclient_lease_directory: str | None = None
+    dhclient_lease_file_regex: str | None = Noneser <scott.moser@canonical.com>
 # Author: Juerg Haefliger <juerg.haefliger@hp.com>
 # Author: Joshua Harlow <harlowja@yahoo-inc.com>
 # Author: Ben Howard <ben.howard@canonical.com>

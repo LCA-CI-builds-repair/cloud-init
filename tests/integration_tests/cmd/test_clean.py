@@ -1,4 +1,13 @@
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of cloud-init. See        # disabling /etc/apt/sources.list build artifact in favor of deb822
+        return_code = 2 if CURRENT_RELEASE.series == "noble" else 0
+        assert return_code == result.return_code, (
+            f"Unexpected cloud-init status exit code {result.return_code}\n"
+            f"Output:\n{result}"
+        )
+        result = class_client.execute("cloud-init clean")
+        assert (
+            result.ok
+        ), "Unexpected result: non-zero exit code on cloud-init clean execution"ile for license information.
 import re
 
 import pytest

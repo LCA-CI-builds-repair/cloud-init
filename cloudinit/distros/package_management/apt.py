@@ -1,4 +1,26 @@
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of cloud-init. See LICENSE ffrom typing import Any, List, Optional, cast
+
+def get_apt_wrapper_command(cfg: dict) -> List[str]:
+    """
+    Constructs the list of arguments to prefix to the apt-get command.
+    """
+    enabled: Optional[str] = None
+    command: Optional[Any] = None
+    if cfg is not None:
+        enabled = cfg.get("enabled")
+        command = cfg.get("command")
+
+        if isinstance(command, str):
+            command = [command]
+        elif not isinstance(command, list):
+            raise TypeError("apt_wrapper command must be a string or list")
+
+    if util.is_true(enabled) or (
+        str(enabled).lower() == "auto" and command and subp.which(command[0])
+    ):
+        return cast(List[str], command)
+    else:
+        return []tion.
 import fcntl
 import functools
 import logging

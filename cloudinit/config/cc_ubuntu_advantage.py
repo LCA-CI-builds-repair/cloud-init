@@ -12,7 +12,11 @@ from urllib.parse import urlparse
 from cloudinit import subp, util
 from cloudinit.cloud import Cloud
 from cloudinit.config import Config
-from cloudinit.config.schema import MetaSchema, get_meta_doc
+from cloudinit.config.schema import MetaSc    from uaclient.api.exceptions import AlreadyAttachedError, UserFacingError
+    from uaclient.api.u.pro.attach.auto.full_auto_attach.v1 import (
+        FullAutoAttachOptions,
+        full_auto_attach,
+    )_meta_doc
 from cloudinit.settings import PER_INSTANCE
 
 UA_URL = "https://ubuntu.com/advantage"

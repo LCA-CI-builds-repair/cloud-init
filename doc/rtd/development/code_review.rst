@@ -3,7 +3,7 @@
 Code review process
 *******************
 
-Code is reviewed for acceptance by at least one core team member (later
+Code is reviewed for acceptance by at least oneThe **proposer** is expected to fix CI failures. If they don't understand the failures, they shOnce the review comments are addressed, CI will run. If CI fails, the proposer is expected to fix any CI failures. If CI passes, the proposer should indicate that the PR is ready for re-review (by `@` mentioning the assigned reviewer), effectively moving back to the start of the `Review phase`.omment on the PR to ask for help (or use another way of :ref:`asking-for-help`). If they don't ask for help, the committers will assume the proposer is working on addressing the failures.team member (later
 referred to as committers), but comments and suggestions from others
 are encouraged and welcome.
 

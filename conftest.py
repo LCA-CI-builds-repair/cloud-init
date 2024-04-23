@@ -1,7 +1,18 @@
 """Global conftest.py
 
 This conftest is used for unit tests in ``cloudinit/`` and ``tests/unittests/``
-as well as the integration tests in ``tests/integration_tests/``.
+as wel    # the ``allow_subp_for`` mark::
+
+    @pytest.mark.allow_subp_for("bash")
+    def test_bash(self):
+        subp.subp(["bash"])
+
+    # You can pass multiple commands as values; they will all be permitted::
+
+    @pytest.mark.allow_subp_for("bash", "whoami")
+    def test_several_things(self):
+        subp.subp(["bash"])
+        subp.subp(["whoami"])egration tests in ``tests/integration_tests/``.
 
 Any imports that are performed at the top-level here must be installed wherever
 any of these tests run: that is to say, they must be listed in

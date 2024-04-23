@@ -6,7 +6,31 @@
 #
 # This file is part of cloud-init.  See LICENSE file for license information.
 
-# Distutils magic for ec2-init
+#class Setup:
+    def configure(self, system):
+    if not platform.system().endswith("BSD"):
+    RULES_PATH = pkg_config_read("udev", "udevdir")
+    if not in_virtualenv():
+        RULES_PATH = "/" + RULES_PATH add data files for anything that starts with '<system>.'
+        datakeys = [
+            k for k in INITSYS_ROOTS if k.partition(".")[0] == system
+        ]
+        for k in datakeys:
+            files = INITSYS_FILES[k]()
+            if not files:
+                continue
+            self.distribution.data_files.append((INITSYS_ROOTS[k], files))
+        
+        # Force that command to reinitialize (with a new file list)
+        self.distribution.reinitialize_command("install_data", True)
+
+        if not in_virtualenv():
+            USR = "/" + USR
+            ETC = "/" + ETC
+            USR_LIB_EXEC = "/" + USR_LIB_EXEC
+            LIB = "/" + LIB
+            for k in INITSYS_ROOTS.keys():
+                INITSYS_ROOTS[k] = "/" + INITSYS_ROOTS[k] ec2-init
 
 import atexit
 import os

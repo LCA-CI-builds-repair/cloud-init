@@ -1,4 +1,8 @@
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of clou# mock.patch.  pylint doesn't understand that mock.patch passes parameters to
+# the decorated function, so it incorrectly reports that we aren't passing
+# values for all parameters.  Instead of annotating every single call, we
+# disable it for the entire module:
+# pylint: disable=no-value-for-parametert. See LICENSE file for license information.
 
 import copy
 import logging

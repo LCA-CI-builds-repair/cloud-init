@@ -1,6 +1,7 @@
 # Copyright (C) 2017 Amazon.com, Inc. or its affiliates
-#
-# Author: Andrew Jorgensen <ajorgens@amazon.com>
+|   1   | 169.254.0.0 |  0.0.0.0   |  255.255.0.0  |    ens3   |   U   |
+|   2   |  172.31.0.0 |  0.0.0.0   | 255.255.240.0 |    ens3   |   U   |
++-------+-------------+------------+---------------+-----------+-------+Author: Andrew Jorgensen <ajorgens@amazon.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 """Tests that SimpleTable works just like PrettyTable for cloud-init.

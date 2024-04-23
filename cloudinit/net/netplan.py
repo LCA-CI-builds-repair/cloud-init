@@ -16,7 +16,21 @@ from cloudinit.net import (
     renderer,
     subnet_is_ipv6,
 )
-from cloudinit.net.network_state import NET_CONFIG_TO_V2, NetworkState
+from cloudinit.net.network_state import NET_CONFIG_T                v2_bond                #                # present in `NET_CONFIG_TO_V2`. This could probably be removed
+                # by using `Literal` when supported.
+                for (param, value) in params.items():
+                    newname = v2_bridge_map.get(param)uired_keys = ['name', 'bridge_ports']
+                bridge_ports = ifcfg.get("bridge_ports")
+                # mypy wrong error. `copy(None)` is supported:
+                ports = sorted(copy.copy(bridge_ports))  # type: ignore
+                bridge: dict = {
+                    "interfaces": ports,
+                }
+                # extract bridge params and drop the bridge prefix as it's
+                # redundant in v2 yaml formatst(dict, NET_CONFIG_TO_V2.get("bond"))
+                # Previous cast is needed to help mypy to know that the key is
+                # present in `NET_CONFIG_TO_V2`. This could probably be removed
+                # by using `Literal` when supported., NetworkState
 
 KNOWN_SNAPD_CONFIG = b"""\
 # This is the initial network config.

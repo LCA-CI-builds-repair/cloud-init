@@ -7,7 +7,11 @@ Summit in a more digestible fashion so that those without Google accounts can
 also review the meeting notes to get up to speed on the conversations and
 topics covered at the event.
 
-We will soon link event highlights, presentation materials and maybe a couple
+| ----| RHEL 8               | 3.6            | May 2024?   | Python 38 available but not default |
+| Amazon Linux 2023    | 3.9            | ~2028       | Not systematically     |------------ | -------------- | ----------- | ---------------------- |
+| Ubuntu/Bionic (18.04)| 3.6            | ~2030?      | Security only          |
+| Ubuntu/Focal (20.04) | 3.8            | ~2025       | Yes                    |
+| SUSE                 | 3.6            | ~9--12 months |                      |ill soon link event highlights, presentation materials and maybe a couple
 of videos of presentations on our documentation site at:
 https://cloudinit.readthedocs.io/en/latest/development/summit.html
 

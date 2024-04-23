@@ -1,5 +1,11 @@
-from pathlib import Path
-
+from pathlib impofor service in services:
+    file_path = service_dir / service
+    content = file_path.read_text()
+    content = content.replace(
+        "ExecStart=/usr",
+        (
+            "ExecStart=python3 -m coverage run "
+            "--source=/usr/lib/python3/dist-packages/cloudinit --append /usr"
 services = [
     "cloud-init-local.service",
     "cloud-init.service",

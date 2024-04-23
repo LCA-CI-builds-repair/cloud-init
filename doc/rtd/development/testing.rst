@@ -4,7 +4,9 @@ Testing
 *******
 
 ``Cloud-init`` has both unit tests and integration tests. Unit tests can
-be found at :file:`tests/unittests`. Integration tests can be found at
+be found at :file:`tests/unittests`. Inte   in an ubuntu lxd container with python3-pytest installed.
+
+.. LINKS:ion tests can be found at
 :file:`tests/integration_tests`. Documentation specifically for integration
 tests can be found on the :ref:`integration_tests` page, but
 the guidelines specified below apply to both types of tests.

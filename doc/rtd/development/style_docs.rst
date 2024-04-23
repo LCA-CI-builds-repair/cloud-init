@@ -4,7 +4,10 @@ Documentation style guide
 Language
 --------
 
-Where possible, text should be written in UK English. However, discretion and
+Where possible, text shoupaste commands directly into their terminal. For user convenience, please
+ensure that code output is presented in a separate code block to the commands.
+
+Vertical whitespacee written in UK English. However, discretion and
 common sense can both be applied. For example, where text refers to code
 elements that exist in US English, the spelling of these elements should not
 be changed to UK English.

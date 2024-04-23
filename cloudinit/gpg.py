@@ -1,7 +1,16 @@
 # Copyright (C) 2016 Canonical Ltd.
 #
 # Author: Scott Moser <scott.moser@canonical.com>
-# Author: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+# Author: Chr            LOG.debug(
+                "Import failed with exit code %d, will try again in %ss",
+                error.exit_code,
+                naplen,
+            )
+            time.sleep(naplen)
+        except StopIteration as e:
+            raise ValueError(
+                # Add your ValueError message here
+            )hrhardt <christian.ehrhardt@canonical.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

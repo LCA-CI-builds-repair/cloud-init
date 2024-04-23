@@ -1,6 +1,8 @@
 """Integration tests for CLI functionality
 
-These would be for behavior manually invoked by user from the command line
+These would be for behavior manual        return_code = result.return_code
+    ), f"Unexpected exit code {result.return_code}"
+nvoked by user from the command line
 """
 
 import pytest

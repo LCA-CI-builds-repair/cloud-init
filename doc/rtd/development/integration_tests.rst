@@ -6,7 +6,29 @@ Integration testing
 Overview
 =========
 
-Integration tests are written using ``pytest`` and are located at
+Integration tests are written usinIntegration Test Guidelines
+===========================
+
+A subset of the integration tests are run when a pull request
+is submitted on GitHub. The tests run on these continuous
+integration (CI) runs are given a ``pytest`` mark:
+
+    @pytest.mark.ci
+
+Most new tests should *not* use this mark, so be aware that having a
+successful CI run does not necessarily mean that your test passed
+successfully.
+
+Fixtures
+========
+
+Integration tests rely heavily on fixtures to do initial test setup.
+One or more of these fixtures will be used in almost every integration test.
+
+Details such as the cloud platform or initial image to use are determined
+via what is specified in the `Configuration`.
+
+``client``ated at
 :file:`tests/integration_tests`. General design principles laid out in
 :ref:`testing` should be followed for integration tests.
 

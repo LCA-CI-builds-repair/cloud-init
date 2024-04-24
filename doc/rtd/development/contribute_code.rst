@@ -1,7 +1,24 @@
 Contribute to the code
 **********************
 
-For a run-through of the entire process, the following pages will be your best
+For a run-throughVersions and Compatibility
+---------------------------
+
+.. list-table::
+   :header-rows: 1
+   :align: center
+   :widths: 25 25
+
+   * - Cloud-init version
+     - Python version
+   * - 22.1
+     - 3.6+
+   * - 20.3
+     - 3.5+
+   * - 19.4
+     - 2.7+
+
+Type annotations provide information on the expected types of function parameters and return values, enhancing code readability and maintainability.rocess, the following pages will be your best
 starting point:
 
 * :doc:`Find issues to work on<find_issues>`

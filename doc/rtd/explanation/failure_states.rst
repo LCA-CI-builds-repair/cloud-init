@@ -1,6 +1,31 @@
-.. _failure_states:
+.Failure states
+==============
 
-Failure states
+Cloud-init has multiple modes of failure. This page describes these
+modes and how to gather information about failures.
+
+Critical failure
+----------------
+
+Critical failures happen when cloud-init experiences a condition that it
+cannot safely handle. When this happens, cloud-init may be unable to complete,
+and the instance is likely to be in an unknown broken state.
+
+Cloud-init experiences critical failure when:
+
+* there is a major problem with the cloud image that is running cloud-init
+* there is a severe bug in cloud-init
+
+When this happens, error messages will be visible in output of
+``cloud-init status --long`` within the ``'error'``.
+
+The same errors will also be located under the key nested under the
+module-level keys that store information related to each
+:ref:`stage of cloud-init<boot_stages>`: ``init-local``, ``init``,
+``modules-config``, ``modules-final``.
+
+Recoverable failure
+-------------------s
 ==============
 
 Cloud-init has multiple modes of failure. This page describes these

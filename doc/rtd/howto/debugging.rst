@@ -3,7 +3,30 @@
 How to debug cloud-init
 ***********************
 
-There are several cloud-init :ref:`failure modes<failure_states>` that one may
+There are severDebugging Cloud-Init Errors
+---------------------------
+
+   - :file:`/var/log/cloud-init-output.log`
+
+   Identify errors in the logs and the lines preceding these errors.
+
+   Ask yourself:
+
+   - According to the log files, what went wrong?
+   - How does the cloud-init error relate to the configuration provided to this instance?
+   - What does the documentation say about the parts of the configuration that relate to this error? Did a configuration module fail?
+   - What :ref:`failure state<failure_states>` is cloud-init in?
+
+
+.. _did_not_finish_running:
+
+Cloud-init never finished running
+=================================
+
+There are many reasons why cloud-init may fail to complete. Some reasons are internal to cloud-init, but in other cases, cloud-init failure to complete may be a symptom of failure in other components of the system, or the result of a user configuration.
+
+External reasons
+----------------e modes<failure_states>` that one may
 need to debug. Debugging is specific to the scenario, but the starting points
 are often similar:
 

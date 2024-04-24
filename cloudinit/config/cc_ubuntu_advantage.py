@@ -11,8 +11,37 @@ from urllib.parse import urlparse
 
 from cloudinit import subp, util
 from cloudinit.cloud import Cloud
-from cloudinit.config import Config
-from cloudinit.config.schema import MetaSchema, get_meta_doc
+from cloudinit.con    """Install ubuntu-advantage-tools if not present."""
+ from uaclient.api.exceptions import AlreadyAttachedError, UserFacingError
+from uaclient.api.u.pro.attach.auto.full_auto_attach.v1 import (
+    FullAutoAttachOptions,
+    full_auto_attach,
+)p.which("pro"):
+        return
+    try:
+        cloud.distro.update_package_sources()
+    except Exception as e:
+        util.logexc(LOG, f"Package update failed: {e}")
+        raise
+
+    try:
+        cloud.distro.install_packages(["ubuntu-advantage-tools"])
+    except Exception as e:
+        util.logexc(LOG, f"Failed to install ubuntu-advantage-tools: {e}")
+        raise
+
+
+def _should_auto_attach(ua_section: dict) -> bool:
+    disable_auto_attach = bool(
+        ua_section.get("features", {}).get("disable_auto_attach", False)
+    )
+    if disable_auto_attach:
+        return False
+
+    from uaclient.api.exceptions import UserFacingError
+    from uaclient.api.u.pro.attach.auto.should_auto_attach.v1 import (
+        should_auto_attach,
+    )nit.config.schema import MetaSchema, get_meta_doc
 from cloudinit.settings import PER_INSTANCE
 
 UA_URL = "https://ubuntu.com/advantage"

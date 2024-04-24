@@ -1,7 +1,13 @@
 # Copyright (C) 2012 Canonical Ltd.
-# Copyright (C) 2012 Yahoo! Inc.
-#
-# Author: Scott Moser <scott.moser@canonical.com>
+# Copyright (C) 2012 Yahoo# Add error handling for file reading
+try:
+    with open('file.txt', 'r') as file:
+        for line in file:
+            print(line)
+except FileNotFoundError:
+    print("File not found.")
+except Exception as e:
+    print("An error occurred:", e)t Moser <scott.moser@canonical.com>
 # Author: Joshua Harlow <harlowja@yahoo-inc.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.

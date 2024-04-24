@@ -12,7 +12,10 @@ from typing import List, Union
 
 LOG = logging.getLogger(__name__)
 
-SubpResult = collections.namedtuple("SubpResult", ["stdout", "stderr"])
+SubpResult = collections.namedt        raise RuntimeError(
+            f'Runparts: {len(failed)} failures in {len(attempted)} attempted commands.\n'
+            f'Failed commands: {",".join(failed)}'
+        )("SubpResult", ["stdout", "stderr"])
 
 
 def prepend_base_command(base_command, commands):

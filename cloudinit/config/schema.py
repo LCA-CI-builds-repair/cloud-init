@@ -15,8 +15,22 @@ from enum import Enum
 from errno import EACCES
 from functools import partial
 from itertools import chain
-from typing import (
-    TYPE_CHECKING,
+from typing    if hasattr(Draft4Validator, "TYPE_CHECKER"):  # jsonschema 3.0+
+        meta_schema["additionalProperties"] = False  # Unsupported in 2.6.0
+        type_checker = Draft4Validator.TYPE_CHECKER.redefine(
+            "string", is_schema_byte_string
+        )
+        validator_kwargs = {
+            "type_checker": type_checker,
+        }
+    else:  # jsonschema 2.6 workaround
+        # pylint:disable-next=no-member
+        types = Draft4Validator.DEFAULT_TYPES if hasattr(Draft4Validator, "DEFAULT_TYPES") else {}
+        if "string" in types:
+            types["string"] = (str, bytes)
+        else:
+            types.update({"string": (str, bytes)})
+        validator_kwargs = {"default_types": types}PE_CHECKING,
     DefaultDict,
     List,
     NamedTuple,

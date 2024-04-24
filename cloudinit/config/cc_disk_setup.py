@@ -15,8 +15,40 @@ from textwrap import dedent
 from cloudinit import subp, util
 from cloudinit.cloud import Cloud
 from cloudinit.config import Config
-from cloudinit.config.schema import MetaSchema, get_meta_doc
-from cloudinit.distros import ALL_DISTROS
+from cloudinit.config.schema import MetaSchema, get_meta_    cleaned = []
+
+    # user would expect a code '83' to be Linux, but sgdisk outputs 8300.
+    for code in codes:
+        if len(code) == 4 and code.endswith("00"):
+            code = code[0:2]
+        cleaned.append(code)
+    return cleaned
+
+
+def check_partition_layout(table_type, device, layout):
+    """
+    See if the partition lay out matches.
+
+    This is a future-proofing function. In order
+    to add support for other disk layout schemes, add a
+    function called check_partition_%s_layout
+    """
+    if "gpt" == table_type:
+        found_layout = check_partition_gpt_layout(device, layout)
+    elif "mbr" == table_type:
+        found_layout = check_partition_mbr_layout(device, layout)
+    else:
+        raise RuntimeError("Unable to determine table type: %s" % table_type)
+
+
+def check_partition_gpt_layout(device, layout):
+    # Add implementation for GPT partition layout check
+    pass
+
+
+def check_partition_mbr_layout(device, layout):
+    # Add implementation for MBR partition layout check
+    passos import ALL_DISTROS
 from cloudinit.settings import PER_INSTANCE
 
 # Define the commands to use

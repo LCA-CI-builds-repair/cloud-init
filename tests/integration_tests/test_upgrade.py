@@ -5,7 +5,18 @@ import os
 import pytest
 
 from tests.integration_tests.clouds import IntegrationCloud
-from tests.integration_tests.conftest import get_validated_source
+from tests.integration_tests.conftest imp        LOG.info(
+            LOG_TEMPLATE.format(
+                pre_systemd_analyze=pre_systemd_analyze,
+                post_systemd_analyze=post_systemd_analyze,
+                pre_systemd_blame="\n".join(pre_systemd_blame[:10]),
+                post_systemd_blame="\n".join(post_systemd_blame[:10]),
+                pre_analyze_totals="\n".join(map(str, pre_analyze_totals)),
+                post_analyze_totals="\n".join(map(str, post_analyze_totals)),
+                pre_cloud_blame="\n".join(pre_cloud_blame[:10]),
+                post_cloud_blame="\n".join(post_cloud_blame[:10]),
+            )
+        )d_source
 from tests.integration_tests.integration_settings import PLATFORM
 from tests.integration_tests.releases import CURRENT_RELEASE, FOCAL, IS_UBUNTU
 from tests.integration_tests.util import verify_clean_log

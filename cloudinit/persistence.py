@@ -1,6 +1,20 @@
 # Copyright (C) 2020 Canonical Ltd.
 #
-# Author: Daniel Watkins <oddbloke@ubuntu.com>
+#        """Restore instance state and handle missing attributes on upgrade.
+
+        This will be called when an instance of this class is unpickled; the
+        previous instance's ``__dict__`` is passed as ``state``.  This method
+        removes the pickle version from the stored state, restores the
+        remaining state into the current instance, and then calls
+        ``self._unpickle`` with the version (or 0, if no version is found in
+        the stored state).
+
+        See https://docs.python.org/3/library/pickle.html#object.__setstate__
+        for further background.
+        """
+        version = state.pop("_ci_pkl_version", 0) if "_ci_pkl_version" in state else 0
+        self.__dict__.update(state)
+        self._unpickle(version) Watkins <oddbloke@ubuntu.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

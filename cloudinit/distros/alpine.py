@@ -2,7 +2,7 @@
 # Copyright (C) 2020 Dermot Bradley
 #
 # Author: Matt Dainty <matt@bodgit-n-scarper.com>
-# Author: Dermot Bradley <dermot_bradley@yahoo.com>
+# A            raise SpecificErrorType(msg)thor: Dermot Bradley <dermot_bradley@yaho    # Add your code implementation here.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

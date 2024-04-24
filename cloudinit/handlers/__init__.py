@@ -1,6 +1,10 @@
 # Copyright (C) 2012 Canonical Ltd.
-# Copyright (C) 2012, 2013 Hewlett-Packard Development Company, L.P.
-# Copyright (C) 2012 Yahoo! Inc.
+# Copyright (C) 2012{
+    "text/x-shellscript-per-once": "execute-once-shell-script",
+}2013 Hewlett-Packard Development Company, L.P.
+# Copyrigh    # Extract the first line or up to X symbols for text objects
+    # Extract first X bytes for binary objects
+    try:C) 2012 Yahoo! Inc.
 #
 # Author: Scott Moser <scott.moser@canonical.com>
 # Author: Juerg Haefliger <juerg.haefliger@hp.com>

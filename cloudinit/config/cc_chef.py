@@ -1,8 +1,63 @@
 # Copyright (C) 2012 Hewlett-Packard Development Company, L.P.
 #
 # Author: Avishai Ish-Shalom <avishai@fewbytes.com>
-# Author: Mike Moulton <mike@meltmedia.com>
-# Author: Juerg Haefliger <juerg.haefliger@hp.com>
+# Author: Mike Moulton <mike@melimport os
+from cloudinit import util
+
+def post_run_chef(chef_cfg):
+    delete_pem = util.get_cfg_option_bool(
+          # Check if Chef is installed or force installation is requested
+    installed = subp.is_exe(CHEF_EXEC_PATH)
+    if not installed or force_install:chef_cfg, "delete_validation_post_exec", default=False
+    )
+    if delete_pem and os.path.isfile(CHEF_VALIDATION_PEM_PATH):
+        os.unlink(CHEF_VALIDATION_PEM_PATH)
+
+
+def get_template_params(iid, chef_cfg):
+    params = CHEF_RB_TPL_DEFAULTS.copy()
+    # Allow users to overwrite any of the keys they want (if they so choose),
+    # when a value is None, then the value will be set to None and no boolean
+    # or string version will be populated...
+    for k, v in chef_cfg.items():
+        if k not in CHEF_RB_TPL_KEYS:
+            LOG.debug("Skipping unknown chef template key '%s'", k)
+            continue
+        if v is None:
+            params[k] = None
+        else:
+            # This will make the value a boolean or string...
+            if k in CHEF_RB_TPL_BOOL_KEYS:
+                params[k] = util.get_cfg_option_bool(chef_cfg, k)
+            else:
+                params[k] = util.get_cfg_option_str(chef_cfg, k)
+    # These ones are overwritten to be exact values...
+    params.update(
+        {
+            "generated_by": util.make_header(),
+            "node_name": util.get_cfg_option_str(
+                chef_cfg, "node_name", default=iid
+            ),
+            "environment": util.get_cfg_option_str(
+                chef_cfg, "environment", default="_default"
+            ),
+            # These two are mandatory...
+            "server_url": chef_cfg["server_url"],
+            "validation_name": chef_cfg["validation_name"],
+        }
+    )
+    return params
+
+
+def handle(name: str, cfg: Config, cloud: Cloud, args: list) -> None:
+    """Handler method activated by cloud-init."""
+
+    # If there isn't a chef key in the configuration don't do anything
+    if "chef" not in cfg:
+        LOG.debug(
+            "Skipping module named %s, no 'chef' key in configuration", name
+        )
+        return@hp.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

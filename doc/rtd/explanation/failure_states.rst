@@ -3,7 +3,15 @@
 Failure states
 ==============
 
-Cloud-init has multiple modes of failure. This page describes these
+Clou- 0 - success
+- 1 - unrecoverable error
+- 2 - recoverable error
+
+If ``cloud-init status`` exits with exit code 1, cloud-init experienced a critical failure and was unable to recover. In this case, something is likely seriously wrong with the system, or cloud-init has experienced a serious bug. If you believe that you have experienced a serious bug, please file a :ref:`bug report<reporting_bugs>`.
+
+If cloud-init exits with exit code 2, cloud-init was able to complete gracefully, however something went wrong and the user should investigate.
+
+See :ref:`this more detailed explanation<reported_status>` for more information on cloud-init's status.ple modes of failure. This page describes these
 modes and how to gather information about failures.
 
 .. _critical_failure:

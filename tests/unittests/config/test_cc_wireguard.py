@@ -1,7 +1,25 @@
 # This file is part of cloud-init. See LICENSE file for license information.
 import pytest
 
-from cloudinit import subp, util
+from cloudinitfrom cloudinit import subp
+
+def test_enable_wg_on_error(self, m_subp):
+    """Errors when enabling WireGuard interfaces are raised."""
+    wg_int = {"name": "wg0"}
+    distro = mock.MagicMock()  # No errors raised
+    distro.manage_service.side_effect = subp.ProcessExecutionError(
+        "systemctl start wg-quik@wg0 failed: exit code 1"
+    )
+    mycloud = FakeCloud(distro)
+    with self.assertRaises(RuntimeError) as context_mgr:
+        cc_wireguard.enable_wg(wg_int, mycloud)
+    self.assertEqual(
+        "Failed enabling/starting WireGuard interface(s):\n"
+        "Unexpected error while running command.\n"
+        "Command: -\nExit code: -\nReason: -\n"
+        "Stdout: systemctl start wg-quik@wg0 failed: exit code 1\n"
+        "Stderr: -",
+        str(context_mgr.exception),l
 from cloudinit.config import cc_wireguard
 from cloudinit.config.schema import (
     SchemaValidationError,

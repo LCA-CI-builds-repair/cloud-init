@@ -1,6 +1,56 @@
 """Integration tests for CLI functionality
 
-These would be for behavior manually invoked by user from the command line
+These would be for b# Add necessary import for CUR# Add necessary import for CURRENT_RELEASE module
+from some_module import CURRENT_RELEASE
+
+"""
+Check cloud-init status command output and log messages.
+"""
+result = client.execute("cloud-init status --long")
+
+# Determine the expected return code based on the current release series
+if CURRENT_RELEASE.series in ("focal", "jammy", "lunar", "mantic"):
+    expected_return_code = 0  # Stable releases don't change exit code behavior
+else:
+    expected_return_code = 2  # 23.4 and later will exit 2 on warnings
+
+# Verify the return code matches the expected value
+assert expected_return_code == result.return_code, f"Unexpected exit code {result.return_code}"
+
+# Check for specific warnings in the cloud-init log file
+log = client.read_from_file("/var/log/cloud-init.log")
+expected_warning = (
+    "[WARNING]: Invalid cloud-config provided: Please run "
+    "'sudo cloud-init schema --system' to see the schema errors."
+)
+assert expected_warning in log, "Expected warning message not found in log"
+
+# Ensure a specific string is not present in the log
+assert "asdfasdf" not in log, "Unexpected string 'asdfasdf' found in log"ule
+from some_module import CURRENT_RELEASE
+
+"""
+Check cloud-init CLI commands and their expected behavior.
+"""
+result = client.execute("cloud-init schema --system")
+assert not result.ok
+assert "Cloud config schema errors" in result.stderr
+assert (
+    "Expected first line to be one of: #!, ## template: jinja,"
+    " #cloud-boothook, #cloud-config" in result.stderr
+)
+
+result = client.execute("cloud-init status --long")
+
+# Determine the return code based on the current release series
+if CURRENT_RELEASE.series in ("focal", "jammy", "lunar", "mantic"):
+    return_code = 0  # Stable releases don't change exit code behavior
+else:
+    return_code = 2  # 23.4 and later will exit 2 on warnings
+
+assert (
+    return_code == result.return_code
+), f"Unexpected exit code {result.return_code}"nvoked by user from the command line
 """
 
 import pytest

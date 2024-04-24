@@ -2,9 +2,24 @@
 
 import sys
 
-import pytest
+import pytes# Add necessary imports for the missing modules
+from some_module import templater, self, util, tmpdir
 
-from cloudinit import subp, templater, util
+def test_variant_sets_distro_in_cloud_cfg(variant, tmpdir):
+    """Testing parametrized inputs with imported function saves ~0.5s per
+    call versus calling as subp
+    """
+    outfile = tmpdir.join("outcfg").strpath
+
+    templater.render_template(variant, self.tmpl_path, outfile, is_yaml=True)
+    with open(outfile) as stream:
+        system_cfg = util.load_yaml(stream.read())
+    
+    # Update variant to "ubuntu" if it is "unknown"
+    if variant == "unknown":
+        variant = "ubuntu"  # Unknown is defaulted to ubuntu
+    
+    assert system_cfg["system_info"]["distro"] == variantnit import subp, templater, util
 from tests.helpers import cloud_init_project_dir
 
 # TODO(Look to align with tools.render-template or cloudinit.distos.OSFAMILIES)

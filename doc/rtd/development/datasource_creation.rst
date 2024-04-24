@@ -1,7 +1,24 @@
 .. _datasource_creation:
 
 Supporting your cloud or platform
-*********************************
+***Testing access
+^^^^^^^^^^^^^^
+
+A platform that isn't available for testing cannot be independently validated.
+You will need to provide some means for community members and upstream
+developers to test and verify this platform. Code that cannot be used cannot be
+supported.
+
+Maintainer support
+^^^^^^^^^^^^^^^^^^
+
+A point of contact is required who can answer questions and occasionally
+provide testing or maintenance support. Maintainership is relatively informal,
+but there is an expectation that from time to time upstream may need to contact
+the maintainer with inquiries. Datasources that appear to be unmaintained
+and/or unused may be considered for eventual removal.
+
+Adding cloud-init support***********
 
 The upstream cloud-init project regularly accepts code contributions for new
 platforms that wish to support cloud-init.

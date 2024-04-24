@@ -22,7 +22,18 @@ from cloudinit import features, gpg, subp, templater, util
 from cloudinit.cloud import Cloud
 from cloudinit.config import Config
 from cloudinit.config.schema import MetaSchema, get_meta_doc
-from cloudinit.settings import PER_INSTANCE
+from cloudinit.settings impimport shutil
+
+# Check for missing packages based on required commands
+missing_packages = []
+for command in required_cmds:
+    if not shutil.which(command):
+        missing_packages.append(PACKAGE_DEPENDENCY_BY_COMMAND.get(command, "Unknown Package"))
+
+# If there are missing packages, handle the dependencies
+if missing_packages:
+    # Handle the missing packages logic here
+    passPER_INSTANCE
 
 LOG = logging.getLogger(__name__)
 

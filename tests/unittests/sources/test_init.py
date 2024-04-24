@@ -19,10 +19,53 @@ from cloudinit.sources import (
     redact_sensitive_keys,
 )
 from cloudinit.user_data import UserDataProcessor
-from tests.unittests.helpers import CiTestCase, mock
+from tests.unittests.helpers import CiTimport os
+import stat
 
+EXPERIMENTAL_TEXT = "Experimental Text"
+REDACT_SENSITIVE_VALUE = "REDACTED"
 
-class DataSourceTestSubclassNet(DataSource):
+class TestInit:
+    def test_method_name(self):
+        expected = {
+            "metadata": {
+                "variant": "ubuntu",
+            },
+            "ds": {
+                "_doc":import util
+
+# Create a symbolic link for the instance directory
+util.sym_link(cloud_dir, os.path.join(cloud_dir, "instance"))
+
+# Persist instance data without writing to the cache file
+datasource.persist_instance_data(write_cache=False)
+self.assertFalse(os.path.exists(pkl_cache_file))
+
+# Persist instance data with write_cache=True
+datasource.persist_instance_data(write_cache=True)
+self.assertTrue(os.path.exists(pkl_cache_file))
+
+# Load data from the pickle cache file
+ds = pkl_load(pkl_cache_file)ENTAL_TEXT,
+                "meta_data": {
+                    "VENDOR-DAta": REDACT_SENSITIVE_VALUE,
+                    "availability_zone": "myaz",
+                    "local-hostname": "test-subclass-hostname",
+                    "region": "myregion",
+                    "some": {"security-credentials": REDACT_SENSITIVE_VALUE},
+                    "someother": {
+                        "nested": {"userData": REDACT_SENSITIVE_VALUE}
+                    },
+                },
+            },
+        }
+        self.assertEqual(expected, redacted)
+        file_stat = os.stat(json_file)
+        self.assertEqual(0o644, stat.S_IMODE(file_stat.st_mode))
+
+    def test_get_data_writes_json_instance_data_sensitive(self):
+        # Add implementation for this test method
+        pass DataSourceTestSubclassNet(DataSource):
 
     dsname = "MyTestSubclass"
     url_max_wait = 55

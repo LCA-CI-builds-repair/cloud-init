@@ -8,7 +8,12 @@ import yaml
 
 from cloudinit import helpers, settings, url_helper
 from cloudinit.sources import DataSourceMAAS
-from tests.unittests.helpers import populate_dir
+from tests.def test_v1_id_ignores_unused_entries_in_config(self):
+    """Test v1 id ignores unused entries in config."""
+    cfg = self.v1_cfg.copy()
+    cfg["consumer_secret"] = "BOO"
+    cfg["unrelated"] = "HI MOM"
+    result = DataSourceMAAS.get_id_from_ds_cfg(cfg)ests.helpers import populate_dir
 
 
 class TestMAASDataSource:

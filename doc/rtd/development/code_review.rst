@@ -3,7 +3,28 @@
 Code review process
 *******************
 
-Code is reviewed for acceptance by at least one core team member (later
+Code is reviewed for acceptance by at least oneThe **proposer** is expected to fix CI failures. If they don't understand the
+failures, they should comment on the PR to ask for help (or use another way
+of :ref:`asking-for-help`). If they don't ask for help, the
+committers will assume the proposer is working on addressing the failures.
+
+* If CI passes:
+
+  Move on to the **review phase**.
+
+Review phase
+============
+
+In this phase, the **proposer** and the **reviewers** will work iteratively
+together to get the PR merged into the cloud-init codebase.
+
+There are three potential outcomes: **merged**, **rejected permanently**, and
+**temporarily closed**. The first two are covered in this section; see
+the :ref:`inactive pull requests<inactive-PRs>` section for details about
+temporary closure.
+
+A committer is assigned
+-----------------------r
 referred to as committers), but comments and suggestions from others
 are encouraged and welcome.
 

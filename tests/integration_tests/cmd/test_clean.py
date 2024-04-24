@@ -1,4 +1,27 @@
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of cloud-init. See# Add necessary import for CURRENT_RELEASE module
+from some_module import CURRENT_RELEASE
+
+        # Disabling /etc/apt/sources.list build artifact in favor of deb822
+        return_code = 2 if CURRENT_RELEASE.series == "noble" else 0
+        assert return_code == result.return_code, (
+            f"Unexpected cloud-init status exit code {result.return_code}\n"
+            f"Output:\n{result}"
+        )
+        result = class_client.execute("cloud-init clean")
+        assert (
+            result.ok
+        ), "Non-zero exit on cloud-init clean runparts of /etc/cloud/clean.d"
+        
+        # Log files are not removed without --logs
+        log_paths = (
+            "/var/log/cloud-init.log",
+            "/var/log/cloud-init-output.log",
+        )
+        net_cfg_paths = (
+            "/etc/network/interfaces.d/50-cloud-init.cfg",
+            "/etc/netplan/50-cloud-init.yaml",
+            "/etc/systemd/network/10-cloud-init-eth0.network",
+        )cense information.
 import re
 
 import pytest

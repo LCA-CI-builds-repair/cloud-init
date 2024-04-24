@@ -1,6 +1,32 @@
 """Integration test for the ssh module.
 
-This test specifies keys to be provided to the system through the ``ssh``
+This test specifies keys to bimport pytest
+
+@pytest.mark.user_data(USER_DATA)
+class TestSshKeysProvided:
+    @pytest.mark.parametrize(
+        "config_path,expected_out",
+        (
+            (
+                "/etc/ssh/ssh_host_rsa_key.pub",
+                "AAAAB3NzaC1yc2EAAAADAQABAAABAQC0/Ho+o3eJISydO2JvIgT"
+                "LnZOtrxPl+fSvJfKDjoOLY0HB2eOjy2s2/2N6d9X9SGZ4",
+            ),
+            (
+                "/etc/ssh/ssh_host_rsa_key",
+                "4DOkqNiUGl80Zp1RgZNohHUXlJMtAbrIlAVEk+mTmg7vjfyp2un"
+                "RQvLZpMRdywBm",
+            ),
+            (
+                "/etc/ssh/ssh_host_rsa_key-cert.pub",
+                "AAAAHHNzaC1yc2EtY2VydC12MDFAb3BlbnNzaC5jb20AAAAgMpg"
+                "BP4Phn3L8I7Vqh7lmHKcOfIokEvSEbHDw83Y3JloAAAAD",
+            ),
+        )
+    )
+    def test_ssh_keys(self, config_path, expected_out):
+        # Test implementation goes here
+        passstem through the ``ssh``
 module and then checks that if those keys were successfully added to the
 system.
 

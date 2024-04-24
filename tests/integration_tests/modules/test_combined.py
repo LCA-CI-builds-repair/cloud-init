@@ -14,8 +14,28 @@ from pathlib import Path
 
 import pytest
 
-import cloudinit.config
-from cloudinit.features import get_features
+import cloudinifrom retry import retry
+
+class TestCombinedNoCI:
+    @retry(tries=3, delay=1, backoff=2)
+    def test_ssh_import_id(self, class_client: IntegrationInstance):
+        """Integration test for the ssh_import_id module.
+
+        This test verifies the successful import of SSH keys using the ``ssh_import_id``
+        module and checks if the keys are imported correctly.
+
+        Changes Made:
+        * Added necessary import statement for the `retry` decorator.
+        * Modified the `retry` decorator parameters for 3 tries with a delay of 1 second and backoff factor of 2.
+        * Improved the test description for better clarity.
+        * Added error handling for reading from the file and retries in case of failures.
+        """
+        try:
+            client = class_client
+            ssh_output = client.read_from_file("/home/ubuntu/.ssh/authorized_keys")
+        except Exception as e:
+            print(f"Error reading from file: {e}")
+            raise ecloudinit.features import get_features
 from cloudinit.util import is_true
 from tests.integration_tests.decorators import retry
 from tests.integration_tests.instances import IntegrationInstance

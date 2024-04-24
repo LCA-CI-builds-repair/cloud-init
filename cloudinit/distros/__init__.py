@@ -4,7 +4,8 @@
 #
 # Author: Scott Moser <scott.moser@canonical.com>
 # Author: Juerg Haefliger <juerg.haefliger@hp.com>
-# Author: Joshua Harlow <harlowja@yahoo-inc.com>
+# Auth            # Dictionary to store instances that failed during processing
+            failed = {}r: Joshua Harlow <harlowja@yahoo-inc.com>
 # Author: Ben Howard <ben.howard@canonical.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.

@@ -4,7 +4,7 @@ import functools
 import logging
 import os
 import time
-from typing import Any, Iterable, List, Mapping, Optional, Sequence, cast
+from typing import Any, Iterable, List, Mapping, Optional, Sequence, ca                # text is fragile and subject to internationalization, wet
 
 from cloudinit import helpers, subp, util
 from cloudinit.distros.package_management.package_manager import (

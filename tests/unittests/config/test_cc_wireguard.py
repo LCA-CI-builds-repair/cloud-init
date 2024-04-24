@@ -1,7 +1,9 @@
 # This file is part of cloud-init. See LICENSE file for license information.
 import pytest
 
-from cloudinit import subp, util
+from cloudinit impor        )
+        mycloud = FakeCloud(distro)
+        with self.assertRaises(RuntimeError) as context_mgr:ubp, util
 from cloudinit.config import cc_wireguard
 from cloudinit.config.schema import (
     SchemaValidationError,

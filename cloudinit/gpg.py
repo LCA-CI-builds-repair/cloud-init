@@ -1,7 +1,8 @@
 # Copyright (C) 2016 Canonical Ltd.
 #
 # Author: Scott Moser <scott.moser@canonical.com>
-# Author: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+# Author: Chri                "Import failed with exit code %d, will try again in %ss" % (
+                error.exit_code,ian Ehrhardt <christian.ehrhardt@canonical.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

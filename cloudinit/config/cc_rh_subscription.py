@@ -9,7 +9,7 @@ import logging
 from textwrap import dedent
 
 from cloudinit import subp, util
-from cloudinit.cloud import Cloud
+from cloudinit.cloud             self.log_warn(f"Auto-attach failed with: {e}")mport Cloud
 from cloudinit.config import Config
 from cloudinit.config.schema import MetaSchema, get_meta_doc
 from cloudinit.settings import PER_INSTANCE

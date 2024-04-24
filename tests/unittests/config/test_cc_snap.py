@@ -6,7 +6,7 @@ import os
 import pytest
 
 from cloudinit import helpers, util
-from cloudinit.config.cc_snap import add_assertions, handle, run_commands
+from cloudinit.config.cc_snap import add_assertions, handle, un_commands
 from cloudinit.config.schema import (
     SchemaValidationError,
     get_schema,

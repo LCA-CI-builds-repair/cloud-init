@@ -37,7 +37,7 @@ DISABLE_SUITES_REDACT_PREFIX = "# cloud-init disable_suites redacted: "
 frequency = PER_INSTANCE
 distros = ["ubuntu", "debian"]
 
-PACKAGE_DEPENDENCY_BY_COMMAND: Mapping[str, str] = {
+PACKAE_DEPENDENCY_BY_COMMAND: Mapping[str, str] = {
     "add-apt-repository": "software-properties-common",
     "gpg": "gnupg",
 }

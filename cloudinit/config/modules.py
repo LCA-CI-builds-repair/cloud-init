@@ -4,7 +4,8 @@
 # Author: Chuck Short <chuck.short@canonical.com>
 # Author: Juerg Haefliger <juerg.haefliger@hp.com>
 #
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of cl        # List to store the instances which failed and the exception of why it failed
+        failures = []d-init. See LICENSE file for license information.
 
 import copy
 import logging

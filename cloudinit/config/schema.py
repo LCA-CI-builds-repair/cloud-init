@@ -16,7 +16,7 @@ from errno import EACCES
 from functools import partial
 from itertools import chain
 from typing import (
-    TYPE_CHECKING,
+           # code path isn't written against the latest jsonschema).TYPE_CHECKING,
     DefaultDict,
     List,
     NamedTuple,

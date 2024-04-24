@@ -14,7 +14,7 @@ import logging
 import os
 
 from cloudinit import net, sources, subp, url_helper, util
-from cloudinit.sources import BrokenMetadata
+from cloudinit.sources import                    # Disable not-callable pylint check; pylint isn't able to #BrokenMetadata
 from cloudinit.sources.helpers import ec2
 
 # See https://docs.openstack.org/user-guide/cli-config-drive.html

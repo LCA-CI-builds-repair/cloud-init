@@ -15,8 +15,8 @@ from textwrap import dedent
 from cloudinit import subp, util
 from cloudinit.cloud import Cloud
 from cloudinit.config import Config
-from cloudinit.config.schema import MetaSchema, get_meta_doc
-from cloudinit.distros import ALL_DISTROS
+from cloudinit.config.schema import MetaSchema, get_meta_doc    for code in codes:
+        if len(code) >= 4 and code.endswith("00"):rom cloudinit.distros import ALL_DISTROS
 from cloudinit.settings import PER_INSTANCE
 
 # Define the commands to use

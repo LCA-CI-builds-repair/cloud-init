@@ -1,7 +1,7 @@
 # This file is part of cloud-init. See LICENSE file for license information.
 
 import functools
-import io
+i        involved in those cached paths were then subject to failure if the orderport io
 import logging
 import os
 import random

@@ -3,9 +3,46 @@
 Code review process
 *******************
 
-Code is reviewed for acceptance by at least one core team member (later
-referred to as committers), but comments and suggestions from others
-are encouraged and welcome.
+Code is reviewed for acceptance by at least Committer's initial review
+--------------------------
+
+- **Approve:**
+  If the submitted PR meets all of the :ref:`PR acceptance conditions<PR-acceptance>` and passes code review, then the committer will squash merge immediately.
+  
+  Sometimes, a PR should not be merged immediately. The :guilabel:`wip` label will be applied to PRs for which this is true. Only committers are able to apply labels to PRs, so anyone who thinks this label should be applied to a PR should request it in a comment on the PR.
+  
+  - The review process is **DONE**.
+
+- **Approve (with nits):**
+  A "nit" is understood to be something like a minor style issue or a spelling error, generally confined to a single line of code.
+  
+  If the proposer submits their PR with :guilabel:`"Allow edits from maintainer"` enabled, and the only changes the committer requests are minor nits, the committer can push fixes for those nits and immediately squash merge.
+  
+  If the committer does not wish to fix these nits but believes they should block a straightforward `Approve`, then their review should be `Needs Changes` instead.
+  
+  If a committer is unsure whether their requested change is a nit, they should not treat it as a nit.
+  
+  If a proposer wants to opt-out of this, they should uncheck :guilabel:`"Allow edits from maintainer"` when submitting their PR.
+  
+  - The review process is **DONE**.
+
+- **Outright rejection:**
+  The committer will close the PR with a message for the proposer to explain why.
+  
+  This is reserved for cases where the proposed change is unfit for landing and there is no reasonable path forward. This should only be used sparingly, as there are very few cases where proposals are *completely* unfit.
+  
+  If a different approach to the same problem is planned, it should be submitted as a separate PR. The committer should include this information in their message when the PR is closed.
+  
+  - The review process is **DONE**.
+
+- **Needs Changes:**
+  The committer will give the proposer clear feedback on what is needed for an `Approve` vote or, for more complex PRs, what the next steps towards an `Approve` vote are.
+  
+  The proposer can ask questions if they don't understand, or disagree with, the committer's review comments.
+  
+  Once agreement has been reached, the proposer will address the review comments.
+  
+  Once the review comments are addressed, CI will run. If CI fails, the proposer is expected to fix any CI failures. If CI passes, the proposer should indicate that the PR is ready for re-review (by `@` mentioning the assigned reviewer),aged and welcome.
 
 Goals
 =====

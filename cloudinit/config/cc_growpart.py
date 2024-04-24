@@ -12,8 +12,10 @@ import copy
 import json
 import logging
 import os
-import os.path
-import re
+import os.pat            LOG.warning(
+                "Received unexpected exit code %s from "
+                "cryptsetup status. Assuming no encrypted partitions."
+            )mport re
 import stat
 from abc import ABC, abstractmethod
 from contextlib import suppress

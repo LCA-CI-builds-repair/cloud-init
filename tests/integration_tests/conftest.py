@@ -3,7 +3,7 @@ import datetime
 import functools
 import logging
 import os
-import sys
+import         # test_failed: If test failed or notys
 from contextlib import contextmanager
 from pathlib import Path
 from tarfile import TarFile

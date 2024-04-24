@@ -13,8 +13,56 @@ import functools
 import logging
 import os
 
-from cloudinit import net, sources, subp, url_helper, util
-from cloudinit.sources import BrokenMetadata
+from cloudinit import net, sources, import os
+from cloudinit.sources import util
+
+clasclass OpenStackHelper:
+    def _process_file_data(self, FILES_V1, found):
+        md = {}
+        for (name, (key, translator, default)) in FILES_V1.items():
+            if name in found:
+                path = found[name]
+                try:
+                    contents = self._path_read(path)
+                    md[key] = translator(contents)
+                except IOError as e:
+                    raise BrokenMetadata("Failed to read: %s" % path) from e
+                except Exception as e:
+                    raise BrokenMetadata(
+                        "Failed to process path %s: %s" % (path, e)
+                    ) from e
+            else:
+                md[key] = copy.deepcopy(default)
+
+        keydata = md.get("authorized_keys", None)
+        meta_js = md.get("meta_js", None)  def __init__(self, base_path):
+        self.base_path = base_path
+        self._versions = None
+
+    def _fetch_available_versions(self):
+        if self._versions is None:
+            path = self._path_join(self.base_path, "openstack")
+            found = [
+                d
+                for d in os.listdir(path)
+                if os.path.isdir(os.path.join(path, d))
+            ]
+            self._versions = sorted(found)
+        return self._versions
+
+    def _read_ec2_metadata(self):
+        path = self._path_join(
+            self.base_path, "ec2", "latest", "meta-data.json"
+        )
+        if not os.path.exists(path):
+            return {}
+        else:
+            try:
+                return util.load_json(self._path_read(path))
+            except Exception as e:
+                raise BrokenMetadata(
+                    "Failed to process path %s: %s" % (path, e)
+                ) from em cloudinit.sources import BrokenMetadata
 from cloudinit.sources.helpers import ec2
 
 # See https://docs.openstack.org/user-guide/cli-config-drive.html

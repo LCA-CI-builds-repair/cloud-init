@@ -9,7 +9,28 @@ from unittest import mock
 import pytest
 import responses
 
-from cloudinit.sources import DataSourceOracle as oracle
+from cloudinit.sources impo@mock.patch(
+    "cloudinit.net.is_openvswitch_internal_interface",
+    mock.Mock(return_value=False),
+)
+class TestNetworkConfigFromOpcImds:
+    def test_no_secondary_nics_does_not_mutate_input(self):
+        oracle_ds = DataSourceOracle()
+        oracle_ds._vnics_data = [{}]
+        # We test this by using in a non-dict to ensure that no dict
+        # operations are used; failure would be seen as exceptions
+        oracle_ds._network_config = object()
+        oracle_ds._add_network_config_from_opc_imds(set_primary=False)
+
+    def test_bare_metal_machine_skipped(self, caplog):
+        oracle_ds = DataSourceOracle()
+        # nicIndex in the first entry indicates a bare metal machine
+        oracle_ds._vnics_data = json.loads(OPC_BM_SECONDARY_VNIC_RESPONSE)
+        # We test this by using a non-dict to ensure that no dict
+        # operations are used
+        oracle_ds._network_config = object()
+        oracle_ds._add_network_config_from_opc_imds(set_primary=False)
+        assert "bare metal machine" in caplog.textas oracle
 from cloudinit.sources import NetworkConfigSource
 from cloudinit.sources.DataSourceOracle import OpcMetadata
 from cloudinit.url_helper import UrlError

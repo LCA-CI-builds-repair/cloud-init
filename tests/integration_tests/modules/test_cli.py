@@ -1,6 +1,28 @@
 """Integration tests for CLI functionality
 
-These would be for behavior manually invoked by user from the command line
+These would be f    """
+    result    """
+    result = client.execute("cloud-init status --long")
+    assert (
+        result.return_code == 2
+    ), f"Unexpected exit code. Expected 2, but got {result.return_code}"
+    log = client.read_from_file("/var/log/cloud-init.log")
+    warning = (
+        "[WARNING]: Invalid cloud-config provided: Please run "
+        "'sudo cloud-init schema --system' to see the schema errors."
+    )
+    assert warning in log
+    assert "asdfasdf" not in logecute("cloud-init schema --system")
+    assert not result.ok
+    assert "Cloud config schema errors" in result.stderr
+    assert (
+        "Expected first line to be one of: #!, ## template: jinja,"
+        " #cloud-boothook, #cloud-config" in result.stderr
+    )
+    result = client.execute("cloud-init status --long")
+    assert (
+        2 == result.return_code
+    ), f"Unexpected exit code {result.return_code}"anually invoked by user from the command line
 """
 
 import pytest

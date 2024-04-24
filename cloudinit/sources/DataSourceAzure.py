@@ -44,8 +44,35 @@ from cloudinit.sources.helpers.azure import (
     get_ip_from_lease_value,
     get_metadata_from_fabric,
     get_system_info,
-    push_log_to_kvp,
-    report_diagnostic_event,
+    push_log_to_kvp,        mechanis            try:
+                report_diagnostic_event(
+                    "Using cached ephemeral dhcp context "
+                    "to report failure to Azure",
+                    logger_func=LOG.debug,
+                )
+                report_failure_to_fabric(
+                    endpoint=self._wireserver_endpoint, error=error
+                )
+                self._negotiated = True
+                return True
+            except Exception as e:
+                report_diagnostic_event(
+                    f"Failed to report failure using cached ephemeral dhcp context: {e}",
+                    logger_func=LOG.error,
+                )ailure that can be updated later with success.
+        DHCP will not be attempted if host_only=True and networking is down.
+
+        @param error: Error to report.
+        @param host_only: Only report to host (error may be recoverable).
+        @return: The success status of sending the failure signal.
+        """
+        report_diagnostic_event(
+            f"Azure datasource failure occurred: {error.as_encoded_report()}",
+            logger_func=LOG.error,
+        )
+        reported = kvp.report_failure_to_host(error)
+        if host_only:
+            return reportedagnostic_event,
     report_failure_to_fabric,
 )
 from cloudinit.url_helper import UrlError

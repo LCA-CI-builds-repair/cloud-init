@@ -1,6 +1,52 @@
 # Author: Fabian Lichtenegger-Lukas <fabian.lichtenegger-lukas@nts.eu>
-# Author: Josef Tschiggerl <josef.tschiggerl@nts.eu>
-# This file is part of cloud-init. See LICENSE file for license information.
+# Author: Josef Tschiggerl <josef.tfrom cloudinit import util
+
+def validate_wireguard_config(wg_int: dict):
+    """
+    This function supplements flexible jsonschema validation with specific
+    value checks to aid in triage of invalid user-provided configuration.
+
+    @param wg_int: Dict of configuration value under 'wg:interfaces'.
+
+    @raises: ValueError describing invalid values provided.
+    """
+    errors = []
+    missing = REQUIRED_WG_INT_KEYS.difference(set(wg_int.keys()))
+    if missing:
+        keys = ", ".join(sorted(missing))
+        errors.append(f"Missing required wg:interfaces keys: {keys}")
+
+    for key, value in sorted(wg_int.items()):
+        if key == "name" or key == "config_path" or key == "content":
+            if not isinstance(value, str):
+                errors.append(
+                    f"Expected a string for wg:interfaces:{key}. Found {value}"
+                )
+
+    if errors:
+        raise ValueError(
+            f"Invalid wireguard interface configuration:{NL}{NL.join(errors)}"
+        )
+
+
+def write_config(wg_int: dict):
+    """Writing user-provided configuration into Wireguard
+    interface configuration file.
+
+    @param wg_int: Dict of configuration value under 'wg:interfaces'.
+
+    @raises: RuntimeError for issues writing of configuration file.
+    """
+    LOG.debug("Configuring Wireguard interface %s", wg_int["name"])
+    try:
+        LOG.debug("Writing wireguard config to file %s", wg_int["config_path"])
+        util.write_file(
+            wg_int["config_path"], wg_int["content"], mode=WG_CONFIG_FILE_MODE
+        )
+    except Exception as e:
+        raise RuntimeError(
+            "Failure writing Wireguard configuration file: %s" % e
+        )oud-init. See LICENSE file for license information.
 """Wireguard"""
 
 import logging

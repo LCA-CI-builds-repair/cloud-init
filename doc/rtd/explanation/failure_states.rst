@@ -3,7 +3,8 @@
 Failure states
 ==============
 
-Cloud-init has multiple modes of failure. This page describes these
+Clou// Your edited code snippet goes here
+// Make sure to include all necessary changesdes of failure. This page describes these
 modes and how to gather information about failures.
 
 .. _critical_failure:

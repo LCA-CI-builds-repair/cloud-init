@@ -67,7 +67,7 @@ def mock_azure_get_metadata_from_fabric():
 
 
 @pytest.fixture
-def mock_azure_report_failure_to_fabric():
+def mock_azure_report_failure_to_fabr    def test_password_redacted_in_ovf(self):():
     with mock.patch(
         MOCKPATH + "report_failure_to_fabric",
         autospec=True,

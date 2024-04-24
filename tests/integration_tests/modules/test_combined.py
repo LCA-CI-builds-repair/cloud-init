@@ -1,4 +1,32 @@
-# This file is part of cloud-init. See LICENSE file for license information.
+#"""A set of somewhat unrelated tests that can be combined into a single
+instance launch. Generally tests should only be added here if a failure
+of the test would be unlikely to affect the running of another test using
+the same instance launch. Most independent module coherence tests can go
+here.
+"""
+import glob
+import importlib
+import json
+import re
+import uuid
+from pathlib import Path
+
+import pytest
+
+import cloudinit.config
+from cloudinit.features import get_features
+from cloudinit.util import is_true
+from tests.integration_tests.decorators import retry
+from tests.integration_tests.instances import IntegrationInstance
+from tests.integration_tests.integration_settings import PLATFORM
+from tests.integration_tests.releases import CURRENT_RELEASE, IS_UBUNTU
+from tests.integration_tests.util import (
+    get_feature_flag_value,
+    get_inactive_modules,
+    lxd_has_nocloud,
+    verify_clean_log,
+    verify_ordered_items_in_text,
+)nit. See LICENSE file for license information.
 """A set of somewhat unrelated tests that can be combined into a single
 instance launch. Generally tests should only be added here if a failure
 of the test would be unlikely to affect the running of another test using

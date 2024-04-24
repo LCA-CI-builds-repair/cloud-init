@@ -1,4 +1,10 @@
-import os
+iimport sys
+from importlib import reload
+
+import pytest
+
+from cloudinit import apport
+from tests.unittests.helpers import mock
 import sys
 from importlib import reload
 

@@ -1,4 +1,27 @@
-# Copyright (C) 2020 Canonical Ltd.
+##
+# This file is part of cloud-init. See LICENSE file for license information.
+
+"""Upgrade testing for cloud-init.
+
+This module tests cloud-init's behaviour across upgrades. Specifically, it
+specifies a set of invariants that the current codebase expects to be true (as
+tests in ``TestUpgrade``) and then checks that these hold true after unpickling
+``obj.pkl``s from previous versions of cloud-init; those pickles are stored in
+``tests/data/old_pickles/``.
+"""
+
+import operator
+import pathlib
+
+import pytest
+
+from cloudinit.sources import DataSourceAzure, DataSourceNoCloud, pkl_load
+from tests.unittests.helpers import resourceLocation
+
+DSNAME_TO_CLASS = {
+    "Azure": DataSourceAzure,
+    "NoCloud": DataSourceNoCloud,
+}cal Ltd.
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

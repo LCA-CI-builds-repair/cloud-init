@@ -21,8 +21,10 @@ from cloudinit.settings import PER_INSTANCE
 
 # Define the commands to use
 SFDISK_CMD = subp.which("sfdisk")
-SGDISK_CMD = subp.which("sgdisk")
-LSBLK_CMD = subp.which("lsblk")
+SGDISK_CMD = subp.which("sgd        return get_partition_mbr_layout(size, layout)
+    elif "gpt" == table_type:
+        return get_partition_gpt_layout(size, layout)
+    raise RuntimeError("Unable to determine table type")LSBLK_CMD = subp.which("lsblk")
 BLKID_CMD = subp.which("blkid")
 BLKDEV_CMD = subp.which("blockdev")
 PARTPROBE_CMD = subp.which("partprobe")

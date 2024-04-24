@@ -46,7 +46,26 @@ from cloudinit.sources.helpers.azure import (
     get_system_info,
     push_log_to_kvp,
     report_diagnostic_event,
-    report_failure_to_fabric,
+    r            report_diagnostic_event(
+                "Using new ephemeral dhcp to report failure to Azure",
+                logger_func=LOG.debug,
+            )
+            self._teardown_ephemeral_networking()
+            try:
+                self._setup_ephemeral_networking(timeout_minutes=20)
+            except NoDHCPLeaseError:
+                # Reporting failure will fail, but it will emit telemetry.
+                pass
+            report_failure_to_fabric(
+                endpoint=self._wireserver_endpoint, error=error
+            )
+            self._negotiated = True
+            return True
+        except Exception as e:
+            report_diagnostic_event(
+                "Failed to report failure using new ephemeral dhcp: %s" % e,
+                logger_func=LOG.debug,
+            )ic,
 )
 from cloudinit.url_helper import UrlError
 

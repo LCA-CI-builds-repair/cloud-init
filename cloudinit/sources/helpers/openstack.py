@@ -14,7 +14,24 @@ import logging
 import os
 
 from cloudinit import net, sources, subp, url_helper, util
-from cloudinit.sources import BrokenMetadata
+from cloudinit.sources            if name in found:
+                path = found[name]
+                try:
+                    contents = self._path_read(path)
+                except IOError as e:
+                    raise BrokenMetadata("Failed to read: %s" % path) from e
+                try:
+                    # Disable not-callable pylint check; pylint isn't able to
+                    # determine that every member of FILES_V1 has a callable in
+                    # the appropriate position
+                    md[key] = translator(contents)  # pylint: disable=E1102
+                except Exception as e:
+                    raise BrokenMetadata(
+                        "Failed to process path %s: %s" % (path, e)
+                    ) from e
+                keydata = md["authorized_keys"]
+            else:
+                md[key] = default.copy()ata
 from cloudinit.sources.helpers import ec2
 
 # See https://docs.openstack.org/user-guide/cli-config-drive.html

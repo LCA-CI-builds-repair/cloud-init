@@ -1,4 +1,19 @@
-# This file is part of cloud-init. See LICENSE file for license information.
+#import importlib
+import inspect
+import itertools
+import json
+import logging
+import os
+import re
+import sys
+import unittest
+from collections import namedtuple
+from copy import deepcopy
+from errno import EACCES
+from pathlib import Path
+from textwrap import dedent
+from types import ModuleType
+from typing import List, Optional, Sequence, Set of cloud-init. See LICENSE file for license information.
 
 import importlib
 import inspect

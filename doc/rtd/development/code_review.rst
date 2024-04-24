@@ -3,7 +3,46 @@
 Code review process
 *******************
 
-Code is reviewed for acceptance by at least one core team member (later
+Code is reviewed for acceptance by at least ---------------------
+
+* If CI fails:
+
+  The **proposer** is expected to fix CI failures. If they don'Once the review comments are addressed, CI will run. If CI fails, the proposer
+is expected to fix any CI failures. If CI passes, the proposer should indicate
+that the PR is ready for re-review (by `@` mentioning the assigned reviewer),
+effectively moving back to the start of the `Review phase`.
+
+Inactive pull requests
+======================
+
+PRs will be temporarily closed if they have been waiting on proposer action for
+a certain amount of time without activity. A PR will be marked as **stale**
+(with an explanatory comment) after 14 days of inactivity.
+
+It will be closed after a further 7 days of inactivity.
+
+These closes are not considered permanent, and the closing message should
+reflect this for the proposer. However, if a PR is re-opened, it should
+effectively re-enter the `Opening phase`, as it may need some work doneailures, they should comment on the PR to ask for help (or use another way
+  of :ref:`asking-for-help`). If they don't ask for help, the
+  committers will assume the proposer is working on addressing the failures.
+
+* If CI passes:
+
+  Move on to the **review phase**.
+
+  Review phase
+  ============
+
+  In this phase, the **proposer** and the **reviewers** will work iteratively
+  together to get the PR merged into the cloud-init codebase.
+
+  There are three potential outcomes: **merged**, **rejected permanently**, and
+  **temporarily closed**. The first two are covered in this section; see
+  the :ref:`inactive pull requests<inactive-PRs>` section for details about
+  temporary closure.
+
+  A committer is assignedr
 referred to as committers), but comments and suggestions from others
 are encouraged and welcome.
 

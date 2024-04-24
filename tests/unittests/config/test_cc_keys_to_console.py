@@ -4,7 +4,22 @@ import re
 
 import pytest
 
-from cloudinit.config import cc_keys_to_console
+from cloudinit.config im            (  # Avoid common failure giving a string 'false' instead of false
+                {"ssh_key_console_blacklist": [1]},
+                "Cloud config schema errors: ssh_key_console_blacklist.0: 1 is not of type 'string'",
+            ),
+            (  # Avoid common failure giving a string 'false' instead of false
+                {"ssh_fp_console_blacklist": None},
+                "Cloud config schema errors: ssh_fp_console_blacklist: None is not of type 'array'",
+            ),
+            (  # Avoid common failure giving a string 'false' instead of false
+                {"ssh_fp_console_blacklist": [1]},
+                "Cloud config schema errors: ssh_fp_console_blacklist.0: 1 is not of type 'string'",
+            ),
+            (  # Avoid common failure giving a string 'false' instead of false
+                {"ssh_fp_console_blacklist": [1]},
+                "Cloud config schema errors: ssh_fp_console_blacklist.0: 1 is",
+            )nsole
 from cloudinit.config.schema import (
     SchemaValidationError,
     get_schema,

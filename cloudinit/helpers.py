@@ -6,9 +6,24 @@
 # Author: Juerg Haefliger <juerg.haefliger@hp.com>
 # Author: Joshua Harlow <harlowja@yahoo-inc.com>
 #
-# This file is part of cloud-init. See LICENSE file for license information.
-
-import contextlib
+# This file is part of cloud-init. See LICENSE file for licens        """Perform deserialization fixes for Paths."""
+        if not hasattr(self, "run_dir"):
+            # On older versions of cloud-init the Paths class do not
+            # have the run_dir attribute. This is problematic because
+            # when loading the pickle object on newer versions of cloud-init
+            # we will rely on this attribute. To fix that, we are now
+            # manually adding that attribute here.
+            self.run_dir = Paths(
+                path_cfgs=self.cfgs, ds=self.datasource
+            ).run_dir
+        if "instance_data" not in self.lookups:
+            self.lookups["instance_data"] = "instance-data.json"
+        if "instance_data_sensitive" not in self.lookups:
+            self.lookups[
+                "instance_data_sensitive"
+            ] = "instance-data-sensitive.json"
+        if "combined_cloud_config" not in self.lookups:
+            self.lookups["combined_cloud_config"] = "combined-cloud-config"ort contextlib
 import logging
 import os
 from configparser import NoOptionError, NoSectionError, RawConfigParser

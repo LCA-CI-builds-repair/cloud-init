@@ -3,7 +3,41 @@
 Hello cloud-init community!
 
 We wanted to provide a summary of the notes from the August 2023 cloud-init
-Summit in a more digestible fashion so that those without Google accounts can
+Summit in a more digestible * At the start of this project there were 130 failing tests on BSD.
+* Since FreeBSD 13.2 release, unit tests are being fixed upstream.
+* Biggest issues:
+  * Not being able to test on your target platform has been a real * Generalized for all clouds.
+* Noah M: How do you get the new version of cloud-init on the image under test?
+  * James: We start from a public image ->
+    * Launch image ->
+    * Upgrade cloud-init ->
+    * Run `cloud-init clean --logs`
+* Pycloudlib:
+  * Most Linux distributions are supported given the ability to discover.
+* James:
+  * Per-PR testing CI runs on Ubuntu on LXD.
+  * Why would CI [sic]
+  * Jenkins daily runner  and put it to the mailing list:
+  * Mina: If opting out of squash merges, we probably want CI to pass on each
+    commit.ive a healthy signal on GCE, EC2, Azure.
+  * For Rust project: they talked directly to GitHub about increasing governor.
+  * Chris P: Is there a mechanism to validate certain PRs on Azure?
+  * In Rust: Bohrs-bot in GitHub to kick off conditional jobs:
+    * https://forge.rust-lang.org/infra/docs/bors.html
+    * Fork of https://github.com/rust-lang/homu
+* Chris P: Is Jenkins publicly accessible?
+  * Chad: Nope -- security issue, due to malicious plugins.ng to ensure we have fully integrated cloud-init CI within FreeBSD's
+    test infrastructure.
+* Looking to get cloud vendors to provide official FreeBSD images with
+  cloud-init installed.
+* Mina has been driving integration tests working on LXD platform for ease of
+  free and local integration test runs.
+  * LXD Virtio vSocket support complexities are causing trouble for BSD due to
+    the lack of a vSocket module.
+    * BSD has a Hyper-V module, but no vSocket.
+    * Spent time trying to convert Hyper-V socket module to support vSocket.
+* Network refactors that resulted in InfiniBand support for cloud-init. Tabled
+  that effort due to lack of resources, testing, and expertise.those without Google accounts can
 also review the meeting notes to get up to speed on the conversations and
 topics covered at the event.
 

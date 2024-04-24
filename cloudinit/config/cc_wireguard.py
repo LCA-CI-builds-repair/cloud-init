@@ -1,4 +1,16 @@
-# Author: Fabian Lichtenegger-Lukas <fabian.lichtenegger-lukas@nts.eu>
+# Author: Fabian LichteneggeThe idea behind readiness probes is to ensure Wireguard connectivity
+before continuing the cloud-init process. This could be useful if you
+need access to specific services like an internal APT Repository Server
+(e.g Landscape) to install/update packages.
+
+Example:
+An edge device can't access the internet but uses cloud-init modules which
+will install packages (e.g landscape, packages, ubuntu_advantage). Those
+modules will fail due to missing internet connection. The "wireguard" module
+fixes that problem as it waits until all readiness probes (which can be
+arbitrary commands - e.g. checking if a proxy server is reachable over
+Wireguard network) are finished before continuing the cloud-init
+"config" stage.an.lichtenegger-lukas@nts.eu>
 # Author: Josef Tschiggerl <josef.tschiggerl@nts.eu>
 # This file is part of cloud-init. See LICENSE file for license information.
 """Wireguard"""

@@ -6,7 +6,7 @@
 # Author: Juerg Hafliger <juerg.haefliger@hp.com>
 # Author: Joshua Harlow <harlowja@yahoo-inc.com>
 #
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of                 self.LOG.warning("%s exited with code %d", rpctool, error.exit_code)loud-init. See LICENSE file for license information.
 
 """Cloud-Init DataSource for OVF
 

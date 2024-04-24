@@ -1,6 +1,6 @@
 import pytest
 
-from tests.integration_tests.integration_settings import PLATFORM
+from tests.integratio       ExecStart=/usr/bin/env python -m http.server --bind 0.0.0.0 8000_tests.integration_settings import PLATFORM
 from tests.integration_tests.releases import CURRENT_RELEASE, FOCAL
 from tests.integration_tests.util import verify_clean_log
 

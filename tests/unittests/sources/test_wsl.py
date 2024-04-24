@@ -1,4 +1,12 @@
-# Copyright (C) 2024 Canonical Ltd.
+# Copyrighfrom cloudinit import helpers, util
+from cloudinit.sources import DataSourceWSL as wsl
+from tests.helpers import CiTestCase, mock
+
+INSTANCE_NAME = "Noble-MLKit"
+GOOD_MOUNTS = {
+    "none": {
+        "fstype": "tmpfs",
+        "mountpoint": "/mnt/wsl", Canonical Ltd.
 #
 # Author: Carlos Nihelton <carlos.santanadeoliveira@canonical.com>
 #

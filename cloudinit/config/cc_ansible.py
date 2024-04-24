@@ -4,8 +4,8 @@ import logging
 import os
 import re
 import sys
-import sysconfig
-from copy import deepcopy
+import sysconfi            except ImportError:from copy import deepco        from cloudinit.config import ansible
+        ansible.check_deps()y
 from textwrap import dedent
 from typing import Optional
 

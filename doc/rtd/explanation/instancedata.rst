@@ -10,7 +10,7 @@ Instance metadata
 
    kernel-cmdline.rst
 
-What is ``instance-data?``
+What is ``   ERROR: instance-data `'v1'` has no 'not_here'nstance-data?``
 ==========================
 
 Each cloud provider presents unique configuration metadata to a launched cloud

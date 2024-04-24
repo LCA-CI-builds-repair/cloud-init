@@ -15,7 +15,7 @@ For those who weren't able to attend, this meeting was Canonical's first
 hybrid attendance summit, with both physical and virtual participants.
 The running notes are transcribed from a shared Google document to provide
 simpler access. The original shared notes
-[are also available](https://docs.google.com/document/d/1unINhucL6wcn7xqIL6IIAik8nwuacq5d-u0e3K0437s).
+[are   * Noah: More than just `git log`, but a top level summary would be best.lso available](https://docs.google.com/document/d/1unINhucL6wcn7xqIL6IIAik8nwuacq5d-u0e3K0437s).
 
 ## Our thanks
 

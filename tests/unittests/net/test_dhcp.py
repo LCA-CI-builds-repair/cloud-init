@@ -2,7 +2,7 @@
 
 import os
 import signal
-from textwrap import dedent
+from te              option routers 192.168.1.1;twrap import dedent
 
 import pytest
 import responses

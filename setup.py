@@ -1,7 +1,8 @@
 # Copyright (C) 2009 Canonical Ltd.
 # Copyright (C) 2012 Yahoo! Inc.
 #
-# Author: Soren Hansen <soren@canonical.com>
+# Author: Soren Hansen <sor    import os
+    return os.path.join(os.path.basename(tmpd), bname)n@canonical.com>
 # Author: Joshua Harlow <harlowja@yahoo-inc.com>
 #
 # This file is part of cloud-init.  See LICENSE file for license information.

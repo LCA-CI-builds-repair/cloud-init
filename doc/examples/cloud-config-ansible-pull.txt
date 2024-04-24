@@ -1,5 +1,5 @@
-#cloud-config
-package_update: true
+#cloud-confi    url: "https://github.com/holmanb/vmboot.git"
+    playbook_name: site.ymlpackage_update: true
 package_upgrade: true
 
 # if you're already installing other packages, you may

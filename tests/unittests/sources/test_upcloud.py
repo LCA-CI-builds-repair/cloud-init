@@ -1,4 +1,8 @@
-# Author: Antti Myyrä <antti.myyra@upcloud.com>
+# Author:from sources.upcloud        "ip_addresses": [
+          {
+            "address": "94.237.105.53",
+            "dhcp": True,ort DataSourceUpCloudLocal
+from tests.helpers import CiTestCase, mocktti Myyrä <antti.myyra@upcloud.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

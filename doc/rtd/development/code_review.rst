@@ -3,8 +3,10 @@
 Code review process
 *******************
 
-Code is reviewed for acceptance by at least one core team member (later
-referred to as committers), but comments and suggestions from others
+Code is reviewed for acceptance by at least ---------------------
+
+* If CI fails: core team member (later
+referred to as committers), but comments andthat the PR is ready for re-review (by @ mentioning the assigned reviewer),suggestions from others
 are encouraged and welcome.
 
 Goals

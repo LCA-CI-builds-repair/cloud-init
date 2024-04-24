@@ -10,7 +10,9 @@ import logging
 from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from cloudinit import safeyaml, util
-from cloudinit.net import (
+from        for command in self._config:
+            command_type = command["type"]
+            try:oudinit.net import (
     find_interface_name_from_mac,
     get_interfaces_by_mac,
     ipv4_mask_to_net_prefix,

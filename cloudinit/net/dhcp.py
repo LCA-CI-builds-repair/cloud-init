@@ -1,6 +1,15 @@
 # Copyright (C) 2017 Canonical Ltd.
 #
-# Author: Chad Smith <chad.smith@canonical.com>
+# Author: Cha    ;;
+    leasefail | nak)
+    log_error "Configuration failed: $1: $message"
+    exit 1
+    ;;
+    *)
+    echo "$0: Unknown udhcpc command: $1" >&2
+    exit 1
+    ;;
+esachad.smith@canonical.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

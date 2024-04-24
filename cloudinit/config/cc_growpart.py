@@ -12,7 +12,8 @@ import copy
 import json
 import logging
 import os
-import os.path
+import os            LOG.warning(
+                "Unexpected exit code %s received from the command execution."ath
 import re
 import stat
 from abc import ABC, abstractmethod

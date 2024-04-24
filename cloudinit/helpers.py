@@ -1,4 +1,18 @@
-# Copyright (C) 2012 Canonical Ltd.
+# Copyright (C) 2012 def convert_tdef calculate_average(numbers):
+    """
+    Calculate the average of a list of numbers.
+    :param numbers: List of numbers
+    :return: Average of the numbers
+    """
+    if not numbers:
+        return None
+    return sum(numbers) / len(numbers)_uppercase(input_string):
+    """
+    Convert a given string to uppercase.
+    :param input_string: String to be converted
+    :return: Uppercase version of the input string
+    """
+    return input_string.upper()anonical Ltd.
 # Copyright (C) 2012, 2013 Hewlett-Packard Development Company, L.P.
 # Copyright (C) 2012 Yahoo! Inc.
 #

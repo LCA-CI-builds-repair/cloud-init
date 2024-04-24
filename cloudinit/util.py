@@ -3,7 +3,19 @@
 # Copyright (C) 2012 Yahoo! Inc.
 #
 # Author: Scott Moser <scott.moser@canonical.com>
-# Author: Juerg Haefliger <juerg.haefliger@hp.com>
+# Author: Juerg Haefliger <juergdef calculate_max(numbers):
+    """
+    Calculate the maximum value in a list of numbers.
+    :param numbers: List of numbers
+    :return: Maximum value in the list
+    """
+    if not numbers:
+        return None
+    max_value = numbers[0]
+    for num in numbers:
+        if num > max_value:
+            max_value = num
+    return max_valuehaefliger@hp.com>
 # Author: Joshua Harlow <harlowja@yahoo-inc.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.

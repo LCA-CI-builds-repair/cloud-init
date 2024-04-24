@@ -12,7 +12,53 @@ from urllib.parse import urlparse
 from cloudinit import subp, util
 from cloudinit.cloud import Cloud
 from cloudinit.config import Config
-from cloudinit.config.schema import MetaSchema, get_meta_doc
+from cloudi    try:
+        result = util.log_time(
+            logfunc=LOG.debug,
+            msg="Checking if the instance can be attached to Ubuntu Pro",
+            func=should_auto_attach,
+        )
+    except UserFacingError as ex:
+        LOG.error("Error occurred during `should_auto_attach`: %s", ex)
+        LOG.warning(ERROR_MSG_SHOULD_AUTO_ATTACH)
+        return False
+    return result.should_auto_attach
+
+
+def _attach(ua_section: dict):
+    token = ua_section.get("token")
+    if not token:
+        msg = "`ubuntu_advantage.token` is required in non-Pro Ubuntu instances."
+        LOG.error(msg)
+        raise RuntimeError(msg)
+    enable_beta = ua_section.get("enable_beta")
+    if enable_beta:
+        LOG.debug(
+            "Ignoring `ubuntu_advantage.enable_beta` services in UA attach: %s",
+            ", ".join(enable_beta),
+        )
+    configure_ua(token=token, enable=ua_section.get("enable"))
+
+
+def _auto_attach(ua_section: dict):
+
+    # pylint: disable=import-error
+    from uaclient.api.exceptions import AlreadyAttachedError, UserFacingError
+    from uaclient.api.u.pro.attach.auto.full_auto_attach.v1 import (
+        FullAutoAttachOptions,
+        full_auto_attach,
+    )
+
+    try:
+        # Perform auto-attachment
+        full_auto_attach(FullAutoAttachOptions())
+        LOG.info("Auto-attachment to Ubuntu Pro completed successfully.")
+    except AlreadyAttachedError as ex:
+        LOG.warning("Instance is already attached: %s", ex)
+    except UserFacingError as ex:
+        LOG.error("Error occurred during auto-attachment: %s", ex)
+
+    # pylint: enable=import-error_meta_doc
 from cloudinit.settings import PER_INSTANCE
 
 UA_URL = "https://ubuntu.com/advantage"

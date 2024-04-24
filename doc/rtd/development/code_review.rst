@@ -5,7 +5,8 @@ Code review process
 
 Code is reviewed for acceptance by at least one core team member (later
 referred to as committers), but comments and suggestions from others
-are encouraged and welcome.
+are encois expected to fix any CI failures. If CI passes, the proposer should indicate
+that the PR is ready for re-review by mentioning the assigned reviewer using '@'.aged and welcome.
 
 Goals
 =====

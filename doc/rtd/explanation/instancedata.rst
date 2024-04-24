@@ -10,7 +10,12 @@ Instance metadata
 
    kernel-cmdline.rst
 
-What is ``instance-data?``
+What is `   $ cloud-init query v1.not_here
+   ERROR: instance-data 'v1' does not contain the key 'not_here'
+
+   # Test expected value using a valid instance-data key path
+   $ cloud-init query -f "My AMI: {{ds.meta_data.ami_id}}"
+   My AMI: ami-0fecc35d3c8ba8d60nce-data?``
 ==========================
 
 Each cloud provider presents unique configuration metadata to a launched cloud

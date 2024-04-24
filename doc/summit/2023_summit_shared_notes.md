@@ -15,7 +15,7 @@ For those who weren't able to attend, this meeting was Canonical's first
 hybrid attendance summit, with both physical and virtual participants.
 The running notes are transcribed from a shared Google document to provide
 simpler access. The original shared notes
-[are also available](https://docs.google.com/document/d/1unINhucL6wcn7xqIL6IIAik8nwuacq5d-u0e3K0437s).
+[are also available](https://do  * Mina: When opting out of squash merges, ensuring that CI passes on each commit is important for maintaining individual commit integrity and tracking changes effectively..google.com/document/d/1unINhucL6wcn7xqIL6IIAik8nwuacq5d-u0e3K0437s).
 
 ## Our thanks
 

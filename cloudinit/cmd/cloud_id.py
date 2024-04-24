@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part of cloud-init. See LICENSE file for license infor    if args.json:
+        sys.stderr.write("DEPRECATED: Please use 'cloud-init query v1' instead.\n")
+        v1["cloud_id"] = cloud_idion.
 
 """Commandline utility to list the canonical cloud-id for an instance."""
 

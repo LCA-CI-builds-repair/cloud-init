@@ -7,7 +7,11 @@ import stat
 
 from cloudinit import importer, util
 from cloudinit.event import EventScope, EventType
-from cloudinit.helpers import Paths
+from c    def test_wb_fallback_interface_is_cached(self, m_get_fallback_nic):
+        """The fallback_interface is cached and won't be rediscovered."""
+        self.datasource._fallback_interface = "nic10"
+        self.assertEqual("nic10", self.datasource.fallback_interface)
+        m_get_fallback_nic.assert_not_called()nit.helpers import Paths
 from cloudinit.sources import (
     EXPERIMENTAL_TEXT,
     METADATA_UNKNOWN,
@@ -19,10 +23,53 @@ from cloudinit.sources import (
     redact_sensitive_keys,
 )
 from cloudinit.user_data import UserDataProcessor
-from tests.unittests.helpers import CiTestCase, mock
+from tests.unitte        """On py3, get_data base64encodes any unserializable content."""
+        tmp = self.tmp_dir()
+        paths = Paths({"run_dir": tmp})
+        datasource = DataSourceTestSubclassNet(
+            self.sys_cfg,
+            self.distro,
+            paths,
+            custom_metadata={"key1": "val1", "key2": {"key2.1": b"\x123"}},
+        )
+        self.assertTrue(datasource.get_data())
+        json_file = paths.get_runpath("instance_data")
+        content = util.load_file(json_file)
+        instance_json = util.load_json(content)
+        self.assertCountEqual(
+            ["ds/meta_data/key2/key2.1"], instance_json["base64_encoded_keys"]
+        )
+        self.assertEqual(
+            {"key1": "val1", "key2": {"key2.1": "EjM="}},
+            instance_json["ds"]["meta_data"],
+        )
 
-
-class DataSourceTestSubclassNet(DataSource):
+    def test_get_hostname_subclass_support(self):
+        """Validate get_hostname signature on all subclasses of DataSource."""
+        base_args = inspect.getfullargspec(DataSource.get_hostname)
+        # Import all DataSource subclasses so we can inspect them.
+        modules = util.get_modules_from_dir(
+            os.path.dirname(os.path.dirname(__file__))
+        )
+        for _loc, name in modules.items():
+            mod_locs, _ = importer.find_module(name, ["cloudinit.sources"], [])
+            if mod_locs:
+                importer.import_module(mod_locs[0])
+        for child in DataSource.__subclasses__():
+            if "Test" in child.dsname:
+                continue
+            self.assertEqual(
+                base_args,
+                inspect.getfullargspec(child.get_hostname),
+                "%s does not implement DataSource.get_hostname params" % child,
+            )
+            for grandchild in child.__subclasses__():
+                self.assertEqual(
+                    base_args,
+                    inspect.getfullargspec(grandchild.get_hostname),
+                    "%s does not implement DataSource.get_hostname params"
+                    % grandchild,
+                )aSourceTestSubclassNet(DataSource):
 
     dsname = "MyTestSubclass"
     url_max_wait = 55

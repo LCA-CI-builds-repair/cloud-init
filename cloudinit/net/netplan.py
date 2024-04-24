@@ -9,7 +9,97 @@ import textwrap
 from typing import Optional, cast
 
 from cloudinit import features, safeyaml, subp, util
-from cloudinit.net import (
+from cloudini    NETPLAN_INFO = ["netplan", "info"]
+
+    def __init__(sel        if not same_content and os.path.exists(fpnplan):
+            current_mode = util.get_permissi                # required_keys = ['name', 'bond_interfaces']
+                bond = {}
+                      sections = {
+            "ethernets": ethernets,
+            "wifis": wifis,
+            "bonds": bonds,
+            "bridges": bridges,
+            "vlans": vlans
+        }
+        
+        content = ""
+        for section_name, section_content in sections.items():
+            content += _render_section(section_name, section_content)
+
+        return contentconfig = {}
+                # extract bond params and drop the bond_ prefix as it's
+                # redundant in v2 yaml format
+                v2_bond_map = cast(dict, NET_CONFIG_TO_V2.get("bond"))
+                # Previous cast is needed to help mypy to know that the key is
+                # present in `NET_CONFIG_TO_V2`. This could probably be removed
+                # by using `Literal` when supported.
+                for match in ["bond_", "bond-"]:
+                    bond_params = _get_params_dict_by_match(ifcfg, match)
+                    for (param, value) in bond_params.items():
+                        newname = v2_bond_map.get(param.replace("_", "-"))
+                        if newname is None:
+                            continue
+                        bond_config.update({newname: value})
+
+                if len(bond_config) > 0:
+                    bond.update({"parameters": bond_config})
+                if ifcfg.get("mac_address"):
+                    bond["macaddress"] = ifcfg["mac_address"].lower()
+                slave_interfaces = ifcfg.get("bond-slaves")
+                if slave_interfaces == "none":
+                    _extract_bond_slaves_by_name(interfaces, bond, ifname)
+                _extract_addresses(ifcfg, bond, ifname, self.features)
+                bonds.update({ifname: bond})
+
+            elif if_type == "bridge":
+                # required_keys = ['name', 'bridge_ports']
+                bridge_ports = ifcfg.get("bridge_ports")
+                # mypy wrong error. `copy(None)` is supported:
+                ports = sorted(copy.copy(bridge_ports))  # type: ignore
+                bridge: dict = {
+                    "interfaces": ports,
+                }
+                # extract bridge params and drop the bridge prefix as it's
+                # redundant in v2 yaml format
+                match_prefix = "bridge_"
+                params = _get_params_dict_by_match(ifcfg, match_prefix)
+                br_config = {}
+
+                # v2 yaml uses different names for the keys
+                # and at least one value format change
+                v2_bridge_map = cast(dict, NET_CONFIG_TO_V2.get("bridge"))
+                # Previous cast is needed to help mypy to know that the key is
+                # present in `NET_CONFIG_TO_V2`. This could probably be removed
+                # by using `Literal` when supported.
+                for (param, value) in params.items():
+                    newname = v2_bridge_map.get(param)
+                    if newname is None:
+                        continue
+                    br_config.update({newname: value})
+                    if newname in ["path-cost", "port-priority"]:
+                        # <interface> <value> -> <interface>: int(<value>)
+                        newvalue = {}
+                        for val in value:
+                            (port, portval) = val.split()
+                            newvalue[port] = int(portval)
+                        br_config.update({newname: newvalue})ode:
+                # preserve mode if existing perms are more strict than default
+                mode = current_mode
+        util.write_file(fpnplan, content, mode=mode)
+
+        if self.clean_default:
+            self._clean_default(target=target)
+        self._netplan_generate(run=self._postcmds, same_content=same_content)
+        self._net_setup_link(run=self._postcmds)one):
+        if not config:
+            config = {}
+        self.netplan_path = config.get(
+            "netplan_path", "/etc/netplan/50-cloud-init.yaml"
+        )
+        self.netplan_header = config.get("netplan_header", "")
+        self._postcmds = config.get("postcmds", [])
+        self.clean_default = config.get("clean_default", True)
+        self._features = config.get("features", {}) (
     IPV6_DYNAMIC_TYPES,
     SYS_CLASS_NET,
     get_devicelist,

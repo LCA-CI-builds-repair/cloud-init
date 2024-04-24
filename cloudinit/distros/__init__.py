@@ -3,11 +3,36 @@
 # Copyright (C) 2012 Yahoo! Inc.
 #
 # Author: Scott Moser <scott.moser@canonical.com>
-# Author: Juerg Haefliger <juerg.haefliger@hp.com>
-# Author: Joshua Harlow <harlowja@yahoo-inc.com>
+# Author: Juerg Haefliger <juerg.haefliger@hp.c        # supported by the distro
+        generic_packages = set()
+        for manager in self.package_managers:
+            to_try = (
+                packages_by_manager.get(manager.__class__, set())
+                | generic_packages
+            )
+            if not to_try:
+                continue
+            uninstalled = manager.install_packages(to_try)
+            failed = {
+                pkg for pkg in uninstalled if pkg not in generic_packages
+            }
+            if failed:
+                LOG.info(error_message, failed)
+            generic_packages.update(uninstalled)shua Harlow <harlowja@yahoo-inc.com>
 # Author: Ben Howard <ben.howard@canonical.com>
 #
-# This file is part of cloud-init. See LICENSE file for license information.
+# This file is part        rule_pattern = (
+            r"^(?:permit|deny)"
+            r"(?:\s+(?:nolog|nopass|persist|keepenv|setenv \{[^}]+\})+)*"
+            r"\s+([a-zA-Z0-9_]+)"
+            r"(?:\s+as\s+[a-zA-Z0-9_]+)*"
+            r"(?:\s+cmd\s+[^\s]+(?:\s+args\s+[^\s]+(?:\s*[^\s]+)*)*)*"
+            r"\s*$"
+        )
+
+        LOG.debug(
+            "Checking if user '%s' is referenced in the doas rule: %r", user, rule
+        )it. See LICENSE file for license information.
 
 import abc
 import logging

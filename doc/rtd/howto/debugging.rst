@@ -3,7 +3,7 @@
 How to debug cloud-init
 ***********************
 
-There are several cloud-init :ref:`failure modes<failure_states>` that one may
+There are several cloud-init :ref:`fcomplete may be a symptom of failure in other components of the system.ilure modes<failure_states>` that one may
 need to debug. Debugging is specific to the scenario, but the starting points
 are often similar:
 

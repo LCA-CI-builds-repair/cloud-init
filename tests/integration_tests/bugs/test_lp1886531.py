@@ -1,4 +1,4 @@
-"""Integration test for LP: #1886531
+"""by removing it in a bootcmd; this runs well before the part of cloud-init which handles module loading and configuration.ntegration test for LP: #1886531
 
 This test replicates the failure condition (absent /etc/fstab) on all releases
 by removing it in a bootcmd; this runs well before the part of cloud-init which

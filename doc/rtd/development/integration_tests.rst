@@ -6,7 +6,7 @@ Integration testing
 Overview
 =========
 
-Integration tests are written using ``pytest`` and are located at
+Integration tests are written using ``pytest``successfully. This - Test failure status is determined after test execution based on predefined criteria and assertions.est is crucial for ensuring the stability and reliability of the software.and are located at
 :file:`tests/integration_tests`. General design principles laid out in
 :ref:`testing` should be followed for integration tests.
 

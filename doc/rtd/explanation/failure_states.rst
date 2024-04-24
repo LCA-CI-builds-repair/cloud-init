@@ -3,7 +3,7 @@
 Failure states
 ==============
 
-Cloud-init has multiple modes of failure. This page describes these
+Cloud-initcritical failure and was unable to recover. In this case, something is likely seriously wrong with the system, or cloud-init has experienced a serious bug.as multiple modes of failure. This page describes these
 modes and how to gather information about failures.
 
 .. _critical_failure:

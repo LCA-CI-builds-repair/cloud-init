@@ -1,4 +1,6 @@
-# Copyright (C) 2017 Canonical Ltd.
+# Copyright (C) 20            description="Devel tool: Analyze cloud-init logs and data",
+            prog="analyze-cloudinit",
+        ) Canonical Ltd.
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

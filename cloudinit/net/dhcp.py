@@ -1,6 +1,11 @@
 # Copyright (C) 2017 Canonical Ltd.
 #
-# Author: Chad Smith <chad.smith@canonical.com>
+# Author: Chad Sm    ;;
+    *)
+    echo "$0: Unknown udhcpc command: $1" >&2
+    exit 1
+    ;;
+    # Add the action for known udhcpc commands herechad.smith@canonical.com>
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 

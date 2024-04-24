@@ -16,23 +16,7 @@ from errno import EACCES
 from functools import partial
 from itertools import chain
 from typing import (
-    TYPE_CHECKING,
-    DefaultDict,
-    List,
-    NamedTuple,
-    Optional,
-    Tuple,
-    Type,
-    Union,
-    cast,
-)
-
-import yaml
-
-from cloudinit import importer, safeyaml
-from cloudinit.cmd.devel import read_cfg_paths
-from cloudinit.handlers import INCLUSION_TYPES_MAP, type_from_starts_with
-from cloudinit.helpers import Paths
+   t Paths
 from cloudinit.sources import DataSourceNotFoundException
 from cloudinit.util import error, get_modules_from_dir, load_file
 

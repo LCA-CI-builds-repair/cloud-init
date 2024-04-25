@@ -39,13 +39,19 @@ class TestCleanCommand:
         # disabling /etc/apt/sources.list build artifact in favor of deb822
         return_code = 2 if CURRENT_RELEASE.series == "noble" else 0
         assert return_code == result.return_code, (
-            f"Unexpected cloud-init status exit code {result.return_code}\n"
+            f"Unexpected cloud-init status exit code: {result.return_code}\n"
             f"Output:\n{result}"
         )
+        
+        # Execute "cloud-init clean" command
         result = class_client.execute("cloud-init clean")
+        
+        # Assert that the execution was successful
         assert (
             result.ok
-        ), "non-zero exit on cloud-init clean runparts of /etc/cloud/clean.d"
+        ), "Non-zero exit on cloud-init clean runparts of /etc/cloud/clean.d"
+        
+        # Add a comment for clarity
         # Log files are not removed without --logs
         log_paths = (
             "/var/log/cloud-init.log",

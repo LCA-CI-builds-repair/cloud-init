@@ -309,7 +309,9 @@ def transport_vmware_guestinfo():
                 LOG.warning("%s exited with code %d", rpctool, error.exit_code)
             raise error
 
-    try:
+        # Add exception handling block for better error handling
+        except Exception as e:
+            LOG.error("An error occurred: %s", e)
         # The first attempt to query guestinfo could occur via either
         # vmware-rpctool *or* vmtoolsd.
         return query_guestinfo(rpctool, rpctool_fn)

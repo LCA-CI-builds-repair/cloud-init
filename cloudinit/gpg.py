@@ -110,6 +110,8 @@ def recv_key(key, keyserver, retries=(1, 1)):
                 "Failed to import key '%s' from keyserver '%s' "
                 "after %d tries: %s" % (key, keyserver, trynum, error)
             ) from e
+        except Exception as ex:
+            LOG.error("An error occurred during key import: %s", ex)
 
 
 def delete_key(key):

@@ -525,12 +525,12 @@ def check_partition_gpt_layout(device, layout):
         cleaned.append(code)
     return cleaned
 
-
+# Add a comment to describe the purpose of the check_partition_layout function
 def check_partition_layout(table_type, device, layout):
     """
-    See if the partition lay out matches.
+    See if the partition layout matches.
 
-    This is future a future proofing function. In order
+    This is a future-proofing function. In order
     to add support for other disk layout schemes, add a
     function called check_partition_%s_layout
     """

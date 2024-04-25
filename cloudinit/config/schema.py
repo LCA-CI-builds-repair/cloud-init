@@ -507,6 +507,7 @@ def get_jsonschema_validator():
         validator_kwargs = {"default_types": types}
 
     # Add deprecation handling
+    # Handle deprecation here
     validators = dict(Draft4Validator.VALIDATORS)
     validators[DEPRECATED_KEY] = _validator_deprecated
     validators["changed"] = _validator_changed

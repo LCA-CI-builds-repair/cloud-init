@@ -731,6 +731,7 @@ class TestReadMetadata:
                     ]
                 )
             )
+            # Perform a request using the _do_request method of lxd to http://agua/
             resp = lxd._do_request(m, "http://agua/")
 
             # assert that 30 iterations or the first 200 code is the final

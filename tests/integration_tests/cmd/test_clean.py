@@ -36,16 +36,16 @@ class TestCleanCommand:
         result = class_client.execute("cloud-init status --wait --long")
 
         # Expect warning exit code 2 on Ubuntu Noble due to cloud-init
-        # disabling /etc/apt/sources.list build artifact in favor of deb822
+        # Set return code based on the series for CURRENT_RELEASE
         return_code = 2 if CURRENT_RELEASE.series == "noble" else 0
         assert return_code == result.return_code, (
-            f"Unexpected cloud-init status exit code {result.return_code}\n"
+            f"Unexpected exit code for cloud-init status: {result.return_code}\n"
             f"Output:\n{result}"
         )
         result = class_client.execute("cloud-init clean")
         assert (
             result.ok
-        ), "non-zero exit on cloud-init clean runparts of /etc/cloud/clean.d"
+        ), "Non-zero exit code on cloud-init clean runparts of /etc/cloud/clean.d"
         # Log files are not removed without --logs
         log_paths = (
             "/var/log/cloud-init.log",

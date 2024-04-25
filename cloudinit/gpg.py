@@ -98,6 +98,7 @@ def recv_key(key, keyserver, retries=(1, 1)):
         except subp.ProcessExecutionError as e:
             error = e
         try:
+            sleeps = iter([1, 2, 3])  # Initialize the sleeps iterator with appropriate values
             naplen = next(sleeps)
             LOG.debug(
                 "Import failed with exit code %d, will try again in %ss",

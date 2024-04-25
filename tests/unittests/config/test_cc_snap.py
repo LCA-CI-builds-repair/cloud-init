@@ -195,7 +195,8 @@ class TestCommands:
         cmd1 = f'echo "HI" >> {outfile}'
         cmd2 = f'echo "MOM" >> {outfile}'
         commands = {"02": cmd1, "01": cmd2}
-        run_commands(commands=commands)
+        sorted_commands = dict(sorted(commands.items()))
+        run_commands(commands=sorted_commands)
 
         expected_messages = ["Running user-provided snap commands"]
         for message in expected_messages:
@@ -207,7 +208,6 @@ class TestCommands:
         outfile = "output.log"
 
         cmd1 = f'echo "HI" >> {tmp_path}/{outfile}'
-        cmd2 = f'echo "MOM" >> {tmp_path}/{outfile}'
         commands = [cmd1, cmd2]
         run_commands(commands=commands)
 

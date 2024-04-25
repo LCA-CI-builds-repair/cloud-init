@@ -260,7 +260,7 @@ class InitsysInstallData(install):
                 if not files:
                     continue
                 self.distribution.data_files.append((INITSYS_ROOTS[k], files))
-        # Force that command to reinitialize (with new file list)
+                # Force that command to reinitialize (with new file list)
         self.distribution.reinitialize_command("install_data", True)
 
 

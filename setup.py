@@ -251,16 +251,15 @@ class InitsysInstallData(install):
             raise DistutilsError("Invalid --init-system: %s" % ",".join(bad))
 
         for system in self.init_system:
-            # add data files for anything that starts with '<system>.'
-            datakeys = [
-                k for k in INITSYS_ROOTS if k.partition(".")[0] == system
-            ]
-            for k in datakeys:
-                files = INITSYS_FILES[k]()
-                if not files:
-                    continue
-                self.distribution.data_files.append((INITSYS_ROOTS[k], files))
-        # Force that command to reinitialize (with new file list)
+# Add data files for anything that starts with '<system>.'
+datakeys = [
+    k for k in INITSYS_ROOTS if k.partition(".")[0] == system
+]
+for k in datakeys:
+    files = INITSYS_FILES.get(k, None)  # Get files for the current key, handle missing keys
+    if files:
+        self.distribution.data_files.append((INITSYS_ROOTS[k], files))  # Append data files
+# Force that command to reinitialize (with new file list)
         self.distribution.reinitialize_command("install_data", True)
 
 

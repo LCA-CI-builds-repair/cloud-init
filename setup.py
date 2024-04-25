@@ -216,8 +216,6 @@ class MyEggInfo(egg_info):
                 ]
             with open(mfname, "w") as fp:
                 fp.write("".join(files))
-
-
 # TODO: Is there a better way to do this??
 class InitsysInstallData(install):
     init_system = None
@@ -251,6 +249,7 @@ class InitsysInstallData(install):
             raise DistutilsError("Invalid --init-system: %s" % ",".join(bad))
 
         for system in self.init_system:
+        for system in self.init_system:
             # add data files for anything that starts with '<system>.'
             datakeys = [
                 k for k in INITSYS_ROOTS if k.partition(".")[0] == system
@@ -262,8 +261,6 @@ class InitsysInstallData(install):
                 self.distribution.data_files.append((INITSYS_ROOTS[k], files))
         # Force that command to reinitialize (with new file list)
         self.distribution.reinitialize_command("install_data", True)
-
-
 if not in_virtualenv():
     USR = "/" + USR
     ETC = "/" + ETC

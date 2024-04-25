@@ -96,20 +96,20 @@ def recv_key(key, keyserver, retries=(1, 1)):
             )
             return
         except subp.ProcessExecutionError as e:
-            error = e
-        try:
-            naplen = next(sleeps)
-            LOG.debug(
-                "Import failed with exit code %d, will try again in %ss",
-                error.exit_code,
-                naplen,
-            )
-            time.sleep(naplen)
-        except StopIteration as e:
-            raise ValueError(
-                "Failed to import key '%s' from keyserver '%s' "
-                "after %d tries: %s" % (key, keyserver, trynum, error)
-            ) from e
+error = e
+try:
+    naplen = next(sleeps)
+    LOG.debug(
+        "Import failed with exit code %d, will try again in %ss",
+        error.exit_code,
+        naplen,
+    )
+    time.sleep(naplen)
+except StopIteration as e:
+    raise ValueError(
+        f"Failed to import key '{key}' from keyserver '{keyserver}' "
+        f"after {trynum} tries: {error}"
+    ) from e
 
 
 def delete_key(key):

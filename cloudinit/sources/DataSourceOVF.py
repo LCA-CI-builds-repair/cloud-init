@@ -306,10 +306,11 @@ def transport_vmware_guestinfo():
             return None
         except subp.ProcessExecutionError as error:
             if error.exit_code != 1:
-                LOG.warning("%s exited with code %d", rpctool, error.exit_code)
-            raise error
+LOG.warning("%s exited with code %d", rpctool, error.exit_code)
+raise error
 
-    try:
+try:
+    # Add implementation or handling after the raised error here
         # The first attempt to query guestinfo could occur via either
         # vmware-rpctool *or* vmtoolsd.
         return query_guestinfo(rpctool, rpctool_fn)

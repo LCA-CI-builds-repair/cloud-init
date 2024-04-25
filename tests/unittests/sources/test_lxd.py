@@ -726,14 +726,18 @@ class TestReadMetadata:
                             text=mock.PropertyMock(
                                 return_value="properly formatted http response"
                             ),
-                        )
-                        for code in return_codes
-                    ]
-                )
-            )
-            resp = lxd._do_request(m, "http://agua/")
+# Fix syntax errors and assertions in the code snippet
+return_codes = [200] * 30
+m = mock.Mock(
+    side_effect=[
+        mock.Mock(
+            status_code=code
+        ) for code in return_codes
+    ]
+)
+resp = lxd._do_request(m, "http://example.com/")
 
-            # assert that 30 iterations or the first 200 code is the final
+# Assert that 30 iterations or the first 200 code is the final
             # attempt, whichever comes first
             assert min(len(return_codes), 30) == m.get.call_count
             if len(return_codes) < 31:

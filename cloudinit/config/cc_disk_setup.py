@@ -516,21 +516,23 @@ def check_partition_gpt_layout(device, layout):
             break
 
     codes = [line.strip().split()[5] for line in out_lines]
-    cleaned = []
+cleaned = []
 
-    # user would expect a code '83' to be Linux, but sgdisk outputs 8300.
-    for code in codes:
-        if len(code) == 4 and code.endswith("00"):
-            code = code[0:2]
-        cleaned.append(code)
-    return cleaned
-
+# user would expect a code '83' to be Linux, but sgdisk outputs 8300.
+for code in codes:
+    if len(code) == 4 and code.endswith("00"):
+        code = code[0:2]
+    cleaned.append(code)
+return cleaned
 
 def check_partition_layout(table_type, device, layout):
     """
-    See if the partition lay out matches.
+    See if the partition layout matches.
 
-    This is future a future proofing function. In order
+    This function checks if the partition layout matches the provided layout.
+    It is a future-proofing function for potential changes in layout handling.
+    """
+    # Add implementation for checking partition layout here
     to add support for other disk layout schemes, add a
     function called check_partition_%s_layout
     """

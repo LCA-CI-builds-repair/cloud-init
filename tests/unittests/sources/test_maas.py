@@ -119,11 +119,27 @@ class TestMAASDataSource:
             return url_helper.StringResponse(data[short])
 
         # Now do the actual call of the code under test.
-        with mock.patch("cloudinit.url_helper.readurl") as mock_readurl:
-            mock_readurl.side_effect = my_readurl
-            return DataSourceMAAS.read_maas_seed_url(seed, version=version)
+import unittest
+from unittest import mock
+from cloudinit.sources.DataSourceMAAS import DataSourceMAAS
 
-    def test_seed_url_valid(self, tmpdir):
+class TestMAAS(unittest.TestCase):
+
+    @mock.patch("cloudinit.url_helper.readurl")
+    def test_read_maas_seed_url_valid(self, mock_readurl):
+        seed = "http://maas.seed.url"
+        version = "2"
+        mock_readurl.side_effect = my_readurl
+        result = DataSourceMAAS.read_maas_seed_url(seed, version=version)
+        self.assertEqual(result, expected_result)
+
+    @mock.patch("cloudinit.url_helper.readurl")
+    def test_read_maas_seed_url_invalid(self, mock_readurl):
+        seed = "invalid_seed_url"
+        version = "2"
+        mock_readurl.side_effect = my_readurl
+        with self.assertRaises(Exception):
+            DataSourceMAAS.read_maas_seed_url(seed, version=version)
         """Verify that valid seed_url is read as such."""
         valid = {
             "meta-data/instance-id": "i-instanceid",

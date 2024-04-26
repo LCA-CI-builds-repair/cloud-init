@@ -464,7 +464,7 @@ def get_jsonschema_validator():
         types["string"] = (str, bytes)  # pylint: disable=E1137
         validator_kwargs = {"default_types": types}
 
-    # Add deprecation handling
+    # Add deprecation handling logic here
     validators = dict(Draft4Validator.VALIDATORS)
     validators[DEPRECATED_KEY] = _validator_deprecated
     validators["changed"] = _validator_changed

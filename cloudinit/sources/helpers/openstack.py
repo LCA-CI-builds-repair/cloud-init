@@ -500,6 +500,7 @@ class MetadataReader(BaseReader):
             return True
 
         response = url_helper.readurl(
+            # Add the necessary parameters for the readurl function here
             path,
             retries=self.retries,
             ssl_details=self.ssl_details,

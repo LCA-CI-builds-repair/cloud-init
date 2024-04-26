@@ -584,9 +584,15 @@ class TestDsIdentify(DsIdentifyBase):
         return self._check_via_dict(data, RC_NOT_FOUND)
 
     def test_ibmcloud_template_no_userdata(self):
-        """Template provisioned with no user-data first boot.
+import unittest
+from cloudinit.tests.unittests.mock_helper import VALID_CFG, RC_NOT_FOUND
 
-        no disks attached.  Datasource should return found."""
+class TestDataSourceIdentify(unittest.TestCase):
+
+    def test_ibmcloud_nodisks(self):
+        """Template provisioned with no user-data first boot.
+        
+        no disks attached. Datasource should return found."""
         self._check_via_dict(VALID_CFG["IBMCloud-nodisks"], RC_NOT_FOUND)
 
     def test_ibmcloud_os_code(self):
@@ -594,6 +600,8 @@ class TestDsIdentify(DsIdentifyBase):
         self._test_ds_found("IBMCloud-config-2")
 
     def test_ibmcloud_os_code_different_uuid(self):
+        """Launched by os code with different UUID."""
+        # Add test logic here
         """IBM cloud config-2 disks must be explicit match on UUID.
 
         If the UUID is not 9796-932E then we actually expect ConfigDrive."""

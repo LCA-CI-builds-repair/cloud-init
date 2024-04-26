@@ -104,8 +104,16 @@ class TestWireGuard(CiTestCase):
         )
 
     @mock.patch("%s.subp.subp" % MPATH)
+import unittest
+from unittest import mock
+from cloudinit.tests.unittests.mock_helper import FakeCloud
+from cloudinit import cc_wireguard
+from cloudinit.tests.unittests.config import helpers
+
+class TestWireguardConfig(unittest.TestCase):
+
+    @mock.patch('cloudinit.subp.ProcessExecutionError')
     def test_enable_wg_on_error(self, m_subp):
-        """Errors when enabling wireguard interfaces are raised."""
         wg_int = {"name": "wg0"}
         distro = mock.MagicMock()  # No errors raised
         distro.manage_service.side_effect = subp.ProcessExecutionError(

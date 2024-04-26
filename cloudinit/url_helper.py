@@ -74,6 +74,9 @@ def read_file_or_url(url, **kwargs) -> Union["FileResponse", "UrlResponse"]:
         if kwargs.get("data"):
             LOG.warning("Unable to post data to file resource %s", url)
         file_path = url[len("file://") :]
+from errno import ENOENT
+from cloudinit import NOT_FOUND
+
         try:
             with open(file_path, "rb") as fp:
                 contents = fp.read()
@@ -85,8 +88,6 @@ def read_file_or_url(url, **kwargs) -> Union["FileResponse", "UrlResponse"]:
         return FileResponse(file_path, contents=contents)
     else:
         return readurl(url, **kwargs)
-
-
 # Made to have same accessors as UrlResponse so that the
 # read_file_or_url can return this or that object and the
 # 'user' of those objects will not need to know the difference.

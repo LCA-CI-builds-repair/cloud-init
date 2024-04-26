@@ -32,12 +32,30 @@ EXPECTED_HEADER = """\
 # a single time (PER_ONCE).
 #\n\n"""
 
+import unittest
+from unittest.mock import patch
+from cloudinit.tests.unittests import helpers
 
-class TestResolvConf(FilesystemMockingTestCase):
+class TestResolvConf(helpers.FilesystemMockingTestCase):
     with_logs = True
     cfg = {"manage_resolv_conf": True, "resolv_conf": {}}
 
-    def setUp(self):
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('os.path.exists', return_value=True)
+    def test_write_resolv_conf_header(self, mock_exists, mock_open):
+        from cloudinit.config.cc_resolv_conf import write_resolv_conf_header
+        write_resolv_conf_header('/etc/resolv.conf', self.cfg)
+        mock_open.assert_called_once_with('/etc/resolv.conf', 'w')
+        handle = mock_open()
+        handle.write.assert_called_once_with(EXPECTED_HEADER)
+
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('os.path.exists', return_value=True)
+    def test_write_resolv_conf_header_no_manage(self, mock_exists, mock_open):
+        from cloudinit.config.cc_resolv_conf import write_resolv_conf_header
+        self.cfg['manage_resolv_conf'] = False
+        write_resolv_conf_header('/etc/resolv.conf', self.cfg)
+        mock_open.assert_not_called()
         super(TestResolvConf, self).setUp()
         self.tmp = tempfile.mkdtemp()
         util.ensure_dir(os.path.join(self.tmp, "data"))

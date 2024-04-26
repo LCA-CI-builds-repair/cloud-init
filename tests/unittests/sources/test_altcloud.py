@@ -77,7 +77,6 @@ class TestGetCloudType(CiTestCase):
     """Test to exercise method: DataSourceAltCloud.get_cloud_type()"""
 
     with_logs = True
-
     def setUp(self):
         """Set up."""
         super(TestGetCloudType, self).setUp()
@@ -88,6 +87,7 @@ class TestGetCloudType(CiTestCase):
         # We have to switch arch to x86_64 to avoid test failure
         force_arch("x86_64")
 
+    # Add a comment or code block for the tearDown method
     def tearDown(self):
         # Reset
         dmi.read_dmi_data = self.dmi_data

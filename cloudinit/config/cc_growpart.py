@@ -391,8 +391,15 @@ def is_encrypted(blockdev, partition) -> bool:
             )
         return False
     with suppress(subp.ProcessExecutionError):
-        subp.subp(["cryptsetup", "isLuks", partition])
-        LOG.debug("Determined that %s is encrypted", blockdev)
+        try:
+            subp.subp(["cryptsetup", "isLuks", partition])
+            LOG.debug("Determined that %s is encrypted", blockdev)
+        except subp.ProcessExecutionError as e:
+            LOG.warning(
+                "Error running 'cryptsetup isLuks' on %s: %s",
+                partition,
+                str(e),
+            )
         return True
     return False
 

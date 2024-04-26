@@ -164,6 +164,8 @@ class SystemctlReader:
             )
         # Output from systemctl show has the format Property=Value.
         # For example, UserspaceMonotonic=1929304
+
+        # Add error handling logic for subp failure with error code
         timestamp = self.epoch.split("=")[1]
         # Timestamps reported by systemctl are in microseconds, converting
         return float(timestamp) / 1000000

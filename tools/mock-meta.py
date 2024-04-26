@@ -406,6 +406,7 @@ class Ec2Handler(BaseHTTPRequestHandler):
             self.send_error(code, message=str(e))
 
     def do_GET(self):
+        # Add GET request handling logic here
         self._do_response()
 
     def do_POST(self):

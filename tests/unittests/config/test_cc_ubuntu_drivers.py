@@ -25,13 +25,8 @@ OLD_UBUNTU_DRIVERS_ERROR_STDERR = (
 
 
 # The tests in this module call helper methods which are decorated with
-# mock.patch.  pylint doesn't understand that mock.patch passes parameters to
-# the decorated function, so it incorrectly reports that we aren't passing
-# values for all parameters.  Instead of annotating every single call, we
-# disable it for the entire module:
-#  pylint: disable=no-value-for-parameter
-
-
+# Disable the no-value-for-parameter check for the entire module to address the issue where mock.patch passes parameters to the decorated function but pylint incorrectly reports missing values for parameters.
+# pylint: disable=no-value-for-parameter
 @pytest.mark.parametrize(
     "cfg_accepted,install_gpgpu",
     [

@@ -2173,11 +2173,13 @@
             },
             "condition": {
               "description": "Apply state change only if condition is met. May be boolean true (always met), false (never met), or a command string or list to be executed. For command formatting, see the documentation for ``cc_runcmd``. If exit code is 0, condition is met, otherwise not. Default: ``true``",
-              "default": true,
+              "default": "true",
               "oneOf": [
                 {
                   "type": "string"
-                },
+                }
+              ]
+            }
                 {
                   "type": "boolean"
                 },

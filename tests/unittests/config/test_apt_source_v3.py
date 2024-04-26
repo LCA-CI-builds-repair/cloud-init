@@ -115,13 +115,13 @@ class TestAptSourceConfig:
         cfg = {
             self.aptlistfile: {
                 "source": (
-                    "deb http://test.ubuntu.com/ubuntu"
-                    " karmic-backports"
-                    " main universe multiverse restricted"
+                    "deb http://test.ubuntu.com/ubuntu "
+                    "karmic-backports "
+                    "main universe multiverse restricted"
                 )
             }
         }
-        self._apt_src_basic(self.aptlistfile, cfg, tmpdir)
+        self._apt_src_basic_fix_deb_source_string(self.aptlistfile, cfg, tmpdir)
 
     def test_apt_v3_src_basic_tri(self, tmpdir):
         """test_apt_v3_src_basic_tri - Test multiple fix deb source strings"""

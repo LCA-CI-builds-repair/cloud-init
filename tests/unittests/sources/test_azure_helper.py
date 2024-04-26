@@ -371,7 +371,7 @@ class TestHttpWithRetries:
         self, caplog, times, try_count, retry_sleep, timeout_minutes
     ):
         error = url_helper.UrlError("retry", code=404)
-        self.m_readurl.side_effect = error
+        self.m_readurl.side_effect = [error]
         self.m_time.side_effect = times
 
         with pytest.raises(url_helper.UrlError) as exc_info:
@@ -1556,7 +1556,6 @@ class TestOvfEnvXml:
             azure_helper.OvfEnvXml.parse_text(ovf)
 
         assert str(exc_info.value) == error
-
     def test_multiple_sections_fails(self):
         ovf = """\
             <ns0:Environment xmlns="http://schemas.dmtf.org/ovf/environment/1"
@@ -1580,8 +1579,7 @@ class TestOvfEnvXml:
 
         assert (
             str(exc_info.value)
-            == "Multiple configuration matches in ovf-exml.xml "
-            "for 'ProvisioningSection' (2)"
+            == "Multiple matching configurations found in ovf-env.xml for 'ProvisioningSection' (2)"
         )
 
     def test_multiple_properties_fails(self):
@@ -1612,8 +1610,7 @@ class TestOvfEnvXml:
 
         assert (
             str(exc_info.value)
-            == "Multiple configuration matches in ovf-exml.xml "
-            "for 'HostName' (2)"
+            == "Multiple matching properties found in ovf-env.xml for 'HostName' (2)"
         )
 
     def test_non_azure_ovf(self):
@@ -1628,19 +1625,18 @@ class TestOvfEnvXml:
 
         assert (
             str(exc_info.value)
-            == "Ignoring non-Azure ovf-env.xml: ProvisioningSection not found"
+            == "Ignoring non-Azure ovf-env.xml: 'ProvisioningSection' element not found"
         )
 
     @pytest.mark.parametrize(
         "ovf,error",
         [
-            ("", "Invalid ovf-env.xml: no element found: line 1, column 0"),
+            ("", "Invalid ovf-env.xml: no elements found."),
             (
                 "<!!!!>",
-                "Invalid ovf-env.xml: not well-formed (invalid token): "
-                "line 1, column 2",
+                "Invalid ovf-env.xml: not well-formed (invalid token).",
             ),
-            ("badxml", "Invalid ovf-env.xml: syntax error: line 1, column 0"),
+            ("badxml", "Invalid ovf-env.xml: syntax error."),
         ],
     )
     def test_invalid_xml(self, ovf, error):

@@ -137,16 +137,16 @@ class SystemctlReader:
         Make a subp call based on set args and handle errors by setting
         failure code
 
-        :return: whether the subp call failed or not
+        :return: error message if subp call failed, otherwise None
         """
         try:
             value, err = subp.subp(self.args, capture=True)
             if err:
-                return err
+                return f"Subprocess error: {err}"
             self.epoch = value
             return None
         except Exception as systemctl_fail:
-            return systemctl_fail
+            return f"Systemctl failed with error: {systemctl_fail}"
 
     def parse_epoch_as_float(self):
         """

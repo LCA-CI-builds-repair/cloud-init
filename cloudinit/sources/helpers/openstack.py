@@ -378,18 +378,29 @@ class ConfigDriveReader(BaseReader):
         return self._versions
 
     def _read_ec2_metadata(self):
+        import os
+        from cloudinit import util
+
         path = self._path_join(
             self.base_path, "ec2", "latest", "meta-data.json"
         )
-        if not os.path.exists(path):
-            return {}
-        else:
-            try:
+        try:
+            if not os.path.exists(path):
+                return {}
+            else:
                 return util.load_json(self._path_read(path))
-            except Exception as e:
-                raise BrokenMetadata(
-                    "Failed to process path %s: %s" % (path, e)
-                ) from e
+        except FileNotFoundError as e:
+            raise BrokenMetadata(
+                "Metadata file not found at path: %s" % path
+            ) from e
+        except json.JSONDecodeError as e:
+            raise BrokenMetadata(
+                "Failed to decode JSON at path: %s" % path
+            ) from e
+        except Exception as e:
+            raise BrokenMetadata(
+                "Failed to process metadata at path: %s" % path
+            ) from e
 
     def read_v1(self):
         """Reads a version 1 formatted location.
@@ -408,23 +419,38 @@ class ConfigDriveReader(BaseReader):
             raise NonReadable("%s: no files found" % (self.base_path))
 
         md = {}
-        for (name, (key, translator, default)) in FILES_V1.items():
-            if name in found:
-                path = found[name]
-                try:
-                    contents = self._path_read(path)
-                except IOError as e:
-                    raise BrokenMetadata("Failed to read: %s" % path) from e
-                try:
-                    # Disable not-callable pylint check; pylint isn't able to
-                    # determine that every member of FILES_V1 has a callable in
-                    # the appropriate position
-                    md[key] = translator(contents)  # pylint: disable=E1102
-                except Exception as e:
-                    raise BrokenMetadata(
-                        "Failed to process path %s: %s" % (path, e)
-                    ) from e
-            else:
+        import copy
+        import re
+        from cloudinit.sources.helpers import BrokenMetadata
+
+        try:
+            md[key] = translator(contents)  # pylint: disable=E1102
+        except TranslationError as e:
+            raise BrokenMetadata(
+                f"Failed to translate content for key {key}: {e}"
+            ) from e
+        except KeyError as e:
+            raise BrokenMetadata(
+                f"Key error while processing path {path}: {e}"
+            ) from e
+        except Exception as e:
+            raise BrokenMetadata(
+                f"Failed to process path {path}: {e}"
+            ) from e
+
+    else:
+        md[key] = copy.deepcopy(default)
+
+    keydata = md["authorized_keys"]
+    meta_js = md["meta_js"]
+
+    # keydata in meta_js is preferred over "injected"
+    keydata = meta_js.get("public-keys", keydata)
+    if keydata:
+        lines = keydata.splitlines()
+        md["public-keys"] = [
+            line for line in lines if re.match(r'^ssh-', line)
+        ]
                 md[key] = copy.deepcopy(default)
 
         keydata = md["authorized_keys"]

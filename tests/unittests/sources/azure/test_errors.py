@@ -176,16 +176,18 @@ def test_dhcp_interface_not_found(mocker):
                 code=500,
             ),
             "http error 500 querying IMDS",
-        ),
+        import requests
+        from cloudinit.sources.helpers import UrlError
+
         (
-            UrlError(
-                requests.HTTPError(),
-                code=None,
+            (
+                UrlError(
+                    error=requests.HTTPError(),
+                    code=None,
+                ),
+                "Unexpected error querying IMDS",
             ),
-            "unexpected error querying IMDS",
         ),
-    ],
-)
 def test_imds_url_error(exception, reason, mocker):
     mocker.patch(
         "cloudinit.sources.azure.identity.query_vm_id", return_value="foo"

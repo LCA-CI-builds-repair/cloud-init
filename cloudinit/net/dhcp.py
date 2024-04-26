@@ -737,7 +737,7 @@ class Udhcpc(DhcpClient):
                 error.stderr,
                 error.stdout,
             )
-            raise NoDHCPLeaseError from error
+            raise NoDHCPLeaseError(f"No DHCP lease obtained. Error details - stderr: {error.stderr}, stdout: {error.stdout}") from error
 
         if dhcp_log_func is not None:
             dhcp_log_func(out, err)

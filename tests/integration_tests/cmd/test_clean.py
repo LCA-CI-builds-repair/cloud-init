@@ -39,7 +39,7 @@ class TestCleanCommand:
         # disabling /etc/apt/sources.list build artifact in favor of deb822
         return_code = 2 if CURRENT_RELEASE.series == "noble" else 0
         assert return_code == result.return_code, (
-            f"Unexpected cloud-init status exit code {result.return_code}\n"
+            f"Unexpected cloud-init status exit code. Expected: {return_code}, Actual: {result.return_code}\n"
             f"Output:\n{result}"
         )
         result = class_client.execute("cloud-init clean")

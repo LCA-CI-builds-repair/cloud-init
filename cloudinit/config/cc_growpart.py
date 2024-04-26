@@ -386,11 +386,10 @@ def is_encrypted(blockdev, partition) -> bool:
         subp.subp(["cryptsetup", "status", blockdev])
     except subp.ProcessExecutionError as e:
         if e.exit_code == 4:
-            LOG.debug("Determined that %s is not encrypted", blockdev)
+            LOG.debug("The device %s is determined to be not encrypted", blockdev)
         else:
             LOG.warning(
-                "Received unexpected exit code %s from "
-                "cryptsetup status. Assuming no encrypted partitions.",
+                "Received an unexpected exit code %s from cryptsetup status. Assuming no encrypted partitions.",
                 e.exit_code,
             )
         return False

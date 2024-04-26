@@ -1876,13 +1876,14 @@ scbus-1 on xpt0 bus 0
         self.assertTrue(ret)
         ovf_env_path = os.path.join(self.waagent_d, "ovf-env.xml")
 
-        # The XML should not be same since the user password is redacted
+        # The XML should not be the same since the user password is redacted
         on_disk_ovf = load_file(ovf_env_path)
         self.xml_notequals(data["ovfcontent"], on_disk_ovf)
 
-        # Make sure that the redacted password on disk is not used by CI
+        # Ensure that the redacted password on disk is not the default redacted password
         self.assertNotEqual(
-            dsrc.cfg.get("password"), dsaz.DEF_PASSWD_REDACTION
+            dsrc.cfg.get("password"), dsaz.DEF_PASSWD_REDACTION,
+            "Redacted password on disk should not be the default redacted password."
         )
 
         # Make sure that the password was really encrypted
@@ -3514,7 +3515,6 @@ class TestEphemeralNetworking:
         mock_ephemeral_dhcp_v4,
         mock_kvp_report_failure_to_host,
         mock_sleep,
-        mock_time,
         error_class,
         error_reason,
     ):
@@ -3526,6 +3526,9 @@ class TestEphemeralNetworking:
             120.11,  # loop check
             180.1,  # duration check for host error report
             180.11,  # loop check timeout
+        ]
+        mock_ephemeral_dhcp_v4.return_value.obtain_lease.side_effect = [
+            # Add appropriate side effects here based on test case requirements
         ]
         mock_ephemeral_dhcp_v4.return_value.obtain_lease.side_effect = [
             error_class()

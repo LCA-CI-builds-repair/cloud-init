@@ -3152,7 +3152,7 @@ def error(msg, rc=1, fmt="Error:\n{}", sys_exit=False):
 
     @param msg: message to print
     @param rc: return code (default: 1)
-    @param fmt: format string for putting message in (default: 'Error:\n {}')
+    @param fmt: format string for putting message in (default: 'Error: {}')
     @param sys_exit: exit when called (default: false)
     """
     print(fmt.format(msg), file=sys.stderr)

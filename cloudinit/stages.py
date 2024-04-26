@@ -371,10 +371,7 @@ class Init:
         # then a datasource has not been assigned...
         instance_dir = self.paths.get_ipath(subname)
         if not instance_dir:
-            raise RuntimeError(
-                "No instance directory is available."
-                " Has a datasource been fetched??"
-            )
+            raise RuntimeError("No instance directory available. Please check if a datasource has been fetched.")
         return instance_dir
 
     def _write_network_config_json(self, netcfg: dict):

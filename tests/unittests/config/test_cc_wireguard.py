@@ -115,10 +115,10 @@ class TestWireGuard(CiTestCase):
         with self.assertRaises(RuntimeError) as context_mgr:
             cc_wireguard.enable_wg(wg_int, mycloud)
         self.assertEqual(
-            "Failed enabling/starting Wireguard interface(s):\n"
-            "Unexpected error while running command.\n"
+            "Failed to enable/start Wireguard interface(s):\n"
+            "Unexpected error occurred while running the command.\n"
             "Command: -\nExit code: -\nReason: -\n"
-            "Stdout: systemctl start wg-quik@wg0 failed: exit code 1\n"
+            "Stdout: systemctl start wg-quick@wg0 failed: exit code 1\n"
             "Stderr: -",
             str(context_mgr.exception),
         )

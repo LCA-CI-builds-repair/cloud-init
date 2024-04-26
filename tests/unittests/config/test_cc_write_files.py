@@ -24,7 +24,6 @@ from tests.unittests.helpers import (
 )
 
 LOG = logging.getLogger(__name__)
-
 YAML_TEXT = """
 write_files:
  - encoding: gzip

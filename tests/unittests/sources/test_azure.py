@@ -2321,8 +2321,6 @@ class TestLoadAzureDsDir(CiTestCase):
             "Invalid ovf-env.xml: syntax error: line 1, column 0",
             str(context_manager.exception),
         )
-
-
 class TestReadAzureOvf(CiTestCase):
     def test_invalid_xml_raises_non_azure_ds(self):
         invalid_xml = "<foo>" + construct_ovf_env()

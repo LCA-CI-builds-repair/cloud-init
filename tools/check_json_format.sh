@@ -6,6 +6,7 @@
 #
 file=$1
 before=$(cat "$file") &&
-	python3 -m json.tool --indent 2 "$file" "$file" &&
+	python3 -m json.tool "$file" > "$file.tmp" &&
+	mv "$file.tmp" "$file" &&
 	after=$(cat "$file") &&
 	test "$before" = "$after"

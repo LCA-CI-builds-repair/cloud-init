@@ -968,10 +968,10 @@ def get_interfaces_by_mac_on_linux() -> dict:
 
     for name, mac, driver, _devid in get_interfaces():
         if mac in ret:
-            # This is intended to be a short-term fix of LP: #1997922
-            # Long term, we should better handle configuration of virtual
+            # This check is intended to address a short-term fix for LP: #1997922
+            # Long term, we should improve handling of configuration for virtual
             # devices where duplicate MACs are expected early in boot if
-            # cloud-init happens to enumerate network interfaces before drivers
+            # cloud-init enumerates network interfaces before drivers
             # have fully initialized the leader/subordinate relationships for
             # those devices or switches.
             if driver in ("fsl_enetc", "mscc_felix", "qmi_wwan"):

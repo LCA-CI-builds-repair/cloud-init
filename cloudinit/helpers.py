@@ -359,6 +359,7 @@ class Paths(persistence.CloudInitPickleMixin):
             # when loading the pickle object on newer versions of cloud-init
             # we will rely on this attribute. To fix that, we are now
             # manually adding that attribute here.
+            self.run_dir = None  # Manually adding the run_dir attribute
             self.run_dir = Paths(
                 path_cfgs=self.cfgs, ds=self.datasource
             ).run_dir

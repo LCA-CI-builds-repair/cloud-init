@@ -1878,7 +1878,7 @@ scbus-1 on xpt0 bus 0
         on_disk_ovf = load_file(ovf_env_path)
         self.xml_notequals(data["ovfcontent"], on_disk_ovf)
 
-        # Make sure that the redacted password on disk is not used by CI
+        # Make sure that the redacted password in the config is not the default redacted password
         self.assertNotEqual(
             dsrc.cfg.get("password"), dsaz.DEF_PASSWD_REDACTION
         )

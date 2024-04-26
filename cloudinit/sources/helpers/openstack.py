@@ -389,6 +389,7 @@ class ConfigDriveReader(BaseReader):
             except Exception as e:
                 raise BrokenMetadata(
                     "Failed to process path %s: %s" % (path, e)
+                )
                 ) from e
 
     def read_v1(self):
@@ -409,7 +410,6 @@ class ConfigDriveReader(BaseReader):
 
         md = {}
         for (name, (key, translator, default)) in FILES_V1.items():
-            if name in found:
                 path = found[name]
                 try:
                     contents = self._path_read(path)

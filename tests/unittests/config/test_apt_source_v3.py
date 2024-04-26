@@ -115,9 +115,9 @@ class TestAptSourceConfig:
         cfg = {
             self.aptlistfile: {
                 "source": (
-                    "deb http://test.ubuntu.com/ubuntu"
-                    " karmic-backports"
-                    " main universe multiverse restricted"
+                    "deb http://test.ubuntu.com/ubuntu "
+                    "karmic-backports "
+                    "main universe multiverse restricted"
                 )
             }
         }

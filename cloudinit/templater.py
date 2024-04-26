@@ -49,13 +49,26 @@ class JinjaSyntaxParsingException(TemplateSyntaxError):
         self,
         error: TemplateSyntaxError,
     ) -> None:
+        if error is None:
+            error_message = "unknown syntax error"
+            lineno = None
+            name = None
+            filename = None
+            source = None
+        else:
+            error_message = error.message or "unknown syntax error"
+            lineno = error.lineno
+            name = error.name
+            filename = error.filename
+            source = error.source
+        
         super().__init__(
-            error.message or "unknown syntax error",
-            error.lineno,
-            error.name,
-            error.filename,
+            error_message,
+            lineno,
+            name,
+            filename,
         )
-        self.source = error.source
+        self.source = source
 
     def __str__(self):
         """Avoid jinja2.TemplateSyntaxErrror multi-line __str__ format."""

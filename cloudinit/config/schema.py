@@ -857,6 +857,7 @@ def _get_config_type_and_rendered_userdata(
     When encountering jinja user-data, render said content.
 
     :return: UserDataTypeAndDecodedContent
+    """
     :raises: SchemaValidationError when non-jinja content found but
         header declared ## template: jinja.
     :raises JinjaSyntaxParsingException when jinja syntax error found.

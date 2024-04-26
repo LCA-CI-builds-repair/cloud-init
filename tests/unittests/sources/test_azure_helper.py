@@ -1530,6 +1530,12 @@ class TestOvfEnvXml:
                 azure_helper.OvfEnvXml(
                     username="test-user",
                     hostname="test-host",
+    @pytest.mark.parametrize(
+        "ovf, expected",
+        [
+            (
+                """<Environment><Provisioning>testpps</Provisioning></Environment>""",
+                dict(
                     preprovisioned_vm_type="testpps",
                 ),
             ),

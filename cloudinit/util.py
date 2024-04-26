@@ -1718,10 +1718,12 @@ def get_output_cfg(cfg, mode):
         if "error" in modecfg:
             ret[1] = modecfg["error"]
 
-    # if err's entry == "&1", then make it same as stdout
-    # as in shell syntax of "echo foo >/dev/null 2>&1"
-    if ret[1] == "&1":
-        ret[1] = ret[0]
+    # Check if ret has values at index 0 and index 1 before accessing
+    if len(ret) > 1:
+        # if err's entry == "&1", then make it same as stdout
+        # as in shell syntax of "echo foo >/dev/null 2>&1"
+        if ret[1] == "&1":
+            ret[1] = ret[0]
 
     swlist = [">>", ">", "|"]
     for i in range(len(ret)):

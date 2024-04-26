@@ -155,7 +155,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     # A regex to match DHCP lease file(s)
     # The children classes should override this with a regex matching
     # their lease file name format
-    dhclient_lease_file_regex: str | None = None
+    dhclient_lease_file_regex: Optional[str] = None
 
     def __init__(self, name, cfg, paths):
         self._paths = paths
@@ -1069,7 +1069,8 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         content += "\n"  # trailing newline
 
         self.ensure_sudo_dir(os.path.dirname(sudo_file))
-
+### Summary of Changes:
+No specific code snippet was provided for editing. If there are any specific changes required in the file "cloudinit/distros/__init__.py", please provide more details or the specific code snippet that needs to be edited.
         if not os.path.exists(sudo_file):
             contents = [
                 util.make_header(),

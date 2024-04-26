@@ -430,7 +430,7 @@ class Renderer(renderer.Renderer):
                 bridge_ports = ifcfg.get("bridge_ports")
                 # mypy wrong error. `copy(None)` is supported:
                 ports = sorted(copy.copy(bridge_ports))  # type: ignore
-                bridge: dict = {
+                bridge = {
                     "interfaces": ports,
                 }
                 # extract bridge params and drop the bridge prefix as it's

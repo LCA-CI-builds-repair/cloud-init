@@ -94,7 +94,7 @@ class Mixin:
     """Shared test definitions."""
 
     def _fetch_and_parse_etc_shadow(self, class_client):
-        """Fetch /etc/shadow and parse it into Python data structures
+        """Fetch /etc/shadow and parse it into Python data structures"""
 
         Returns: ({user: password}, [duplicate, users])
         """

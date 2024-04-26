@@ -107,6 +107,9 @@ class TestParseDHCPLeasesFile(CiTestCase):
               fixed-address 192.168.2.74;
               filename "http://192.168.2.50/boot.php?mac=${netX}";
               option subnet-mask 255.255.255.0;
+# DHCP configuration block for testing purposes
+dhcp_configuration = """
+            host {
               option routers 192.168.2.1;
               renew 4 2017/07/27 18:02:30;
               expire 5 2017/07/28 07:08:15;

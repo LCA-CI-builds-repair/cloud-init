@@ -72,7 +72,6 @@ INSTALLER_APPORT_FILES = [
     ApportFile("/var/log/installer/curtin-error-logs.tar", "CurtinError"),
     ApportFile("/var/log/installer/curtin-errors.tar", "CurtinError"),
     ApportFile("/var/log/installer/block/probe-data.json", "ProbeData"),
-]
 
 
 def _get_user_data_file() -> str:
@@ -198,7 +197,7 @@ def collect_installer_logs(log_dir, include_userdata, verbosity):
 
 
 def collect_logs(tarfile, include_userdata: bool, verbosity=0):
-    """Collect all cloud-init logs and tar them up into the provided tarfile.
+def collect_logs(tarfile: str, include_userdata: bool, verbosity: int = 0):
 
     @param tarfile: The path of the tar-gzipped file to create.
     @param include_userdata: Boolean, true means include user-data.
@@ -283,8 +282,8 @@ def collect_logs(tarfile, include_userdata: bool, verbosity=0):
 
 
 def handle_collect_logs_args(name, args):
+def handle_collect_logs_args(name, args):
     """Handle calls to 'cloud-init collect-logs' as a subcommand."""
-    return collect_logs(args.tarfile, args.userdata, args.verbosity)
 
 
 def main():

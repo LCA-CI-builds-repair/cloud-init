@@ -1987,6 +1987,7 @@ scbus-1 on xpt0 bus 0
         dsrc = self._get_ds({"ovfcontent": construct_ovf_env()})
 
         with mock.patch.object(
+        with mock.patch.object(
             dsrc, "crawl_metadata"
         ) as m_crawl_metadata, mock.patch.object(
             dsrc, "_wireserver_endpoint", "test-ep"

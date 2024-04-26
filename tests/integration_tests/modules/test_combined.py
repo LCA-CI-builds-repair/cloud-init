@@ -14,6 +14,15 @@ from pathlib import Path
 
 import pytest
 
+# Add test functions with descriptive docstrings here
+def test_function_one():
+    """Description of Test Function One"""
+    # Test logic here
+
+def test_function_two():
+    """Description of Test Function Two"""
+    # Test logic here
+
 import cloudinit.config
 from cloudinit.features import get_features
 from cloudinit.util import is_true

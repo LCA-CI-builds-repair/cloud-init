@@ -1,18 +1,16 @@
 #!/bin/sh
 # Copyright (C) 2012, Canonical Group, Ltd.
 #
-# Author: Ben Howard <ben.howard@canonical.com>
-# Author: Scott Moser <scott.moser@ubuntu.com>
-# (c) 2012, Canonical Group, Ltd.
+# Authors: Ben Howard <ben.howard@canonical.com>, Scott Moser <scott.moser@ubuntu.com>
 #
-# This file is part of cloud-init. See LICENSE file for license information.
- 
 # Purpose: Detect invalid locale settings and inform the user
 #  of how to fix them.
-
+ 
 locale_warn() {
     command -v local >/dev/null && local _local="local" ||
         typeset _local="typeset"
+    # Add implementation for locale warning functionality here
+}
 
     $_local bad_names="" bad_lcs="" key="" val="" var="" vars="" bad_kv=""
     $_local w1 w2 w3 w4 remain

@@ -277,14 +277,10 @@ def _parse_deb_config_data(ifaces, contents, src_dir, src_path):
             if option in NET_CONFIG_BRIDGE_OPTIONS:
                 bridge_option = option.replace("bridge_", "", 1)
                 ifaces[currif]["bridge"][bridge_option] = split[1]
-            elif option == "bridge_ports":
-                ifaces[currif]["bridge"]["ports"] = []
-                for iface in split[1:]:
-                    ifaces[currif]["bridge"]["ports"].append(iface)
             elif option == "bridge_hw":
                 # doc is confusing and thus some may put literal 'MAC'
                 #    bridge_hw MAC <address>
-                # but correct is:
+                # but correct format is:
                 #    bridge_hw <address>
                 if split[1].lower() == "mac":
                     ifaces[currif]["bridge"]["mac"] = split[2]

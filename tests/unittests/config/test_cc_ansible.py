@@ -29,6 +29,7 @@ distro_version = dedent(
     """ansible 2.10.8
   config file = None
   configured module search path = ['/home/holmanb/.ansible/plugins/modules', \
+"""
   '/usr/share/ansible/plugins/modules']
   ansible python module location = /usr/lib/python3/dist-packages/ansible
   executable location = /usr/bin/ansible

@@ -1,5 +1,4 @@
 # This file is part of cloud-init. See LICENSE file for license information.
-
 from copy import copy
 from unittest import mock
 
@@ -36,6 +35,7 @@ class TestMAASDataSource:
         assert "user-data" not in md
         assert vd is None
 
+    def test_seed_dir_valid_extra(self, tmpdir):
     def test_seed_dir_valid_extra(self, tmpdir):
         """Verify extra files do not affect seed_dir validity."""
 

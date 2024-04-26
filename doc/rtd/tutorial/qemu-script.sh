@@ -38,10 +38,9 @@ qemu-system-x86_64                                              \
     -m 512                                                      \
     -nographic                                                  \
     -hda jammy-server-cloudimg-amd64.img                        \
+    # Setting SMBIOS information with nocloud configuration via HTTP
     -smbios type=1,serial=ds='nocloud;s=http://10.0.2.2:8000/'
 
 echo -e "\nTo reuse the image and config files, start the python webserver and "
-echo -e "virtual machine from $(pwd), which contains these files:\n$(ls -1)\n"
-
 # end the python server on exit
 trap "trap - SIGTERM && kill -- -$$" EXIT

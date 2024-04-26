@@ -2898,8 +2898,6 @@ def read_meminfo(meminfo="/proc/meminfo", raw=False):
             ret[kmap[key]] = int(value) * mpliers[unit]
 
     return ret
-
-
 def human2bytes(size):
     """Convert human string or integer to size in bytes
 

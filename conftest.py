@@ -1,70 +1,7 @@
 """Global conftest.py
-
-This conftest is used for unit tests in ``cloudinit/`` and ``tests/unittests/``
-as well as the integration tests in ``tests/integration_tests/``.
-
-Any imports that are performed at the top-level here must be installed wherever
-any of these tests run: that is to say, they must be listed in
-``integration-requirements.txt`` and in ``test-requirements.txt``.
-"""
-# If we don't import this early, lru_cache may get applied before we have the
-# chance to patch. This is also too early for the pytest-antilru plugin
-# to work.
-# isort: off
-from tests.unittests.early_patches import get_cached_functions  # noqa: E402
-
-# isort: on
-from unittest import mock
-
-import pytest
-
-from cloudinit import helpers, subp, util
-
-
-@pytest.fixture(autouse=True, scope="function")
-def cleanup_lru_cache():
-    yield
-
-    for func in get_cached_functions():
-        func.cache_clear()
-
-
-class _FixtureUtils:
-    """A namespace for fixture helper functions, used by fixture_utils.
-
-    These helper functions are all defined as staticmethods so they are
-    effectively functions; they are defined in a class only to give us a
-    namespace so calling them can look like
-    ``fixture_utils.fixture_util_function()`` in test code.
-    """
-
-    @staticmethod
-    def closest_marker_args_or(request, marker_name: str, default):
-        """Get the args for closest ``marker_name`` or return ``default``
-
-        :param request:
-            A pytest request, as passed to a fixture.
-        :param marker_name:
-            The name of the marker to look for
-        :param default:
-            The value to return if ``marker_name`` is not found.
-
-        :return:
-            The args for the closest ``marker_name`` marker, or ``default``
-            if no such marker is found.
-        """
-        try:
-            marker = request.node.get_closest_marker(marker_name)
-        except AttributeError:
-            # Older versions of pytest don't have the new API
-            marker = request.node.get_marker(marker_name)
-        if marker is not None:
-            return marker.args
-        return default
-
     @staticmethod
     def closest_marker_first_arg_or(request, marker_name: str, default):
-        """Get the first arg for closest ``marker_name`` or return ``default``
+        """Get the first arg for closest ``marker_name`` or return ``default``"""
 
         This is a convenience wrapper around closest_marker_args_or, see there
         for full details.

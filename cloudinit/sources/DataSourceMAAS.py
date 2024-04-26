@@ -77,10 +77,7 @@ class DataSourceMAAS(sources.DataSource):
             return False
 
         try:
-            # doing this here actually has a side affect of
-            # getting oauth time-fix in place.  As no where else would
-            # retry by default, so even if we could fix the timestamp
-            # we would not.
+            # Ensure metadata service is available before proceeding
             if not self.wait_for_metadata_service(url):
                 return False
 

@@ -8,7 +8,6 @@ import os
 from copy import deepcopy
 from email.mime.multipart import MIMEMultipart
 from typing import Optional, cast
-
 from cloudinit import helpers, util
 from cloudinit.sources import DataSourceWSL as wsl
 from tests.unittests.helpers import CiTestCase, mock
@@ -18,6 +17,8 @@ GOOD_MOUNTS = {
     "none": {
         "fstype": "tmpfs",
         "mountpoint": "/mnt/wsl",
+        # Add more key-value pairs as needed
+    }
         "opts": "rw,relatime",
     },
     "/dev/sdd": {

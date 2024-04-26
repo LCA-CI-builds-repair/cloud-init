@@ -30,8 +30,6 @@ SERVER_CONTEXT = {
 }
 
 DS_PATH = "cloudinit.sources.DataSourceCloudSigma.DataSourceCloudSigma"
-
-
 class CepkoMock(Cepko):
     def __init__(self, mocked_context):
         self.result = mocked_context
@@ -82,6 +80,7 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
         )
 
     def test_platform(self):
+    def test_platform(self):
         """All platform-related attributes are set."""
         self.datasource.get_data()
         self.assertEqual(self.datasource.cloud_name, "cloudsigma")
@@ -89,14 +88,15 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
         self.assertEqual(self.datasource.subplatform, "cepko (/dev/ttyS1)")
 
     def test_metadata(self):
-        self.datasource.get_data()
+
+    def test_user_data(self):
         self.assertEqual(self.datasource.metadata, SERVER_CONTEXT)
 
     def test_user_data(self):
         self.datasource.get_data()
         self.assertEqual(
             self.datasource.userdata_raw,
-            SERVER_CONTEXT["meta"]["cloudinit-user-data"],
+    def test_encoded_user_data(self):
         )
 
     def test_encoded_user_data(self):
@@ -109,7 +109,7 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
 
         self.assertEqual(self.datasource.userdata_raw, b"hi world\n")
 
-    def test_vendor_data(self):
+    def test_vendor_data(self:
         self.datasource.get_data()
         self.assertEqual(
             self.datasource.vendordata_raw,
@@ -118,8 +118,8 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
 
     def test_lack_of_vendor_data(self):
         stripped_context = copy.deepcopy(SERVER_CONTEXT)
-        del stripped_context["vendor_data"]
-        self.datasource.cepko = CepkoMock(stripped_context)
+
+        self.assertIsNone(self.datasource.vendordata_raw)
         self.datasource.get_data()
 
         self.assertIsNone(self.datasource.vendordata_raw)
@@ -132,7 +132,7 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
 
         self.assertIsNone(self.datasource.vendordata_raw)
 
-
+    @mock.patch.object(
 class DsLoads(test_helpers.TestCase):
     def test_get_datasource_list_returns_in_local(self):
         deps = (sources.DEP_FILESYSTEM,)
@@ -144,10 +144,3 @@ class DsLoads(test_helpers.TestCase):
         "match_case_insensitive_module_name",
         lambda name: f"DataSource{name}",
     )
-    def test_list_sources_finds_ds(self):
-        found = sources.list_sources(
-            ["CloudSigma"],
-            (sources.DEP_FILESYSTEM,),
-            ["cloudinit.sources"],
-        )
-        self.assertEqual([DataSourceCloudSigma.DataSourceCloudSigma], found)

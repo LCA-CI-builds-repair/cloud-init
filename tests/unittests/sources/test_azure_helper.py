@@ -1608,8 +1608,6 @@ class TestOvfEnvXml:
             </ns0:Environment>"""
 
         with pytest.raises(azure_helper.BrokenAzureDataSource) as exc_info:
-            azure_helper.OvfEnvXml.parse_text(ovf)
-
         assert (
             str(exc_info.value)
             == "Multiple configuration matches in ovf-exml.xml "

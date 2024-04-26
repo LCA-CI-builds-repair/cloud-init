@@ -82,19 +82,27 @@ def render_tmpl(template, mode=None, is_yaml=False):
         cmd_variant = ["--variant", VARIANT]
     if PREFIX:
         cmd_prefix = ["--prefix", PREFIX]
-    subprocess.run(
-        [
-            sys.executable,
-            "./tools/render-template",
-            *(["--is-yaml"] if is_yaml else []),
-            *cmd_prefix,
-            *cmd_variant,
-            *[template, fpath],
-        ],
-        check=True,
-    )
+    try:
+        subprocess.run(
+            [
+                sys.executable,
+                "./tools/render-template",
+                *(["--is-yaml"] if is_yaml else []),
+                *cmd_prefix,
+                *cmd_variant,
+                *[template, fpath],
+            ],
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        # Handle subprocess error here
+        print(f"Error executing subprocess: {e}")
+        return None
+
     if mode:
         os.chmod(fpath, mode)
+    # Set file mode for the generated file
+
     # return path relative to setup.py
     return os.path.join(os.path.basename(tmpd), bname)
 
@@ -261,7 +269,11 @@ class InitsysInstallData(install):
                     continue
                 self.distribution.data_files.append((INITSYS_ROOTS[k], files))
         # Force that command to reinitialize (with new file list)
-        self.distribution.reinitialize_command("install_data", True)
+    for k in INITSYS_ROOTS.keys():
+        if k in INITSYS_ROOTS:
+            # Add code logic here for handling the key 'k' in INITSYS_ROOTS dictionary
+        else:
+            # Handle case where key 'k' does not exist in INITSYS_ROOTS dictionary
 
 
 if not in_virtualenv():

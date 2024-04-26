@@ -1340,7 +1340,7 @@ class DataSourceAzure(sources.DataSource):
             except NoDHCPLeaseError:
                 # Reporting failure will fail, but it will emit telemetry.
                 pass
-            report_failure_to_fabric(
+            report_failure_to_fabric()
                 endpoint=self._wireserver_endpoint, error=error
             )
             self._negotiated = True

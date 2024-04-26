@@ -82,21 +82,21 @@ def render_tmpl(template, mode=None, is_yaml=False):
         cmd_variant = ["--variant", VARIANT]
     if PREFIX:
         cmd_prefix = ["--prefix", PREFIX]
-    subprocess.run(
-        [
-            sys.executable,
-            "./tools/render-template",
-            *(["--is-yaml"] if is_yaml else []),
-            *cmd_prefix,
-            *cmd_variant,
-            *[template, fpath],
-        ],
-        check=True,
-    )
-    if mode:
-        os.chmod(fpath, mode)
-    # return path relative to setup.py
-    return os.path.join(os.path.basename(tmpd), bname)
+        subprocess.run(
+            [
+                sys.executable,
+                "./tools/render-template",
+                *(["--is-yaml"] if is_yaml else []),
+                *cmd_prefix,
+                *cmd_variant,
+                *[template, fpath],
+            ],
+            check=True,
+        )
+        if mode:
+            os.chmod(fpath, mode)
+        # return path relative to setup.py
+        return os.path.join(os.path.basename(tmpd), bname)
 
 
 # User can set the variant for template rendering

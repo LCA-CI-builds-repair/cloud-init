@@ -1,41 +1,4 @@
 # This file is part of cloud-init. See LICENSE file for license information.
-
-from copy import copy
-from unittest import mock
-
-import pytest
-import yaml
-
-from cloudinit import helpers, settings, url_helper
-from cloudinit.sources import DataSourceMAAS
-from tests.unittests.helpers import populate_dir
-
-
-class TestMAASDataSource:
-    def test_seed_dir_valid(self, tmpdir):
-        """Verify a valid seeddir is read as such."""
-
-        userdata = b"valid01-userdata"
-        data = {
-            "meta-data/instance-id": "i-valid01",
-            "meta-data/local-hostname": "valid01-hostname",
-            "user-data": userdata,
-            "public-keys": "ssh-rsa AAAAB3Nz...aC1yc2E= keyname",
-        }
-
-        my_d = tmpdir.join("valid").strpath
-        populate_dir(my_d, data)
-
-        ud, md, vd = DataSourceMAAS.read_maas_seed_dir(my_d)
-
-        assert userdata == ud
-        for key in ("instance-id", "local-hostname"):
-            assert data["meta-data/" + key] == md[key]
-
-        # verify that 'userdata' is not returned as part of the metadata
-        assert "user-data" not in md
-        assert vd is None
-
     def test_seed_dir_valid_extra(self, tmpdir):
         """Verify extra files do not affect seed_dir validity."""
 

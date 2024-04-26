@@ -43,5 +43,5 @@ qemu-system-x86_64                                              \
 echo -e "\nTo reuse the image and config files, start the python webserver and "
 echo -e "virtual machine from $(pwd), which contains these files:\n$(ls -1)\n"
 
-# end the python server on exit
+# Terminate the python server gracefully on script exit
 trap "trap - SIGTERM && kill -- -$$" EXIT

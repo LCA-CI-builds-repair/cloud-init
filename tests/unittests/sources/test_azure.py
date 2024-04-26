@@ -1872,16 +1872,25 @@ scbus-1 on xpt0 bus 0
         ret = dsrc.get_data()
 
         self.assertTrue(ret)
-        ovf_env_path = os.path.join(self.waagent_d, "ovf-env.xml")
+import os
 
-        # The XML should not be same since the user password is redacted
-        on_disk_ovf = load_file(ovf_env_path)
-        self.xml_notequals(data["ovfcontent"], on_disk_ovf)
+# Define a function to load a file
+def load_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        return None
 
-        # Make sure that the redacted password on disk is not used by CI
-        self.assertNotEqual(
-            dsrc.cfg.get("password"), dsaz.DEF_PASSWD_REDACTION
-        )
+# Load OVF environment file and compare with data
+ovf_env_path = os.path.join(self.waagent_d, "ovf-env.xml")
+on_disk_ovf = load_file(ovf_env_path)
+self.xml_notequals(data["ovfcontent"], on_disk_ovf)
+
+# Ensure that the redacted password on disk is not used by CI
+self.assertNotEqual(
+    dsrc.cfg.get("password"), dsaz.DEF_PASSWD_REDACTION
+)
 
         # Make sure that the password was really encrypted
         et = ET.fromstring(on_disk_ovf)

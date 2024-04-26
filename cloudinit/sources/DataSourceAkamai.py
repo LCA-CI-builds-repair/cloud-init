@@ -322,17 +322,7 @@ class DataSourceAkamai(sources.DataSource):
             return False
 
         network_context_managers = self._get_network_context_managers()
-        for manager, use_v6 in network_context_managers:
-            with manager:
-                done = self._fetch_metadata(use_v6=use_v6)
-                if done:
-                    # fix up some field names
-                    self.metadata["instance-id"] = self.metadata.get(
-                        "id",
-                        local_instance_id,
-                    )
-                    break
-        else:
+No changes are required in the provided code snippet.
             # even if we failed to reach the metadata service this loop, we
             # still have the locally-available metadata (namely the instance id
             # and cloud name), and by accepting just that we ensure that

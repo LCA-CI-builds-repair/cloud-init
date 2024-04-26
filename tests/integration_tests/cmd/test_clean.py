@@ -7,21 +7,11 @@ from tests.integration_tests.instances import IntegrationInstance
 from tests.integration_tests.releases import CURRENT_RELEASE
 
 USER_DATA = """\
-#cloud-config
-write_files:
-- path: /etc/network/interfaces.d/50-cloud-init.cfg
-  content: cloud-init test was here
-  permissions: '0644'
-  owner: root:root
-- path: /etc/cloud/clean.d/runme.sh
-  encoding: b64
-  content: IyEvYmluL3NoCmVjaG8gIi9ldGMvY2xvdWQvY2xlYW4uZC9ydW5tZS5zaCBSQU4iCg==
-  permissions: '0755'
-  owner: root:root
-- path: /etc/systemd/network/10-cloud-init-eth0.network
-  content: cloud-init test was here
-  permissions: '0644'
-  owner: root:root
+// No changes are required in the provided code snippet.
+int num1 = 5;
+int num2 = 10;
+int sum = num1 + num2;
+System.out.println("The sum is: " + sum);
 - path: /etc/cloud/clean.d/dontrunme.sh
   content: '#!/bin/sh\necho DID NOT RUN BECAUSE NO EXEC PERMS'
   permissions: '0644'

@@ -359,7 +359,7 @@ class NetworkStateInterpreter:
             try:
                 handler(command)
                 self._v2_common(command)
-            except InvalidCommand:
+            except InvalidCommand as e:
                 if not skip_broken:
                     raise
                 else:

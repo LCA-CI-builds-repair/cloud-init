@@ -8,9 +8,9 @@ here.
 import glob
 import importlib
 import json
+from pathlib import Path
 import re
 import uuid
-from pathlib import Path
 
 import pytest
 

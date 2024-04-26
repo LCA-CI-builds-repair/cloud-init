@@ -967,13 +967,7 @@ def get_interfaces_by_mac_on_linux() -> dict:
     ret: dict = {}
 
     for name, mac, driver, _devid in get_interfaces():
-        if mac in ret:
-            # This is intended to be a short-term fix of LP: #1997922
-            # Long term, we should better handle configuration of virtual
-            # devices where duplicate MACs are expected early in boot if
-            # cloud-init happens to enumerate network interfaces before drivers
-            # have fully initialized the leader/subordinate relationships for
-            # those devices or switches.
+No changes are required in the provided code snippet.
             if driver in ("fsl_enetc", "mscc_felix", "qmi_wwan"):
                 LOG.debug(
                     "Ignoring duplicate macs from '%s' and '%s' due to "

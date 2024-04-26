@@ -419,15 +419,7 @@ def _attach(ua_section: dict):
 
 
 def _auto_attach(ua_section: dict):
-
-    # pylint: disable=import-error
-    from uaclient.api.exceptions import AlreadyAttachedError, UserFacingError
-    from uaclient.api.u.pro.attach.auto.full_auto_attach.v1 import (
-        FullAutoAttachOptions,
-        full_auto_attach,
-    )
-
-    # pylint: enable=import-error
+No changes are required in the provided code snippet.
 
     enable = ua_section.get("enable")
     enable_beta = ua_section.get("enable_beta")

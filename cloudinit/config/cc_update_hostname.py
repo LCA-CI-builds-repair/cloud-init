@@ -44,6 +44,7 @@ meta: MetaSchema = {
         # after boot cloud-init will no longer modify it.
         #
         # This default cloud-init behavior is equivalent to this cloud-config:
+        """
         preserve_hostname: false
         """
         ),

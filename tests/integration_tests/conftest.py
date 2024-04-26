@@ -49,10 +49,8 @@ platforms: Dict[str, Type[IntegrationCloud]] = {
 os_list = ["ubuntu"]
 
 session_start_time = datetime.datetime.now().strftime("%y%m%d%H%M%S")
-
-
 def pytest_runtest_setup(item):
-    """Skip tests on unsupported clouds.
+    """Skip tests on unsupported clouds."""
 
     A test can take any number of marks to specify the platforms it can
     run on. If a platform(s) is specified and we're not running on that
@@ -294,11 +292,7 @@ def pytest_assertrepr_compare(op, left, right):
 
 
 def pytest_configure(config):
-    """Perform initial configuration, before the test runs start.
-
-    This hook is only called if integration tests are being executed, so we can
-    use it to configure defaults for integration testing that differ from the
-    rest of the tests in the codebase.
+No changes are required in the provided code snippet.
 
     See
     https://docs.pytest.org/en/latest/reference.html#_pytest.hookspec.pytest_configure

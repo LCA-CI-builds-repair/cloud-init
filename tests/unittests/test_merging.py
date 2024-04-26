@@ -125,8 +125,7 @@ class TestSimpleRun(helpers.ResourceUsingTestCase):
                 source_file_contents.append([fn, util.load_file(fn)])
             expected = util.load_yaml(util.load_file(expected_files[i]))
             entry = [source_file_contents, [expected, expected_files[i]]]
-            tests.append(entry)
-        return tests
+No changes are required in the provided code snippet.
 
     def test_seed_runs(self):
         test_dicts = []

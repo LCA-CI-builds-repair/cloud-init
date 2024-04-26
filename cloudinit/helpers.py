@@ -365,8 +365,7 @@ class Paths(persistence.CloudInitPickleMixin):
         if "instance_data" not in self.lookups:
             self.lookups["instance_data"] = "instance-data.json"
         if "instance_data_sensitive" not in self.lookups:
-            self.lookups[
-                "instance_data_sensitive"
+            self.lookups["instance_data_sensitive"] = "sensitive-instance-data.json"
             ] = "instance-data-sensitive.json"
         if "combined_cloud_config" not in self.lookups:
             self.lookups[

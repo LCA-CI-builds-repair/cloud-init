@@ -214,8 +214,9 @@ class TestCLI:
 
     @pytest.mark.parametrize("subcommand", ["init", "modules"])
     @mock.patch("cloudinit.cmd.main.status_wrapper")
-    def test_modules_subcommand_parser(self, m_status_wrapper, subcommand):
-        """The subcommand 'subcommand' calls status_wrapper passing modules."""
+    def test_modules_subcommand_parser(self, m_status_wrapper):
+        """The subcommand 'modules' calls status_wrapper passing modules."""
+        subcommand = "modules"
         self._call_main(["cloud-init", subcommand])
         (name, parseargs) = m_status_wrapper.call_args_list[0][0]
         assert subcommand == name

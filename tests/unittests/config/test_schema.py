@@ -2563,7 +2563,7 @@ apt_reboot_if_required: Default: ``false``. Deprecated in version 22.2.\
                     Expected first line to be one of: #!, ## template: jinja, #cloud-boothook, #cloud-config, #cloud-config-archive, #cloud-config-jsonp, #include, #include-once, #part-handler
 
                     Error: Invalid schema: user-data
-
+No code snippet was provided for the file tests/unittests/config/test_schema.py.
                     """  # noqa: E501
                 ),
                 pytest.raises(SystemExit),

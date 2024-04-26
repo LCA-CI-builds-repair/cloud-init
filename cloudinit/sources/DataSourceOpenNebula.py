@@ -62,6 +62,9 @@ class DataSourceOpenNebula(sources.DataSource):
                     )
                 elif cdev.startswith("/dev"):
                     # util.mount_cb only handles passing a single argument
+                    pass
+            except SomeSpecificException as e:
+                handle_specific_exception(e)
                     # through to the wrapped function, so we have to partially
                     # apply the function to pass in `distro`.  See LP: #1884979
                     partially_applied_func = functools.partial(

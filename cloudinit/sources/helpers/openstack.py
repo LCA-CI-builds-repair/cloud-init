@@ -386,9 +386,9 @@ class ConfigDriveReader(BaseReader):
         else:
             try:
                 return util.load_json(self._path_read(path))
-            except Exception as e:
+            except JSONDecodeError as e:
                 raise BrokenMetadata(
-                    "Failed to process path %s: %s" % (path, e)
+                    f"Failed to process path {path}: {e}"
                 ) from e
 
     def read_v1(self):
@@ -413,17 +413,15 @@ class ConfigDriveReader(BaseReader):
                 path = found[name]
                 try:
                     contents = self._path_read(path)
-                except IOError as e:
-                    raise BrokenMetadata("Failed to read: %s" % path) from e
+                except FileNotFoundError as e:
+                    raise BrokenMetadata(f"Failed to read: {path}") from e
                 try:
                     # Disable not-callable pylint check; pylint isn't able to
                     # determine that every member of FILES_V1 has a callable in
                     # the appropriate position
                     md[key] = translator(contents)  # pylint: disable=E1102
-                except Exception as e:
-                    raise BrokenMetadata(
-                        "Failed to process path %s: %s" % (path, e)
-                    ) from e
+                except DataProcessingError as e:
+                    raise BrokenMetadata(f"Failed to process path {path}: {e}") from e
             else:
                 md[key] = copy.deepcopy(default)
 

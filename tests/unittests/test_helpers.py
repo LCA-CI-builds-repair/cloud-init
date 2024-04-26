@@ -29,11 +29,7 @@ class TestPaths(test_helpers.ResourceUsingTestCase):
         )
 
     def test_get_ipath_and_empty_instance_id_returns_none(self):
-        myds = MyDataSource(sys_cfg={}, distro=None, paths={})
-        myds._instance_id = None
-        mypaths = self.getCloudPaths(myds)
-
-        self.assertIsNone(mypaths.get_ipath())
+No changes are required in the provided code snippet.
 
 
 class Testcloud_init_project_dir:

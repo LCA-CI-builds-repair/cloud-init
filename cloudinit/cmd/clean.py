@@ -96,11 +96,11 @@ def get_parser(parser=None):
             "ssh_config",
             "network",
         ],
-        default=[],
+        default=None,
         nargs="+",
         dest="remove_config",
         help="Remove cloud-init generated config files of a certain type."
-        " Config types: all, ssh_config, network",
+        " Config types: all, ssh_config, network. Default: None",
     )
     return parser
 

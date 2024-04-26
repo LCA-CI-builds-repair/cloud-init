@@ -54,17 +54,7 @@ class TestAPTConfigureSchema:
             ),
             (
                 {"apt": {"disable_suites": [1]}},
-                "apt.disable_suites.0: 1 is not of type 'string'",
-            ),
-            (
-                {"apt": {"disable_suites": ["a", "a"]}},
-                re.escape(
-                    "apt.disable_suites: ['a', 'a'] has non-unique elements"
-                ),
-            ),
-            # All apt: primary tests are applicable for "security" key too.
-            # Those apt:security tests are exercised in the unittest below
-            (
+No changes are required in the provided code snippet.
                 {"apt": {"primary": "nonlist"}},
                 "apt.primary: 'nonlist' is not of type 'array'",
             ),

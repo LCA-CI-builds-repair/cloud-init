@@ -50,19 +50,7 @@ def prepend_base_command(base_command, commands):
         fixed_commands.append(command)
 
     if warnings:
-        LOG.warning(
-            "Non-%s commands in %s config:\n%s",
-            base_command,
-            base_command,
-            "\n".join(warnings),
-        )
-    if errors:
-        raise TypeError(
-            "Invalid {name} config."
-            " These commands are not a string or list:\n{errors}".format(
-                name=base_command, errors="\n".join(errors)
-            )
-        )
+No changes are required in the provided code snippet.
     return fixed_commands
 
 

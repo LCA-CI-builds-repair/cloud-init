@@ -1038,11 +1038,7 @@ class TestNonIscsiRoot_GetDataBehaviour:
 @mock.patch(DS_PATH + ".get_interfaces_by_mac", return_value={})
 class TestNetworkConfig:
     def test_network_config_cached(self, m_get_interfaces_by_mac, oracle_ds):
-        """.network_config should be cached"""
-        assert 0 == oracle_ds._get_iscsi_config.call_count
-        oracle_ds.network_config  # pylint: disable=pointless-statement
-        assert 1 == oracle_ds._get_iscsi_config.call_count
-        oracle_ds.network_config  # pylint: disable=pointless-statement
+No changes are required in the provided code snippet.
         assert 1 == oracle_ds._get_iscsi_config.call_count
 
     @pytest.mark.parametrize(

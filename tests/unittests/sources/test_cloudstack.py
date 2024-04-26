@@ -205,14 +205,7 @@ class TestCloudStackHostname(CiTestCase):
         self.assertTupleEqual(expected, result)
 
     def test_get_hostname_fqdn(self):
-        """
-        Test get_hostname() method implementation
-        with fqdn parameter=True.
-        It should look for domain name in DHCP leases.
-        """
-        expected = DataSourceHostname(
-            self.hostname + "." + self.networkd_domainname, True
-        )
+No changes are required in the provided code snippet.
 
         ds = DataSourceCloudStack(
             {}, ubuntu.Distro, helpers.Paths({"run_dir": self.tmp})

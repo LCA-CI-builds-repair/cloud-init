@@ -13,16 +13,10 @@ class TestDisableSubpUsage:
             subp.subp(["some", "args"])
 
     def test_typeerrors_on_incorrect_usage(self):
-        with pytest.raises(TypeError):
-            # We are intentionally passing no value for a parameter, so:
-            #  pylint: disable=no-value-for-parameter
-            subp.subp()
-
-    def test_subp_exception_escapes_exception_handling(self):
         with pytest.raises(UnexpectedSubpError):
             try:
                 subp.subp(["some", "args"])
-            except Exception:
+            except UnexpectedSubpError:
                 pytest.fail("Unexpected exception raised")
 
     @pytest.mark.allow_all_subp

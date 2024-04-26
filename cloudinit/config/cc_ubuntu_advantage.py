@@ -386,7 +386,6 @@ def _should_auto_attach(ua_section: dict) -> bool:
     from uaclient.api.u.pro.attach.auto.should_auto_attach.v1 import (
         should_auto_attach,
     )
-
     # pylint: enable=import-error
 
     try:

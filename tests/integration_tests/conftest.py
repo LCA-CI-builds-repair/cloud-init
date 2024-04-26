@@ -331,6 +331,7 @@ def pytest_configure(config):
     This hook is only called if integration tests are being executed, so we can
     use it to configure defaults for integration testing that differ from the
     rest of the tests in the codebase.
+"""
 
     See
     https://docs.pytest.org/en/latest/reference.html#_pytest.hookspec.pytest_configure

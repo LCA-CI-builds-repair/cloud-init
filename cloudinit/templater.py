@@ -47,15 +47,15 @@ MISSING_JINJA_PREFIX = "CI_MISSING_JINJA_VAR/"
 class JinjaSyntaxParsingException(TemplateSyntaxError):
     def __init__(
         self,
-        error: TemplateSyntaxError,
+        error_template: TemplateSyntaxError,
     ) -> None:
         super().__init__(
-            error.message or "unknown syntax error",
-            error.lineno,
-            error.name,
-            error.filename,
+            error_template.message or "unknown syntax error",
+            error_template.lineno,
+            error_template.name,
+            error_template.filename,
         )
-        self.source = error.source
+        self.source = error_template.source
 
     def __str__(self):
         """Avoid jinja2.TemplateSyntaxErrror multi-line __str__ format."""
@@ -139,7 +139,7 @@ def basic_render(content, params):
         return str(selected_params[key])
 
     return BASIC_MATCHER.sub(replacer, content)
-
+// Your code snippet here
 
 def detect_template(text):
     def jinja_render(content, params):

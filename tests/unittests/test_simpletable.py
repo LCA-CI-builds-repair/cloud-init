@@ -37,13 +37,36 @@ NET_DEVICE_TABLE = """\
 |   lo   | True |          ::1/128           |       .       |  host |         .         |
 +--------+------+----------------------------+---------------+-------+-------------------+"""  # noqa: E501
 ROUTE_IPV4_FIELDS = (
-    "Route",
-    "Destination",
-    "Gateway",
-    "Genmask",
-    "Interface",
-    "Flags",
-)
+    def __init__(self, fields, rows):
+        self.fields = fields
+        self.rows = rows
+
+    def _row(self, row):
+        """Returns a formatted row."""
+        return (
+            "|"
+            + "|".join(
+                [
+                    col.center(self.column_widths[i] + 2)
+                    for i, col in enumerate(row)
+                ]
+            )
+            + "|"
+        )
+
+    def __str__(self):
+        """Returns a string representation of the table with lines around.
+
+        +-----+-----+
+        | one | two |
+        +-----+-----+
+        |  1  |  2  |
+        |  01 |  10 |
+        +-----+-----+
+        """
+        lines = [self._hdiv(), self._row(self.fields), self._hdiv()]
+        lines += [self._row(r) for r in self.rows] + [self._hdiv()]
+        return "\n".join(lines)
 ROUTE_IPV4_ROWS = (
     ("0", "0.0.0.0", "172.31.0.1", "0.0.0.0", "ens3", "UG"),
     ("1", "169.254.0.0", "0.0.0.0", "255.255.0.0", "ens3", "U"),

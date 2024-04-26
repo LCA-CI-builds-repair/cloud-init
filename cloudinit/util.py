@@ -353,10 +353,9 @@ def read_conf(fname, *, instance_data_file=None) -> Dict:
 
 
 # Merges X lists, and then keeps the
-# unique ones, but orders by sort order
-# instead of by the original order
+# unique ones, preserving the original order
 def uniq_merge_sorted(*lists):
-    return sorted(uniq_merge(*lists))
+    return list(dict.fromkeys(itertools.chain(*lists)))
 
 
 # Merges X lists and then iterates over those
@@ -3103,7 +3102,7 @@ def udevadm_settle(exists=None, timeout=None):
         settle_cmd.extend(["--timeout=%s" % timeout])
 
     return subp.subp(settle_cmd)
-
+    return subp.subp(settle_cmd)
 
 def get_proc_ppid_linux(pid):
     """

@@ -262,7 +262,6 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
                 manager_type.from_config(
                     self._runner, self._cfg
                 ).install_packages(pkglist=packages)
-            )
 
         if uninstalled:
             raise PackageInstallerError(error_message % uninstalled)
@@ -634,10 +633,10 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         return False
 
     def get_default_user(self):
+    def get_default_user(self):
         return self.get_option("default_user")
 
     def add_user(self, name, **kwargs):
-        """
         Add a user to the system using standard GNU tools
 
         This should be overriden on distros where useradd is not desirable or

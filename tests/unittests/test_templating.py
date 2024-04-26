@@ -240,6 +240,7 @@ class TestJinjaSyntaxParsingException:
         ),
     )
     def test_functionality_for_various_syntax_errors(
+    def test_syntax_errors(
         self, line_no, replace_tuple, syntax_error
     ):
         """

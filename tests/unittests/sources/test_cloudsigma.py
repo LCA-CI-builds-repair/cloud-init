@@ -52,7 +52,7 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
 
         distro_cls = distros.fetch("ubuntu")
         distro = distro_cls("ubuntu", cfg={}, paths=self.paths)
-        self.datasource = DataSourceCloudSigma.DataSourceCloudSigma(
+        self.datasource = cloudsigma.DataSourceCloudSigma(
             sys_cfg={}, distro=distro, paths=self.paths
         )
         self.datasource.cepko = CepkoMock(SERVER_CONTEXT)
@@ -148,6 +148,6 @@ class DsLoads(test_helpers.TestCase):
         found = sources.list_sources(
             ["CloudSigma"],
             (sources.DEP_FILESYSTEM,),
-            ["cloudinit.sources"],
+            ["cloudsigma"],
         )
         self.assertEqual([DataSourceCloudSigma.DataSourceCloudSigma], found)

@@ -63,6 +63,3 @@ class SimpleTable:
         lines = [self._hdiv(), self._row(self.fields), self._hdiv()]
         lines += [self._row(r) for r in self.rows] + [self._hdiv()]
         return "\n".join(lines)
-
-    def get_string(self):
-        return self.__str__()

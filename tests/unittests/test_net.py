@@ -7368,9 +7368,9 @@ class TestReadInitramfsConfig(CiTestCase):
 
     def test_no_applicable_sources(self):
         sources = [
+            self._config_source_cls_mock(is_applicable=True),
             self._config_source_cls_mock(is_applicable=False),
-            self._config_source_cls_mock(is_applicable=False),
-            self._config_source_cls_mock(is_applicable=False),
+            self._config_source_cls_mock(is_applicable=True),
         ]
         with mock.patch(
             "cloudinit.net.cmdline._INITRAMFS_CONFIG_SOURCES", sources

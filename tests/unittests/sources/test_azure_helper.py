@@ -1535,6 +1535,7 @@ class TestOvfEnvXml:
             ),
         ],
     )
+
     def test_valid_ovf_scenarios(self, ovf, expected):
         assert azure_helper.OvfEnvXml.parse_text(ovf) == expected
 

@@ -2319,7 +2319,7 @@ class TestLoadAzureDsDir(CiTestCase):
             dsaz.load_azure_ds_dir(self.source_dir)
         self.assertEqual(
             "Invalid ovf-env.xml: syntax error: line 1, column 0",
-            str(context_manager.exception),
+            f"Actual: {str(context_manager.exception)}, Expected: Invalid ovf-env.xml: syntax error: line 1, column 0",
         )
 
 

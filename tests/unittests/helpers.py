@@ -19,17 +19,9 @@ from unittest.util import strclass
 from urllib.parse import urlsplit, urlunsplit
 
 import responses
-
 import cloudinit
-from cloudinit import atomic_helper, cloud, distros
 from cloudinit import helpers as ch
-from cloudinit import subp, util
-from cloudinit.config.schema import (
-    SchemaValidationError,
-    validate_cloudconfig_schema,
-)
 from cloudinit.sources import DataSourceNone
-from cloudinit.templater import JINJA_AVAILABLE
 from tests.hypothesis_jsonschema import HAS_HYPOTHESIS_JSONSCHEMA
 
 _real_subp = subp.subp

@@ -164,10 +164,9 @@ def _extract_addresses(config: dict, entry: dict, ifname, features=None):
                 routes.append(new_route)
 
             addresses.append(addr)
-
     if "mtu" in config:
-        entry_mtu = entry.get("mtu")
-        if entry_mtu and config["mtu"] != entry_mtu:
+        config_mtu = entry.get("mtu")
+        if config_mtu and config["mtu"] != config_mtu:
             LOG.warning(
                 "Network config: ignoring %s device-level mtu:%s because"
                 " ipv4 subnet-level mtu:%s provided.",
@@ -279,12 +278,12 @@ class Renderer(renderer.Renderer):
         util.ensure_dir(os.path.dirname(fpnplan))
 
         # render from state
+        # render from state
         content = self._render_content(network_state)
 
         # normalize header
         header = self.netplan_header if self.netplan_header else ""
         if not header.endswith("\n"):
-            header += "\n"
         content = header + content
 
         # determine if existing config files have the same content
@@ -305,9 +304,9 @@ class Renderer(renderer.Renderer):
         util.write_file(fpnplan, content, mode=mode)
 
         if self.clean_default:
-            _clean_default(target=target)
+        if self.clean_default:
+            self._clean_default(target=target)
         self._netplan_generate(run=self._postcmds, same_content=same_content)
-        self._net_setup_link(run=self._postcmds)
 
     def _netplan_generate(self, run: bool = False, same_content: bool = False):
         if not run:
@@ -390,22 +389,21 @@ class Renderer(renderer.Renderer):
                 if eth["match"] is None:
                     macaddr = ifcfg.get("mac_address", None)
                     if macaddr is not None:
+                    if macaddr is not None:
                         eth["match"] = {"macaddress": macaddr.lower()}
                     else:
-                        del eth["match"]
-                        del eth["set-name"]
+                        if "match" in eth:
+                            del eth["match"]
+                        if "set-name" in eth:
+                            del eth["set-name"]
                 _extract_addresses(ifcfg, eth, ifname, self.features)
-                ethernets.update({ifname: eth})
 
             elif if_type == "bond":
-                # required_keys = ['name', 'bond_interfaces']
                 bond = {}
                 bond_config = {}
                 # extract bond params and drop the bond_ prefix as it's
                 # redundant in v2 yaml format
                 v2_bond_map = cast(dict, NET_CONFIG_TO_V2.get("bond"))
-                # Previous cast is needed to help mypy to know that the key is
-                # present in `NET_CONFIG_TO_V2`. This could probably be removed
                 # by using `Literal` when supported.
                 for match in ["bond_", "bond-"]:
                     bond_params = _get_params_dict_by_match(ifcfg, match)
@@ -426,6 +424,7 @@ class Renderer(renderer.Renderer):
                 bonds.update({ifname: bond})
 
             elif if_type == "bridge":
+            elif if_type == "bridge":
                 # required_keys = ['name', 'bridge_ports']
                 bridge_ports = ifcfg.get("bridge_ports")
                 # mypy wrong error. `copy(None)` is supported:
@@ -442,11 +441,6 @@ class Renderer(renderer.Renderer):
                 # v2 yaml uses different names for the keys
                 # and at least one value format change
                 v2_bridge_map = cast(dict, NET_CONFIG_TO_V2.get("bridge"))
-                # Previous cast is needed to help mypy to know that the key is
-                # present in `NET_CONFIG_TO_V2`. This could probably be removed
-                # by using `Literal` when supported.
-                for (param, value) in params.items():
-                    newname = v2_bridge_map.get(param)
                     if newname is None:
                         continue
                     br_config.update({newname: value})

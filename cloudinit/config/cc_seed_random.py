@@ -90,7 +90,7 @@ def _decode(data, encoding=None):
 
 
 def handle_random_seed_command(command, required, update_env):
-    if not command and required:
+    if required and not command:
         raise ValueError("no command found but required=true")
     elif not command:
         LOG.debug("no command provided")

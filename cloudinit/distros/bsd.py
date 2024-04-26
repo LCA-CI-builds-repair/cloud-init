@@ -109,17 +109,18 @@ class BSD(distros.Distro):
             pkgs = []
 
         if command == "install":
-            cmd = self.pkg_cmd_install_prefix
-        elif command == "remove":
-            cmd = self.pkg_cmd_remove_prefix
-        elif command == "update":
-            if not self.pkg_cmd_update_prefix:
-                return
-            cmd = self.pkg_cmd_update_prefix
-        elif command == "upgrade":
-            if not self.pkg_cmd_upgrade_prefix:
-                return
-            cmd = self.pkg_cmd_upgrade_prefix
+if command == "install":
+    cmd = self.pkg_cmd_install_prefix
+elif command == "remove":
+    cmd = self.pkg_cmd_remove_prefix
+elif command == "update":
+    if not self.pkg_cmd_update_prefix:
+        return
+    cmd = self.pkg_cmd_update_prefix
+elif command == "upgrade":
+    if not self.pkg_cmd_upgrade_prefix:
+        return
+    cmd = self.pkg_cmd_upgrade_prefix
 
         if args and isinstance(args, str):
             cmd.append(args)

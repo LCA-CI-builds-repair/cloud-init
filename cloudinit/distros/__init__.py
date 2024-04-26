@@ -152,10 +152,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     # The children classes should override this with their dhcp leases
     # directory
     dhclient_lease_directory: str | None = None
-    # A regex to match DHCP lease file(s)
-    # The children classes should override this with a regex matching
-    # their lease file name format
-    dhclient_lease_file_regex: str | None = None
+    dhclient_lease_file_regex: Optional[str] = None
 
     def __init__(self, name, cfg, paths):
         self._paths = paths
@@ -217,10 +214,8 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
                                 "Cannot install packages under '%s' as it is "
                                 "not a supported package manager!",
                                 package_manager,
-                            )
-            else:
-                generic_packages.add(self._validate_entry(entry))
-        return dict(packages_by_manager), generic_packages
+                                f"Cannot install packages under '{package_manager}' as it is "
+                                "not a supported package manager!",
 
     def install_packages(self, pkglist: PackageList):
         error_message = (
@@ -418,7 +413,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
             )
 
         network_state = parse_net_config_data(netconfig, renderer=renderer)
-        self._write_network_state(network_state, renderer)
+            return self._apply_network_from_network_config(
 
         # Now try to bring them up
         if bring_up:

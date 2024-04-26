@@ -428,13 +428,10 @@ class Renderer(renderer.Renderer):
             elif if_type == "bridge":
                 # required_keys = ['name', 'bridge_ports']
                 bridge_ports = ifcfg.get("bridge_ports")
-                # mypy wrong error. `copy(None)` is supported:
-                ports = sorted(copy.copy(bridge_ports))  # type: ignore
-                bridge: dict = {
+                ports = sorted(bridge_ports)
+                bridge: dict[str, List[str]] = {
                     "interfaces": ports,
                 }
-                # extract bridge params and drop the bridge prefix as it's
-                # redundant in v2 yaml format
                 match_prefix = "bridge_"
                 params = _get_params_dict_by_match(ifcfg, match_prefix)
                 br_config = {}

@@ -307,6 +307,7 @@ def transport_vmware_guestinfo():
         except subp.ProcessExecutionError as error:
             if error.exit_code != 1:
                 LOG.warning("%s exited with code %d", rpctool, error.exit_code)
+            return None  # Ensure a consistent return in exception handling
             raise error
 
     try:

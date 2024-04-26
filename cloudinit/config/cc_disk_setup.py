@@ -518,7 +518,7 @@ def check_partition_gpt_layout(device, layout):
     codes = [line.strip().split()[5] for line in out_lines]
     cleaned = []
 
-    # user would expect a code '83' to be Linux, but sgdisk outputs 8300.
+    # Convert sgdisk output codes to user-friendly codes
     for code in codes:
         if len(code) == 4 and code.endswith("00"):
             code = code[0:2]

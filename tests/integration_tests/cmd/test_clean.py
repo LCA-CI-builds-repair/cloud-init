@@ -43,8 +43,7 @@ class TestCleanCommand:
             f"Output:\n{result}"
         )
         result = class_client.execute("cloud-init clean")
-        assert (
-            result.ok
+        assert result.ok
         ), "non-zero exit on cloud-init clean runparts of /etc/cloud/clean.d"
         # Log files are not removed without --logs
         log_paths = (

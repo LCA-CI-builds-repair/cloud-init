@@ -111,7 +111,7 @@ class Networking(metaclass=abc.ABCMeta):
             settle process as is required for the given DeviceName to be
             present in the system.  (This may include skipping the settle
             process entirely, if the device already exists.)
-        :type exists: Optional[DeviceName]
+        :type exists: Optional[DeviceName]:
         """
 
     def wait_for_physdevs(

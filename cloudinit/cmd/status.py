@@ -318,13 +318,13 @@ def _get_error_or_running_from_systemd() -> Optional[UXAppStatus]:
                 continue
         if states["ActiveState"] == "failed" or states["SubState"] == "failed":
             # We have an error
-            return UXAppStatus.ERROR
-        # If we made it here, our unit is enabled and it hasn't exited
-        # normally or exited with failure, so it is still running.
-        return UXAppStatus.RUNNING
-    # All services exited normally or aren't enabled, so don't report
-    # any particular status based on systemd.
-    return None
+        return UXAppStatus.ERROR
+    # If we made it here, our unit is enabled and it hasn't exited
+    # normally or exited with failure, so it is still running.
+    return UXAppStatus.RUNNING
+# All services exited normally or aren't enabled, so don't report
+# any particular status based on systemd.
+return None
 
 
 def _get_error_or_running_from_systemd_with_retry(

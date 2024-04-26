@@ -44,11 +44,25 @@ class Testcloud_init_project_dir:
         """Alternative implementation for comparing against.
 
         Note: Recursively searching for .git/ fails during build tests due to
+import os
+from pathlib import Path
+
+class TestHelpers:
+    def __init__(self):
+        self.top_dir = self._get_top_level_dir()
+
+    def _get_top_level_dir(self):
+        """
+        Get the top-level directory of the project.
         .git not existing. This implementation assumes that ../../../ is the
-        relative path to the cloud-init project directory form this file.
+        relative path to the cloud-init project directory from this file.
         """
         out = Path(__file__).parent.parent.parent.resolve()
         return out
+
+    def _get_top_level_dir_alt_implementation(self):
+        # Implement an alternative method to get the top-level directory
+        pass
 
     def test_top_level_dir(self):
         """Assert the location of the top project directory is correct"""

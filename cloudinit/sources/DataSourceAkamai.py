@@ -72,7 +72,8 @@ class DataSourceAkamai(sources.DataSource):
                     {},
                 ),
                 BUILTIN_DS_CONFIG,
-            ],
+            ]
+        )
         )
 
     def _build_url(self, path_name: str, use_v6: bool = False) -> str:
@@ -322,7 +323,6 @@ class DataSourceAkamai(sources.DataSource):
             return False
 
         network_context_managers = self._get_network_context_managers()
-        for manager, use_v6 in network_context_managers:
             with manager:
                 done = self._fetch_metadata(use_v6=use_v6)
                 if done:
@@ -332,6 +332,9 @@ class DataSourceAkamai(sources.DataSource):
                         local_instance_id,
                     )
                     break
+        else:
+            # Handle the case when metadata retrieval is not successful
+            pass
         else:
             # even if we failed to reach the metadata service this loop, we
             # still have the locally-available metadata (namely the instance id

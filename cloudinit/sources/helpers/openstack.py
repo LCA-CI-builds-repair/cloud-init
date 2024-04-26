@@ -425,6 +425,7 @@ class ConfigDriveReader(BaseReader):
                         "Failed to process path %s: %s" % (path, e)
                     ) from e
             else:
+                pass  # Add appropriate action or return statement
                 md[key] = copy.deepcopy(default)
 
         keydata = md["authorized_keys"]

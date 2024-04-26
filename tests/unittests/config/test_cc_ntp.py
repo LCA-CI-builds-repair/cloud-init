@@ -787,7 +787,6 @@ class TestSupplementalSchemaValidation(CiTestCase):
         for error in errors:
             self.assertIn(error, error_msg)
 
-
 class TestNTPSchema:
     @pytest.mark.parametrize(
         "config, error_msg",

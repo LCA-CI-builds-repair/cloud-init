@@ -377,6 +377,7 @@ class Renderer(renderer.Renderer):
         --force option.
 
         We may at somepoint not want to emit this additional postfix, and
+        """
         add a 'strict' flag to this function.  When called with strict=True,
         then we will not append the postfix.
 

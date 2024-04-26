@@ -1,5 +1,4 @@
 """Global conftest.py
-
 This conftest is used for unit tests in ``cloudinit/`` and ``tests/unittests/``
 as well as the integration tests in ``tests/integration_tests/``.
 
@@ -39,6 +38,7 @@ class _FixtureUtils:
     """
 
     @staticmethod
+    @staticmethod
     def closest_marker_args_or(request, marker_name: str, default):
         """Get the args for closest ``marker_name`` or return ``default``
 
@@ -48,8 +48,7 @@ class _FixtureUtils:
             The name of the marker to look for
         :param default:
             The value to return if ``marker_name`` is not found.
-
-        :return:
+        """
             The args for the closest ``marker_name`` marker, or ``default``
             if no such marker is found.
         """
@@ -63,10 +62,17 @@ class _FixtureUtils:
         return default
 
     @staticmethod
+    @staticmethod
     def closest_marker_first_arg_or(request, marker_name: str, default):
         """Get the first arg for closest ``marker_name`` or return ``default``
 
-        This is a convenience wrapper around closest_marker_args_or, see there
+        :param request:
+            A pytest request, as passed to a fixture.
+        :param marker_name:
+            The name of the marker to look for
+        :param default:
+            The value to return if ``marker_name`` is not found.
+        """
         for full details.
         """
         result = _FixtureUtils.closest_marker_args_or(
@@ -93,11 +99,12 @@ def disable_subp_usage(request, fixture_utils):
     Across all (pytest) tests, ensure that subp.subp is not invoked.
 
     Note that this can only catch invocations where the ``subp`` module is
-    imported and ``subp.subp(...)`` is called.  ``from cloudinit.subp import
-    subp`` imports happen before the patching here (or the CiTestCase
-    monkey-patching) happens, so are left untouched.
-
-    While ``disable_subp_usage`` unconditionally patches
+    patching (i.e. the mock created for that patch call will replace the mock
+    created by ``disable_subp_usage``), allowing tests to be written normally.
+    One important exception: if ``autospec=True`` is passed to such an
+    overriding patch call it will fail: autospeccing introspects the object
+    being patched and as ``subp.subp`` will always be a mock when that
+    """
     ``cloudinit.subp.subp``, any test-local patching will override this
     patching (i.e. the mock created for that patch call will replace the mock
     created by ``disable_subp_usage``), allowing tests to be written normally.
@@ -162,11 +169,12 @@ def disable_subp_usage(request, fixture_utils):
             )
 
     else:
-        # Look this up before our patch is in place, so we have access to
-        # the real implementation in side_effect
-        real_subp = subp.subp
-
-        def side_effect(args, *other_args, **kwargs):
+                raise UnexpectedSubpError(
+                    "Unexpectedly used subp.subp to call {} (allowed:"
+                    " {})".format(cmd, ",".join(allow_subp_for))
+                )
+            return real_subp(args, *other_args, **kwargs)
+        """
             cmd = args[0]
             if cmd not in allow_subp_for:
                 raise UnexpectedSubpError(
@@ -176,14 +184,6 @@ def disable_subp_usage(request, fixture_utils):
             return real_subp(args, *other_args, **kwargs)
 
     with mock.patch("cloudinit.subp.subp", autospec=True) as m_subp:
-        m_subp.side_effect = side_effect
-        yield
-
-
-@pytest.fixture(scope="session")
-def fixture_utils():
-    """Return a namespace containing fixture utility functions.
-
     See :py:class:`_FixtureUtils` for further details."""
     return _FixtureUtils
 
@@ -210,6 +210,15 @@ def paths(tmpdir):
     return helpers.Paths(dirs)
 
 
+@pytest.fixture(autouse=True, scope="session")
+def monkeypatch_system_info():
+    def my_system_info():
+        return {
+            "platform": "invalid",
+            "system": "invalid",
+            "release": "invalid",
+            "python": "invalid",
+        }
 @pytest.fixture(autouse=True, scope="session")
 def monkeypatch_system_info():
     def my_system_info():

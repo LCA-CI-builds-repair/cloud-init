@@ -665,7 +665,6 @@ class TestReadMetadata:
             assert expected == lxd.read_metadata(metadata_keys=metadata_keys)
         for log in logs:
             assert log in caplog.text
-
     @pytest.mark.parametrize(
         "metadata_keys, expected_get_urls",
         [

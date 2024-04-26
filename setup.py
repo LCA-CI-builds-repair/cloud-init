@@ -60,6 +60,7 @@ def render_tmpl(template, mode=None, is_yaml=False):
     that files are different outside of the debian directory."""
 
     # newer versions just use install.
+    """
     if "install" not in sys.argv:
         return template
 
@@ -81,7 +82,6 @@ def render_tmpl(template, mode=None, is_yaml=False):
     if VARIANT:
         cmd_variant = ["--variant", VARIANT]
     if PREFIX:
-        cmd_prefix = ["--prefix", PREFIX]
     subprocess.run(
         [
             sys.executable,
@@ -99,6 +99,8 @@ def render_tmpl(template, mode=None, is_yaml=False):
     return os.path.join(os.path.basename(tmpd), bname)
 
 
+# User can set the variant for template rendering
+    """
 # User can set the variant for template rendering
 for a in sys.argv:
     if a.startswith("--distro"):
@@ -188,8 +190,6 @@ elif os.path.isfile("/etc/system-release-cpe"):
         cpe_data = f.read().rstrip().split(":")
 
         if cpe_data[1] == "\o":  # noqa: W605
-            # URI formatted CPE
-            inc = 0
         else:
             # String formatted CPE
             inc = 1
@@ -220,6 +220,10 @@ class MyEggInfo(egg_info):
 
 # TODO: Is there a better way to do this??
 class InitsysInstallData(install):
+    # Add necessary content here
+    """
+# TODO: Is there a better way to do this??
+class InitsysInstallData(install):
     init_system = None
     user_options = install.user_options + [
         # This will magically show up in member variable 'init_sys'
@@ -247,10 +251,6 @@ class InitsysInstallData(install):
             self.init_system = ["systemd"]
 
         bad = [f for f in self.init_system if f not in INITSYS_TYPES]
-        if len(bad) != 0:
-            raise DistutilsError("Invalid --init-system: %s" % ",".join(bad))
-
-        for system in self.init_system:
             # add data files for anything that starts with '<system>.'
             datakeys = [
                 k for k in INITSYS_ROOTS if k.partition(".")[0] == system
@@ -264,6 +264,11 @@ class InitsysInstallData(install):
         self.distribution.reinitialize_command("install_data", True)
 
 
+if not in_virtualenv():
+    USR = "/" + USR
+    ETC = "/" + ETC
+    USR_LIB_EXEC = "/" + USR_LIB_EXEC
+    """
 if not in_virtualenv():
     USR = "/" + USR
     ETC = "/" + ETC

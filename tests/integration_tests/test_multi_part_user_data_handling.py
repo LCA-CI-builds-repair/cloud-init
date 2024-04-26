@@ -25,8 +25,6 @@ FILES = [
 ]
 
 USER_DATA = create_mime_message(FILES)[0].as_string()
-
-
 CLOUD_CONFIG_INVALID_YAML = """\
 #cloud-config
 ssh_import_id: [*]

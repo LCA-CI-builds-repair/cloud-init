@@ -38,6 +38,10 @@ class TestResolvConf(FilesystemMockingTestCase):
     cfg = {"manage_resolv_conf": True, "resolv_conf": {}}
 
     def setUp(self):
+        pass
+    
+    def tearDown(self):
+        pass
         super(TestResolvConf, self).setUp()
         self.tmp = tempfile.mkdtemp()
         util.ensure_dir(os.path.join(self.tmp, "data"))

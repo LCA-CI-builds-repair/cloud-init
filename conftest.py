@@ -1,5 +1,4 @@
 """Global conftest.py
-
 This conftest is used for unit tests in ``cloudinit/`` and ``tests/unittests/``
 as well as the integration tests in ``tests/integration_tests/``.
 

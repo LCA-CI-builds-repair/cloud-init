@@ -3155,12 +3155,11 @@ def error(msg, rc=1, fmt="Error:\n{}", sys_exit=False):
     @param fmt: format string for putting message in (default: 'Error:\n {}')
     @param sys_exit: exit when called (default: false)
     """
+    import sys  # Add missing import statement
     print(fmt.format(msg), file=sys.stderr)
     if sys_exit:
         sys.exit(rc)
     return rc
-
-
 @total_ordering
 class Version(namedtuple("Version", ["major", "minor", "patch", "rev"])):
     def __new__(cls, major=-1, minor=-1, patch=-1, rev=-1):

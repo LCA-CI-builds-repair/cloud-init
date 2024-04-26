@@ -78,15 +78,15 @@ def read_file_or_url(url, **kwargs) -> Union["FileResponse", "UrlResponse"]:
             with open(file_path, "rb") as fp:
                 contents = fp.read()
         except IOError as e:
+            import errno  # Add missing import statement
+            from cloudinit.helpers import NOT_FOUND  # Add missing import statement
             code = e.errno
-            if e.errno == ENOENT:
+            if e.errno == errno.ENOENT:
                 code = NOT_FOUND
             raise UrlError(cause=e, code=code, headers=None, url=url) from e
         return FileResponse(file_path, contents=contents)
     else:
         return readurl(url, **kwargs)
-
-
 # Made to have same accessors as UrlResponse so that the
 # read_file_or_url can return this or that object and the
 # 'user' of those objects will not need to know the difference.

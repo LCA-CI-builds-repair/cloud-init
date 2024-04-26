@@ -124,6 +124,7 @@ class TestMAASDataSource:
             return DataSourceMAAS.read_maas_seed_url(seed, version=version)
 
     def test_seed_url_valid(self, tmpdir):
+        pass
         """Verify that valid seed_url is read as such."""
         valid = {
             "meta-data/instance-id": "i-instanceid",

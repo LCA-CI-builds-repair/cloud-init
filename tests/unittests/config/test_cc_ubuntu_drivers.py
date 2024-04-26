@@ -30,8 +30,6 @@ OLD_UBUNTU_DRIVERS_ERROR_STDERR = (
 # values for all parameters.  Instead of annotating every single call, we
 # disable it for the entire module:
 #  pylint: disable=no-value-for-parameter
-
-
 @pytest.mark.parametrize(
     "cfg_accepted,install_gpgpu",
     [

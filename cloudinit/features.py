@@ -95,3 +95,4 @@ def get_features() -> Dict[str, bool]:
         for k in sys.modules["cloudinit.features"].__dict__.keys()
         if re.match(r"^[_A-Z0-9]+$", k)
     }
+    }

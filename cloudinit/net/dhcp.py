@@ -50,6 +50,7 @@ JSON
     log err "Not supported"
     exit 1
     ;;
+esac
     leasefail | nak)
     log err "configuration failed: $1: $message"
     exit 1

@@ -58,7 +58,6 @@ class TestMAASDataSource:
 
         # additional files should not just appear as keys in metadata atm
         assert "foo" not in md
-
     def test_seed_dir_invalid(self, tmpdir):
         """Verify that invalid seed_dir raises MAASSeedDirMalformed."""
 

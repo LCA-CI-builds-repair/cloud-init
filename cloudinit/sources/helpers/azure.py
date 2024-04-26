@@ -613,53 +613,6 @@ class OpenSSLManager:
                 keys[fingerprint] = ssh_key
                 current = []
         return keys
-
-
-class GoalStateHealthReporter:
-
-    HEALTH_REPORT_XML_TEMPLATE = textwrap.dedent(
-        """\
-        <?xml version="1.0" encoding="utf-8"?>
-        <Health xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-          <GoalStateIncarnation>{incarnation}</GoalStateIncarnation>
-          <Container>
-            <ContainerId>{container_id}</ContainerId>
-            <RoleInstanceList>
-              <Role>
-                <InstanceId>{instance_id}</InstanceId>
-                <Health>
-                  <State>{health_status}</State>
-                  {health_detail_subsection}
-                </Health>
-              </Role>
-            </RoleInstanceList>
-          </Container>
-        </Health>
-        """
-    )
-
-    HEALTH_DETAIL_SUBSECTION_XML_TEMPLATE = textwrap.dedent(
-        """\
-        <Details>
-          <SubStatus>{health_substatus}</SubStatus>
-          <Description>{health_description}</Description>
-        </Details>
-        """
-    )
-
-    PROVISIONING_SUCCESS_STATUS = "Ready"
-    PROVISIONING_NOT_READY_STATUS = "NotReady"
-    PROVISIONING_FAILURE_SUBSTATUS = "ProvisioningFailed"
-
-    HEALTH_REPORT_DESCRIPTION_TRIM_LEN = 512
-
-    def __init__(
-        self,
-        goal_state: GoalState,
-        azure_endpoint_client: AzureEndpointHttpClient,
-        endpoint: str,
-    ) -> None:
         """Creates instance that will report provisioning status to an endpoint
 
         @param goal_state: An instance of class GoalState that contains
@@ -671,6 +624,9 @@ class GoalStateHealthReporter:
             will be sent to
         @return: Instance of class GoalStateHealthReporter
         """
+        import textwrap
+        from cloudinit.sources.helpers.goalstate import GoalState
+
         self._goal_state = goal_state
         self._azure_endpoint_client = azure_endpoint_client
         self._endpoint = endpoint
@@ -718,6 +674,11 @@ class GoalStateHealthReporter:
         self,
         incarnation: str,
         container_id: str,
+        instance_id: str,
+        status: str,
+        substatus: str,
+        description: str,
+    ) -> str:
         instance_id: str,
         status: str,
         substatus=None,

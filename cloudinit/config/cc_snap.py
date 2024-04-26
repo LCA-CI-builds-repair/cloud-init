@@ -40,10 +40,10 @@ meta: MetaSchema = {
 
         The ``assertions`` configuration option is a dictionary or list of
         properly-signed snap assertions which will run before any snap
-        ``commands``. They will be added to snapd's assertion database by
-        invoking ``snap ack <aggregate_assertion_file>``.
+        commands. They will be added to snapd's assertion database by
+        invoking snap ack <aggregate_assertion_file>.
 
-        Snap ``commands`` is a dictionary or list of individual snap
+        Snap commands is a dictionary or list of individual snap
         commands to run on the target system. These commands can be used to
         create snap users, install snaps and provide snap configuration.
 
@@ -162,6 +162,7 @@ def run_commands(commands):
         commands = [v for _, v in sorted(commands.items())]
     elif not isinstance(commands, list):
         raise TypeError(
+        # Add a missing closing parenthesis here to complete the statement
             "commands parameter was not a list or dict: {commands}".format(
                 commands=commands
             )

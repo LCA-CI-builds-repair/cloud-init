@@ -56,9 +56,8 @@ JSON
     ;;
     *)
     echo "$0: Unknown udhcpc command: $1" >&2
-    exit 1
-    ;;
 esac
+exit 1
 """
 
 

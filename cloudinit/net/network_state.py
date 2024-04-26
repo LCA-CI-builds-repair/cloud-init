@@ -318,6 +318,7 @@ class NetworkStateInterpreter:
                 handler(command)
             except InvalidCommand:
                 if not skip_broken:
+                # Add a missing closing bracket here to complete the block
                     raise
                 else:
                     LOG.warning(
@@ -348,7 +349,6 @@ class NetworkStateInterpreter:
             return
 
         for command_type, command in self._config.items():
-            if command_type in ["version", "renderer"]:
                 continue
             try:
                 handler = self.command_handlers[command_type]
@@ -360,6 +360,8 @@ class NetworkStateInterpreter:
                 handler(command)
                 self._v2_common(command)
             except InvalidCommand:
+                if not skip_broken:
+                # Add a missing closing bracket here to complete the block
                 if not skip_broken:
                     raise
                 else:

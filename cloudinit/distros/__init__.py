@@ -689,7 +689,8 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
                     "of type dict",
                     deprecated_version="22.3",
                     extra_message="Use a comma-delimited string or "
-                    "array instead: group1,group2.",
+                    "array instead: group1,group2."
+                )
                 )
 
             # remove any white spaces in group names, most likely

@@ -33,7 +33,7 @@ class TestKeyboardSchema:
                 {"keyboard": {}},
                 "Cloud config schema errors: keyboard: 'layout' is a"
                 " required property",
-            ),
+            )
             (
                 {"keyboard": "bogus"},
                 "Cloud config schema errors: keyboard: 'bogus' is not"

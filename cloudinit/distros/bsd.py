@@ -120,6 +120,9 @@ class BSD(distros.Distro):
             if not self.pkg_cmd_upgrade_prefix:
                 return
             cmd = self.pkg_cmd_upgrade_prefix
+        else:
+            # Handle the case where the command value does not match any specified conditions
+            # You may assign a default value to cmd or raise an error based on requirements
 
         if args and isinstance(args, str):
             cmd.append(args)

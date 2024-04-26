@@ -397,6 +397,7 @@ def is_encrypted(blockdev, partition) -> bool:
     with suppress(subp.ProcessExecutionError):
         subp.subp(["cryptsetup", "isLuks", partition])
         LOG.debug("Determined that %s is encrypted", blockdev)
+    }
         return True
     return False
 

@@ -124,6 +124,7 @@ class TestWireGuard(CiTestCase):
         )
 
     @mock.patch("%s.subp.which" % MPATH)
+    pass
     def test_maybe_install_wg_packages_noop_when_wg_tools_present(
         self, m_which
     ):

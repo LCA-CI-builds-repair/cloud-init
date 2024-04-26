@@ -154,9 +154,8 @@ class SystemctlReader:
 
         :return: timestamp as a float
         """
-        # subp has 2 ways to fail: it either fails and throws an exception,
-        # or returns an error code. Raise an exception here in order to make
-        # sure both scenarios throw exceptions
+        Ensure both scenarios of subp failure (exception or error code) raise exceptions.
+        """
         if self.failure:
             raise RuntimeError(
                 "Subprocess call to systemctl has failed, "

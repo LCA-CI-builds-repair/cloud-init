@@ -605,6 +605,7 @@ class TestDsIdentify(DsIdentifyBase):
         self._test_ds_found("IBMCloud-config-2")
 
     def test_ibmcloud_os_code_different_uuid(self):
+        pass
         """IBM cloud config-2 disks must be explicit match on UUID.
 
         If the UUID is not 9796-932E then we actually expect ConfigDrive."""

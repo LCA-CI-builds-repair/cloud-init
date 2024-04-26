@@ -54,19 +54,15 @@ EXISTING_INSTANCE_ID: Optional[str] = None
 
 # Can be any of the following:
 # NONE
-#   Don't modify the target environment at all. This will run
-#   cloud-init with whatever code was baked into the image
+#   Do not modify the target environment. Run cloud-init with the code baked into the image.
 # IN_PLACE
-#   LXD CONTAINER only. Mount the source code as-is directly into
-#   the container to override the pre-existing cloudinit module. This
-#   won't work for non-local LXD remotes and won't run any installation
-#   code.
+#   Applicable to LXD CONTAINER only. Mount the source code directly into the container to override the pre-existing cloudinit module. This method does not work for non-local LXD remotes and does not run any installation code.
 # PROPOSED
-#   Install from the Ubuntu proposed repo
+#   Install cloud-init from the Ubuntu proposed repository.
 # UPGRADE
-#   Upgrade cloud-init to the version in the Ubuntu archive
+#   Upgrade cloud-init to the version available in the Ubuntu archive.
 # <ppa repo>, e.g., ppa:cloud-init-dev/proposed
-#   Install from a PPA. It MUST start with 'ppa:'
+#   Install from a PPA repository. The repository URL must start with 'ppa:'.
 # <file path>
 #   A path to a valid package to be uploaded and installed
 CLOUD_INIT_SOURCE = "NONE"

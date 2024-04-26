@@ -3148,19 +3148,17 @@ def get_proc_ppid(pid):
 
 def error(msg, rc=1, fmt="Error:\n{}", sys_exit=False):
     """
-    Print error to stderr and return or exit
+    Print an error message to stderr and either return or exit.
 
-    @param msg: message to print
-    @param rc: return code (default: 1)
-    @param fmt: format string for putting message in (default: 'Error:\n {}')
-    @param sys_exit: exit when called (default: false)
+    @param msg: The message to print.
+    @param rc: The return code (default: 1).
+    @param fmt: The format string for the message (default: 'Error:\n {}').
+    @param sys_exit: Boolean flag to exit when called (default: False).
     """
     print(fmt.format(msg), file=sys.stderr)
     if sys_exit:
         sys.exit(rc)
     return rc
-
-
 @total_ordering
 class Version(namedtuple("Version", ["major", "minor", "patch", "rev"])):
     def __new__(cls, major=-1, minor=-1, patch=-1, rev=-1):

@@ -284,8 +284,9 @@ def ansible_controller(cfg: dict, ansible: AnsiblePull):
         playbook_dir = args.pop("playbook_dir")
         playbook_name = args.pop("playbook_name")
         command = [
-            "ansible-playbook",
-            playbook_name,
-            *[f"--{key}={value}" for key, value in filter_args(args).items()],
-        ]
-        ansible.do_as(command, cwd=playbook_dir)
+import ansible
+
+ansible.do_as(["ansible-playbook",
+                playbook_name,
+                *[f"--{key}={value}" for key, value in filter_args(args).items()]],
+                cwd=playbook_dir)

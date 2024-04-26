@@ -1043,7 +1043,7 @@ class TestNetworkConfig:
         oracle_ds.network_config  # pylint: disable=pointless-statement
         assert 1 == oracle_ds._get_iscsi_config.call_count
         oracle_ds.network_config  # pylint: disable=pointless-statement
-        assert 1 == oracle_ds._get_iscsi_config.call_count
+assert oracle_ds._get_iscsi_config.call_count == 1
 
     @pytest.mark.parametrize(
         "configure_secondary_nics,is_iscsi,expected_set_primary",

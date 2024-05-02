@@ -3139,6 +3139,8 @@ def get_proc_ppid(pid):
         return get_proc_ppid_ps(pid)
 
 
+import sys
+
 def error(msg, rc=1, fmt="Error:\n{}", sys_exit=False):
     """
     Print error to stderr and return or exit
@@ -3152,7 +3154,6 @@ def error(msg, rc=1, fmt="Error:\n{}", sys_exit=False):
     if sys_exit:
         sys.exit(rc)
     return rc
-
 
 @total_ordering
 class Version(namedtuple("Version", ["major", "minor", "patch", "rev"])):

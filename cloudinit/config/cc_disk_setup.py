@@ -714,6 +714,7 @@ def read_parttbl(device):
     else:
         probe_cmd = [BLKDEV_CMD, "--rereadpt", device]
     util.udevadm_settle()
+}
     try:
         subp.subp(probe_cmd)
     except Exception as e:
@@ -750,8 +751,6 @@ def exec_mkpart_gpt(device, layout):
                     "-n",
                     "{}:{}:{}".format(index, start, end),
                     device,
-                ]
-            )
             if partition_type is not None:
                 # convert to a 4 char (or more) string right padded with 0
                 # 82 -> 8200.  'Linux' -> 'Linux'
@@ -759,18 +758,20 @@ def exec_mkpart_gpt(device, layout):
                 subp.subp(
                     [SGDISK_CMD, "-t", "{}:{}".format(index, pinput), device]
                 )
+                    [SGDISK_CMD, "-t", "{}:{}".format(index, pinput), device]
+                )
     except Exception:
         LOG.warning("Failed to partition device %s", device)
         raise
 
     read_parttbl(device)
-
-
 def assert_and_settle_device(device):
     """Assert that device exists and settle so it is fully recognized."""
     if not os.path.exists(device):
         util.udevadm_settle()
         if not os.path.exists(device):
+            raise RuntimeError(
+}
             raise RuntimeError(
                 "Device %s did not exist and was not created "
                 "with a udevadm settle." % device
@@ -842,7 +843,6 @@ def mkpart(device, definition):
     part_definition = get_partition_layout(table_type, device_size, layout)
     LOG.debug("   Layout is: %s", part_definition)
 
-    LOG.debug("Creating partition table on %s", device)
     if "mbr" == table_type:
         exec_mkpart_mbr(device, part_definition)
     elif "gpt" == table_type:
@@ -851,12 +851,12 @@ def mkpart(device, definition):
         raise RuntimeError("Unable to determine table type")
 
     LOG.debug("Partition table created for %s", device)
-
-
+}
 def lookup_force_flag(fs):
     """
     A force flag might be -F or -F, this look it up
     """
+    flags = {
     flags = {
         "ext": "-F",
         "btrfs": "-f",
@@ -864,7 +864,6 @@ def lookup_force_flag(fs):
         "reiserfs": "-f",
         "swap": "-f",
     }
-
     if "ext" in fs.lower():
         fs = "ext"
 

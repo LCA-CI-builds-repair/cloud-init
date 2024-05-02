@@ -77,8 +77,7 @@ def test_invalid_userdata(client: IntegrationInstance):
         return_code = 2  # 23.4 and later will exit 2 on warnings
     assert (
         return_code == result.return_code
-    ), f"Unexpected exit code {result.return_code}"
-
+    ), f"Expected exit code: {return_code}, Actual exit code: {result.return_code}"
 
 @pytest.mark.user_data(INVALID_USER_DATA_SCHEMA)
 def test_invalid_userdata_schema(client: IntegrationInstance):

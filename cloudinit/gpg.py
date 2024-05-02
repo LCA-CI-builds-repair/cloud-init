@@ -111,7 +111,6 @@ def recv_key(key, keyserver, retries=(1, 1)):
                 "after %d tries: %s" % (key, keyserver, trynum, error)
             ) from e
 
-
 def delete_key(key):
     """Delete the specified key from the local gpg ring"""
     try:

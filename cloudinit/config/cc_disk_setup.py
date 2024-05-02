@@ -686,7 +686,7 @@ def purge_disk(device):
                 ) from e
 
     purge_disk_ptable(device)
-
+import util
 
 def get_partition_layout(table_type, size, layout):
     """
@@ -702,7 +702,7 @@ def get_partition_layout(table_type, size, layout):
     elif "gpt" == table_type:
         return get_partition_gpt_layout(size, layout)
     raise RuntimeError("Unable to determine table type")
-
+import PARTPROBE_CMD
 
 def read_parttbl(device):
     """
@@ -870,10 +870,8 @@ def lookup_force_flag(fs):
 
     if fs.lower() in flags:
         return flags[fs]
-
-    LOG.warning("Force flag for %s is unknown.", fs)
-    return ""
-
+import os
+import util
 
 def mkfs(fs_cfg):
     """
@@ -906,7 +904,7 @@ def mkfs(fs_cfg):
     overwrite = fs_cfg.get("overwrite", False)
 
     # ensure that we get a real device rather than a symbolic link
-    assert_and_settle_device(device)
+    util.assert_and_settle_device(device)
     device = os.path.realpath(device)
 
     # This allows you to define the default ephemeral or swap

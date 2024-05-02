@@ -51,18 +51,7 @@ class SimpleTable:
         )
 
     def __str__(self):
-        """Returns a string representation of the table with lines around.
-
-        +-----+-----+
-        | one | two |
-        +-----+-----+
-        |  1  |  2  |
-        |  01 |  10 |
-        +-----+-----+
-        """
-        lines = [self._hdiv(), self._row(self.fields), self._hdiv()]
-        lines += [self._row(r) for r in self.rows] + [self._hdiv()]
+        """Returns a string representation of the table without lines around."""
+        lines = [self._row(self.fields)]
+        lines += [self._row(r) for r in self.rows]
         return "\n".join(lines)
-
-    def get_string(self):
-        return self.__str__()

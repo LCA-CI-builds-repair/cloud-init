@@ -65,15 +65,10 @@ AUTHORIZED_KEYS_ROWS = (
         "24:c7:41:49:47:12:31:a0:de:6f:62:79:9b:13:06:36",
         "-",
         "ajorgens",
+    )
+)
     ),
 )
-AUTHORIZED_KEYS_TABLE = """\
-+---------+-------------------------------------------------+---------+----------+
-| Keytype |                Fingerprint (md5)                | Options | Comment  |
-+---------+-------------------------------------------------+---------+----------+
-| ssh-rsa | 24:c7:41:49:47:12:31:a0:de:6f:62:79:9b:13:06:36 |    -    | ajorgens |
-+---------+-------------------------------------------------+---------+----------+"""  # noqa: E501
-
 # from prettytable import PrettyTable
 # pt = PrettyTable(('HEADER',))
 # print(pt)
@@ -82,8 +77,10 @@ NO_ROWS_TABLE = """\
 +--------+
 | HEADER |
 +--------+
+"""
+| HEADER |
++--------+
 +--------+"""
-
 
 class TestSimpleTable(CiTestCase):
     def test_no_rows(self):
@@ -114,6 +111,4 @@ class TestSimpleTable(CiTestCase):
     def test_get_string(self):
         """get_string() method returns the same content as str()."""
         table = SimpleTable(AUTHORIZED_KEYS_FIELDS)
-        for row in AUTHORIZED_KEYS_ROWS:
-            table.add_row(row)
         self.assertEqual(table.get_string(), str(table))

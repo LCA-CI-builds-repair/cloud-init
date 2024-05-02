@@ -152,6 +152,8 @@ def run_commands(commands):
     after attempting all commands.
 
     @param commands: A list or dict containing commands to run. Keys of a
+    """
+    @param commands: A list or dict containing commands to run. Keys of a
         dict will be used to order the commands provided as dict values.
     """
     if not commands:

@@ -21,7 +21,9 @@ import traceback
 import logging
 from typing import Tuple
 
+from cloudinit import atomic_helper
 from cloudinit import netinfo
+from cloudinit import reporting
 from cloudinit import signal_handler
 from cloudinit import sources
 from cloudinit import stages
@@ -29,8 +31,6 @@ from cloudinit import url_helper
 from cloudinit import util
 from cloudinit import version
 from cloudinit import warnings
-from cloudinit import reporting
-from cloudinit import atomic_helper
 from cloudinit.cmd.devel import read_cfg_paths
 from cloudinit.config import cc_set_hostname
 from cloudinit.config.modules import Modules

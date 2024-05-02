@@ -424,65 +424,65 @@ class Renderer(renderer.Renderer):
                     _extract_bond_slaves_by_name(interfaces, bond, ifname)
                 _extract_addresses(ifcfg, bond, ifname, self.features)
                 bonds.update({ifname: bond})
+import copy
 
-            elif if_type == "bridge":
-                # required_keys = ['name', 'bridge_ports']
-                bridge_ports = ifcfg.get("bridge_ports")
-                # mypy wrong error. `copy(None)` is supported:
-                ports = sorted(copy.copy(bridge_ports))  # type: ignore
-                bridge: dict = {
-                    "interfaces": ports,
-                }
+elif if_type == "bridge":
+    # required_keys = ['name', 'bridge_ports']
+    bridge_ports = ifcfg.get("bridge_ports")
+    ports = sorted(copy.copy(bridge_ports))  # type: ignore
+    bridge: dict = {
+        "interfaces": ports,
+    }
                 # extract bridge params and drop the bridge prefix as it's
                 # redundant in v2 yaml format
-                match_prefix = "bridge_"
-                params = _get_params_dict_by_match(ifcfg, match_prefix)
-                br_config = {}
+match_prefix = "bridge_"
+params = _get_params_dict_by_match(ifcfg, match_prefix)
+br_config = {}  # Initialize or use br_config variable
 
-                # v2 yaml uses different names for the keys
-                # and at least one value format change
-                v2_bridge_map = cast(dict, NET_CONFIG_TO_V2.get("bridge"))
+# v2 yaml uses different names for the keys
+# and at least one value format change
+v2_bridge_map = cast(dict, NET_CONFIG_TO_V2.get("bridge"))
                 # Previous cast is needed to help mypy to know that the key is
                 # present in `NET_CONFIG_TO_V2`. This could probably be removed
-                # by using `Literal` when supported.
-                for (param, value) in params.items():
-                    newname = v2_bridge_map.get(param)
-                    if newname is None:
-                        continue
-                    br_config.update({newname: value})
-                    if newname in ["path-cost", "port-priority"]:
+# by using `Literal` when supported.
+for (param, value) in params.items():
+    newname = v2_bridge_map.get(param)  # Initialize or use newname variable
+    if newname is None:
+        continue
+    br_config.update({newname: value})
+    if newname in ["path-cost", "port-priority"]:
                         # <interface> <value> -> <interface>: int(<value>)
                         newvalue = {}
                         for val in value:
                             (port, portval) = val.split()
                             newvalue[port] = int(portval)
-                        br_config.update({newname: newvalue})
+br_config.update({newname: newvalue})
 
-                if len(br_config) > 0:
-                    bridge.update({"parameters": br_config})
-                if ifcfg.get("mac_address"):
-                    bridge["macaddress"] = ifcfg["mac_address"].lower()
-                _extract_addresses(ifcfg, bridge, ifname, self.features)
-                bridges.update({ifname: bridge})
+if len(br_config) > 0:
+    bridge.update({"parameters": br_config})
+if ifcfg.get("mac_address"):
+    bridge["macaddress"] = ifcfg["mac_address"].lower()
+_extract_addresses(ifcfg, bridge, ifname, self.features)
+bridges.update({ifname: bridge})
 
-            elif if_type == "vlan":
-                # required_keys = ['name', 'vlan_id', 'vlan-raw-device']
-                vlan = {
-                    "id": ifcfg.get("vlan_id"),
-                    "link": ifcfg.get("vlan-raw-device"),
-                }
+elif if_type == "vlan":
+    # required_keys = ['name', 'vlan_id', 'vlan-raw-device']
+    vlan = {
+        "id": ifcfg.get("vlan_id"),
+        "link": ifcfg.get("vlan-raw-device"),
+    }
                 macaddr = ifcfg.get("mac_address", None)
                 if macaddr is not None:
                     vlan["macaddress"] = macaddr.lower()
                 _extract_addresses(ifcfg, vlan, ifname, self.features)
                 vlans.update({ifname: vlan})
-
-        # inject global nameserver values under each all interface which
-        # has addresses and do not already have a DNS configuration
-        if nameservers or searchdomains:
-            nscfg = {"addresses": nameservers, "search": searchdomains}
-            for section in [ethernets, wifis, bonds, bridges, vlans]:
-                for _name, cfg in section.items():
+# inject global nameserver values under each all interface which
+# has addresses and do not already have a DNS configuration
+if nameservers or searchdomains:
+    nscfg = {"addresses": nameservers, "search": searchdomains}
+    for section in [ethernets, wifis, bonds, bridges, vlans]:
+        for _name, cfg in section.items():
+            if "nameservers" not in cfg or "addresses" not in cfg:
                     if "nameservers" in cfg or "addresses" not in cfg:
                         continue
                     cfg.update({"nameservers": nscfg})
@@ -504,10 +504,10 @@ class Renderer(renderer.Renderer):
         content += _render_section("ethernets", ethernets)
         content += _render_section("wifis", wifis)
         content += _render_section("bonds", bonds)
-        content += _render_section("bridges", bridges)
-        content += _render_section("vlans", vlans)
+content += _render_section("bridges", bridges)
+content += _render_section("vlans", vlans)
 
-        return "".join(content)
+return "".join(content)
 
 
 def available(target=None):

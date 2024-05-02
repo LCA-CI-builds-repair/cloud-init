@@ -162,15 +162,14 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         self._cfg = cfg
         self.name = name
         self.networking: Networking = self.networking_cls()
-        self.dhcp_client_priority = [
-            dhcp.IscDhclient,
-            dhcp.Dhcpcd,
-            dhcp.Udhcpc,
-        ]
-        self.net_ops = iproute2.Iproute2
-        self._runner = helpers.Runners(paths)
-        self.package_managers: List[PackageManager] = []
-
+self.dhcp_client_priority = [
+    dhcp.IscDhclient,
+    dhcp.Dhcpcd,
+    dhcp.Udhcpc,
+]
+self.net_ops = iproute2.Iproute2
+self._runner = helpers.Runners(paths)
+self.package_managers: List[PackageManager] = []
     def _unpickle(self, ci_pkl_version: int) -> None:
         """Perform deserialization fixes for Distro."""
         if "networking" not in self.__dict__ or not self.networking.__dict__:

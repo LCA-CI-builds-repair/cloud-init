@@ -48,8 +48,9 @@ platforms: Dict[str, Type[IntegrationCloud]] = {
 }
 os_list = ["ubuntu"]
 
-session_start_time = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+import datetime
 
+session_start_time = datetime.datetime.now().strftime("%y%m%d%H%M%S")
 
 def pytest_runtest_setup(item):
     """Skip tests on unsupported clouds.

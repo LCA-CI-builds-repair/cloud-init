@@ -151,10 +151,11 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     # Directory where the distro stores their DHCP leases.
     # The children classes should override this with their dhcp leases
     # directory
-    dhclient_lease_directory: str | None = None
-    # A regex to match DHCP lease file(s)
-    # The children classes should override this with a regex matching
-    # their lease file name format
+    dhclient_lease_directory: str = ""
+    """
+    A directory path where DHCP lease files are stored.
+    The children classes should override this with the specific directory path for their lease files.
+    """
     dhclient_lease_file_regex: str | None = None
 
     def __init__(self, name, cfg, paths):

@@ -96,7 +96,7 @@ class DataSourceCloudSigmaTest(test_helpers.CiTestCase):
         self.datasource.get_data()
         self.assertEqual(
             self.datasource.userdata_raw,
-            SERVER_CONTEXT["meta"]["cloudinit-user-data"],
+            SERVER_CONTEXT["meta"]["cloudinit-user-data"]
         )
 
     def test_encoded_user_data(self):

@@ -50,7 +50,7 @@ class SimpleTable:
             + "|"
         )
 
-    def __str__(self):
+    def __repr__(self):
         """Returns a string representation of the table with lines around.
 
         +-----+-----+
@@ -65,4 +65,4 @@ class SimpleTable:
         return "\n".join(lines)
 
     def get_string(self):
-        return self.__str__()
+        return self.__repr__()

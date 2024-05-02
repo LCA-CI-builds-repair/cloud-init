@@ -441,7 +441,7 @@ class Renderer(renderer.Renderer):
 
                 # v2 yaml uses different names for the keys
                 # and at least one value format change
-                v2_bridge_map = cast(dict, NET_CONFIG_TO_V2.get("bridge"))
+                v2_bridge_map = NET_CONFIG_TO_V2.get("bridge", {})
                 # Previous cast is needed to help mypy to know that the key is
                 # present in `NET_CONFIG_TO_V2`. This could probably be removed
                 # by using `Literal` when supported.

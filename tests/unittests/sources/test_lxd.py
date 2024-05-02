@@ -727,9 +727,8 @@ class TestReadMetadata:
                                 return_value="properly formatted http response"
                             ),
                         )
-                        for code in return_codes
-                    ]
-                )
+                    for code in return_codes
+                ]
             )
             resp = lxd._do_request(m, "http://agua/")
 

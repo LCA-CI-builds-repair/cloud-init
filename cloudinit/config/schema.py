@@ -497,15 +497,10 @@ def get_jsonschema_validator():
         validator_kwargs = {
             "type_checker": type_checker,
         }
-    else:  # jsonschema 2.6 workaround
-        # pylint:disable-next=no-member
-        types = Draft4Validator.DEFAULT_TYPES  # pylint: disable=E1101
-        # Allow bytes as well as string (and disable a spurious unsupported
-        # assignment-operation pylint warning which appears because this
-        # code path isn't written against the latest jsonschema).
-        types["string"] = (str, bytes)  # pylint: disable=E1137
+    else:
+        types = Draft4Validator.DEFAULT_TYPES
+        types["string"] = (str, bytes)
         validator_kwargs = {"default_types": types}
-
     # Add deprecation handling
     validators = dict(Draft4Validator.VALIDATORS)
     validators[DEPRECATED_KEY] = _validator_deprecated

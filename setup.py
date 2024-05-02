@@ -58,7 +58,6 @@ def render_tmpl(template, mode=None, is_yaml=False):
     to config/cloud.cfg is for a.) don't want to write over contents
     in that file if user had something there. b.) debuild will complain
     that files are different outside of the debian directory."""
-
     # newer versions just use install.
     if "install" not in sys.argv:
         return template
@@ -217,7 +216,6 @@ class MyEggInfo(egg_info):
             with open(mfname, "w") as fp:
                 fp.write("".join(files))
 
-
 # TODO: Is there a better way to do this??
 class InitsysInstallData(install):
     init_system = None
@@ -250,6 +248,8 @@ class InitsysInstallData(install):
         if len(bad) != 0:
             raise DistutilsError("Invalid --init-system: %s" % ",".join(bad))
 
+            raise DistutilsError("Invalid --init-system: %s" % ",".join(bad))
+
         for system in self.init_system:
             # add data files for anything that starts with '<system>.'
             datakeys = [
@@ -261,8 +261,6 @@ class InitsysInstallData(install):
                     continue
                 self.distribution.data_files.append((INITSYS_ROOTS[k], files))
         # Force that command to reinitialize (with new file list)
-        self.distribution.reinitialize_command("install_data", True)
-
 
 if not in_virtualenv():
     USR = "/" + USR

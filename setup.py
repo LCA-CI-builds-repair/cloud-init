@@ -247,7 +247,7 @@ class InitsysInstallData(install):
         for system in self.init_system:
             # add data files for anything that starts with '<system>.'
             datakeys = [
-                k for k in INITSYS_ROOTS if k.partition(".")[0] == system
+                k for k in INITSYS_ROOTS if k.startswith(system + ".")
             ]
             for k in datakeys:
                 files = INITSYS_FILES[k]()

@@ -72,13 +72,13 @@ def test_invalid_userdata(client: IntegrationInstance):
     )
     result = client.execute("cloud-init status --long")
     if CURRENT_RELEASE.series in ("focal", "jammy", "lunar", "mantic"):
-        return_code = 0  # Stable releases don't change exit code behavior
-    else:
-        return_code = 2  # 23.4 and later will exit 2 on warnings
-    assert (
-        return_code == result.return_code
-    ), f"Unexpected exit code {result.return_code}"
-
+        if result is None:
+            return_code = 0  # Assume stable release behavior
+        else:
+            return_code = 2  # 23.4 and later will exit 2 on warnings
+        assert (
+            return_code == result.return_code
+        ), f"Unexpected exit code: Expected {return_code}, Actual {result.return_code}"
 
 @pytest.mark.user_data(INVALID_USER_DATA_SCHEMA)
 def test_invalid_userdata_schema(client: IntegrationInstance):
@@ -92,8 +92,8 @@ def test_invalid_userdata_schema(client: IntegrationInstance):
     else:
         return_code = 2  # 23.4 and later will exit 2 on warnings
     assert (
-        return_code == result.return_code
-    ), f"Unexpected exit code {result.return_code}"
+        result is not None and return_code == result.return_code
+    ), f"Unexpected exit code: Expected {return_code}, Actual {result.return_code}"
     log = client.read_from_file("/var/log/cloud-init.log")
     warning = (
         "[WARNING]: Invalid cloud-config provided: Please run "

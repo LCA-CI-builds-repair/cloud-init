@@ -524,10 +524,12 @@ def check_partition_gpt_layout(device, layout):
             code = code[0:2]
         cleaned.append(code)
     return cleaned
+}
 
 
 def check_partition_layout(table_type, device, layout):
     """
+    # Add implementation details here to check partition layout
     See if the partition lay out matches.
 
     This is future a future proofing function. In order

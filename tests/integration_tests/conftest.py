@@ -361,7 +361,7 @@ def _copy_coverage_files(parent_dir: Path) -> List[Path]:
 
 def _generate_coverage_report() -> None:
     log.info("Generating coverage report")
-    parent_dir = Path(integration_settings.LOCAL_LOG_PATH, session_start_time)
+    parent_dir = Path(integration_settings.LOCAL_LOG_PATH) / session_start_time
     coverage_files = _copy_coverage_files(parent_dir)
     subprocess.run(
         ["coverage", "combine"] + [str(f) for f in coverage_files],

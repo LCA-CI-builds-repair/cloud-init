@@ -1873,6 +1873,8 @@ scbus-1 on xpt0 bus 0
         dsrc = self._get_ds(data)
         ret = dsrc.get_data()
 
+        import os
+        
         self.assertTrue(ret)
         ovf_env_path = os.path.join(self.waagent_d, "ovf-env.xml")
 
@@ -1881,7 +1883,7 @@ scbus-1 on xpt0 bus 0
         self.xml_notequals(data["ovfcontent"], on_disk_ovf)
 
         # Make sure that the redacted password on disk is not used by CI
-        self.assertNotEqual(
+        self.assertNotEqual(  # Add missing code here if necessary
             dsrc.cfg.get("password"), dsaz.DEF_PASSWD_REDACTION
         )
 

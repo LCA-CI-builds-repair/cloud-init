@@ -222,14 +222,15 @@ def push_log_to_kvp(file_name=CFG_BUILTIN["def_log_file"]):
 
     start_index = get_last_log_byte_pushed_to_kvp_index()
 
+    import os
+    
     LOG.debug("Dumping cloud-init.log file to KVP")
     try:
         with open(file_name, "rb") as f:
-            f.seek(0, os.SEEK_END)
+            f.seek(0, os.SEEK_SET)
             seek_index = max(f.tell() - MAX_LOG_TO_KVP_LENGTH, start_index)
             report_diagnostic_event(
-                "Dumping last {0} bytes of cloud-init.log file to KVP starting"
-                " from index: {1}".format(f.tell() - seek_index, seek_index),
+                "Dumping last {0} bytes of cloud-init.log file to KVP starting from index: {1}".format(f.tell() - seek_index, seek_index),
                 logger_func=LOG.debug,
             )
             f.seek(seek_index, os.SEEK_SET)

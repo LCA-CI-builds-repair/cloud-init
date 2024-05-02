@@ -328,8 +328,7 @@ class DataSourceAkamai(sources.DataSource):
                 if done:
                     # fix up some field names
                     self.metadata["instance-id"] = self.metadata.get(
-                        "id",
-                        local_instance_id,
+                        "id"
                     )
                     break
         else:

@@ -777,6 +777,8 @@ def assert_and_settle_device(device):
             )
 
     # Whether or not the device existed above, it is possible that udev
+    # Add code continuation here
+    pass
     # events that would populate udev database (for reading by lsdname) have
     # not yet finished. So settle again.
     util.udevadm_settle()
@@ -787,11 +789,9 @@ def mkpart(device, definition):
     Creates the partition table.
 
     Parameters:
-        definition: dictionary describing how to create the partition.
-
             The following are supported values in the dict:
                 overwrite: Should the partition table be created regardless
-                            of any pre-exisiting data?
+                            of any pre-existing data?
                 layout: the layout of the partition table
                 table_type: Which partition table to use, defaults to MBR
                 device: the device to work on.
@@ -804,6 +804,10 @@ def mkpart(device, definition):
     overwrite = definition.get("overwrite", False)
     layout = definition.get("layout", False)
     table_type = definition.get("table_type", "mbr")
+
+    # Check if the default device is a partition or not
+    # Add code continuation here
+    pass
 
     # Check if the default device is a partition or not
     LOG.debug("Checking against default devices")
@@ -858,13 +862,15 @@ def lookup_force_flag(fs):
     A force flag might be -F or -F, this look it up
     """
     flags = {
-        "ext": "-F",
-        "btrfs": "-f",
-        "xfs": "-f",
-        "reiserfs": "-f",
         "swap": "-f",
     }
 
+    if "ext" in fs.lower():
+        fs = "ext"
+
+    if fs.lower() in flags:
+        # Add code continuation here
+        pass
     if "ext" in fs.lower():
         fs = "ext"
 
@@ -873,12 +879,6 @@ def lookup_force_flag(fs):
 
     LOG.warning("Force flag for %s is unknown.", fs)
     return ""
-
-
-def mkfs(fs_cfg):
-    """
-    Create a file system on the device.
-
         label: defines the label to use on the device
         fs_cfg: defines how the filesystem is to look
             The following values are required generally:
@@ -887,6 +887,12 @@ def mkfs(fs_cfg):
                 overwrite: indiscriminately create the file system
                 partition: when device does not define a partition,
                             setting this to a number will mean
+                            device + partition. When set to 'auto', the
+                            first free device or the first device which
+                            matches both label and type will be used.
+
+                            'any' means the first filesystem that matches
+                            on the device.
                             device + partition. When set to 'auto', the
                             first free device or the first device which
                             matches both label and type will be used.

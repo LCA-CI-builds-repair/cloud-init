@@ -395,10 +395,13 @@ def is_encrypted(blockdev, partition) -> bool:
             )
         return False
     with suppress(subp.ProcessExecutionError):
+    try:
         subp.subp(["cryptsetup", "isLuks", partition])
         LOG.debug("Determined that %s is encrypted", blockdev)
         return True
-    return False
+    except Exception as ex:
+        LOG.error("Error occurred: %s", ex)
+        return False
 
 
 def get_underlying_partition(blockdev):

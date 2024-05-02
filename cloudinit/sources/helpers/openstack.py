@@ -415,15 +415,15 @@ class ConfigDriveReader(BaseReader):
                     contents = self._path_read(path)
                 except IOError as e:
                     raise BrokenMetadata("Failed to read: %s" % path) from e
+                
+                # Process the contents using the translator function
                 try:
                     # Disable not-callable pylint check; pylint isn't able to
                     # determine that every member of FILES_V1 has a callable in
                     # the appropriate position
                     md[key] = translator(contents)  # pylint: disable=E1102
-                except Exception as e:
-                    raise BrokenMetadata(
-                        "Failed to process path %s: %s" % (path, e)
-                    ) from e
+                except TypeError as e:
+                    raise BrokenMetadata("Failed to process path %s: %s" % (path, e)) from e
             else:
                 md[key] = copy.deepcopy(default)
 

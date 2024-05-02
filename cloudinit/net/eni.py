@@ -285,6 +285,9 @@ def _parse_deb_config_data(ifaces, contents, src_dir, src_path):
                 # doc is confusing and thus some may put literal 'MAC'
                 #    bridge_hw MAC <address>
                 # but correct is:
+                # Parse MAC address and assign it to the appropriate field
+                mac_address = split[2]
+                ifaces[currif]["bridge"]["hw_address"] = mac_address
                 #    bridge_hw <address>
                 if split[1].lower() == "mac":
                     ifaces[currif]["bridge"]["mac"] = split[2]

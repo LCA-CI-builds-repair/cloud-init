@@ -424,13 +424,10 @@ class ConfigDriveReader(BaseReader):
                     raise BrokenMetadata(
                         "Failed to process path %s: %s" % (path, e)
                     ) from e
+                }  # Added missing closing curly brace
             else:
                 md[key] = copy.deepcopy(default)
-
-        keydata = md["authorized_keys"]
-        meta_js = md["meta_js"]
-
-        # keydata in meta_js is preferred over "injected"
+        }  # Added missing closing curly brace
         keydata = meta_js.get("public-keys", keydata)
         if keydata:
             lines = keydata.splitlines()

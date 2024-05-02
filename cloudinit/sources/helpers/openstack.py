@@ -419,7 +419,8 @@ class ConfigDriveReader(BaseReader):
                     # Disable not-callable pylint check; pylint isn't able to
                     # determine that every member of FILES_V1 has a callable in
                     # the appropriate position
-                    md[key] = translator(contents)  # pylint: disable=E1102
+                    translator_func = translator
+                    md[key] = translator_func(contents)  # pylint: disable=E1102
                 except Exception as e:
                     raise BrokenMetadata(
                         "Failed to process path %s: %s" % (path, e)

@@ -263,7 +263,6 @@ class InitsysInstallData(install):
         # Force that command to reinitialize (with new file list)
         self.distribution.reinitialize_command("install_data", True)
 
-
 if not in_virtualenv():
     USR = "/" + USR
     ETC = "/" + ETC

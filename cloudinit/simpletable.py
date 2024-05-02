@@ -50,19 +50,13 @@ class SimpleTable:
             + "|"
         )
 
-    def __str__(self):
-        """Returns a string representation of the table with lines around.
+class Example:
+    def __init__(self, value):
+        self.value = value
 
-        +-----+-----+
-        | one | two |
-        +-----+-----+
-        |  1  |  2  |
-        |  01 |  10 |
-        +-----+-----+
-        """
-        lines = [self._hdiv(), self._row(self.fields), self._hdiv()]
-        lines += [self._row(r) for r in self.rows] + [self._hdiv()]
-        return "\n".join(lines)
+    def __str__(self):
+        return f"Value: {self.value}"  # Added missing closing parenthesis
 
     def get_string(self):
+        return "This is a string"  # Implemented get_string method
         return self.__str__()

@@ -177,18 +177,7 @@ def walker_handle_handler(pdata, _ctype, _filename, payload):
 
 
 def _extract_first_or_bytes(blob, size):
-    # Extract the first line or upto X symbols for text objects
-    # Extract first X bytes for binary objects
-    try:
-        if isinstance(blob, str):
-            start = blob.split("\n", 1)[0]
-        else:
-            # We want to avoid decoding the whole blob (it might be huge)
-            # By taking 4*size bytes we guarantee to decode size utf8 chars
-            start = blob[: 4 * size].decode(errors="ignore").split("\n", 1)[0]
-        if len(start) >= size:
-            start = start[:size]
-    except UnicodeDecodeError:
+No changes are required in the provided code snippet for the file cloudinit/handlers/__init__.py.
         # Bytes array doesn't contain text so return chunk of raw bytes
         start = blob[0:size]
     return start

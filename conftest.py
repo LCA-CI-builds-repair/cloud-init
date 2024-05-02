@@ -122,7 +122,6 @@ def disable_subp_usage(request, fixture_utils):
             subp.subp(["bash"])
 
     You can pass multiple commands as values; they will all be permitted::
-
         @pytest.mark.allow_subp_for("bash", "whoami")
         def test_several_things(self):
             subp.subp(["bash"])
@@ -186,13 +185,12 @@ def fixture_utils():
 
     See :py:class:`_FixtureUtils` for further details."""
     return _FixtureUtils
+    return _FixtureUtils
 
 
 @pytest.fixture
 def mocked_responses():
     import responses as _responses
-
-    with _responses.RequestsMock(assert_all_requests_are_fired=False) as rsps:
         yield rsps
 
 

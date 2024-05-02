@@ -42,22 +42,23 @@ case $1 in
     "fixed-address": "$ip",
     "subnet-mask": "$subnet",
     "routers": "${router%% *}",
-    "static_routes" : "${staticroutes}"
-}
-JSON
-    ;;
-    deconfig)
-    log err "Not supported"
-    exit 1
-    ;;
-    leasefail | nak)
-    log err "configuration failed: $1: $message"
-    exit 1
-    ;;
-    *)
-    echo "$0: Unknown udhcpc command: $1" >&2
-    exit 1
-    ;;
+    case $1 in
+        static_routes)
+            echo "${staticroutes}"
+            ;;
+        deconfig)
+            log err "Deconfiguration is not supported"
+            exit 1
+            ;;
+        leasefail | nak)
+            log err "Configuration failed: $1: $message"
+            exit 1
+            ;;
+        *)
+            echo "$0: Unknown udhcpc command: $1" >&2
+            exit 1
+            ;;
+    esac
 esac
 """
 

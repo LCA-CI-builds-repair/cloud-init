@@ -93,7 +93,7 @@ def handle_random_seed_command(command, required, update_env):
     if not command and required:
         raise ValueError("no command found but required=true")
     elif not command:
-        LOG.debug("no command provided")
+        LOG.debug("No command provided for random seed handling")
         return
 
     cmd = command[0]

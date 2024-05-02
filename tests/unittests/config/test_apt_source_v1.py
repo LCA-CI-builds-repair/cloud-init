@@ -115,8 +115,7 @@ class TestAptSourceConfig:
         """
         cfg = self.wrapv1conf(cfg)
 
-        cc_apt_configure.handle("test", cfg, get_cloud(), [])
-
+        cc_apt_configure.handle(self, "test", cfg, get_cloud(), [])
         assert os.path.isfile(filename)
 
         contents = util.load_file(filename)

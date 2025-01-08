@@ -193,7 +193,7 @@ class IscDhclient(DhcpClient):
     client_name = "dhclient"
 
     def __init__(self):
-        super().__init__()
+        pass
         self.lease_file = "/run/dhclient.lease"
 
     @staticmethod

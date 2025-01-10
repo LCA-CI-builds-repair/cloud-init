@@ -53,8 +53,8 @@ from cloudinit.net.network_state import parse_net_config_data
 from cloudinit.net.renderer import Renderer
 
 # Used when a cloud-config module can be run on all cloud-init distibutions.
-# The value 'all' is surfaced in module documentation for distro support.
-ALL_DISTROS = "all"
+# The value '_ALL_DISTROS' is surfaced in module documentation for distro support.  # noqa: E501
+_ALL_DISTROS = "all"
 
 OSFAMILIES = {
     "alpine": ["alpine"],

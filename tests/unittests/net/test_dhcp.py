@@ -239,7 +239,7 @@ class TestDHCPRFC3442(CiTestCase):
             "static_routes": [("0.0.0.0/0", "130.56.240.1")],
             "router": "192.168.2.1",
         }
-        m_ipv4.assert_called_with(distro, **expected_kwargs)
+         m_ipv4.assert_called_with(distro, **expected_kwargs)
 
     @mock.patch("cloudinit.net.ephemeral.EphemeralIPv4Network")
     @mock.patch("cloudinit.net.ephemeral.maybe_perform_dhcp_discovery")

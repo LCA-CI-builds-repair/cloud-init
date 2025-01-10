@@ -158,9 +158,9 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     dhclient_lease_file_regex: str | None = None
 
     def __init__(self, name, cfg, paths):
+        self.osfamily = name
         self._paths = paths
         self._cfg = cfg
-        self.name = name
         self.networking: Networking = self.networking_cls()
         self.dhcp_client_priority = [
             dhcp.IscDhclient,

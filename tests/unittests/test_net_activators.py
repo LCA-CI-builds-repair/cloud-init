@@ -326,15 +326,15 @@ class TestActivatorsBringDown:
 
 
 class TestNetworkManagerActivatorBringUp:
-    def fake_isfile_no_nmconn(filename):
+    def _fake_isfile_no_nmconn(self, filename):
         return False if filename.endswith(".nmconnection") else True
 
     @patch("cloudinit.subp.subp", return_value=("", ""))
     @patch(
         "cloudinit.net.network_manager.available_nm_ifcfg_rh",
-        return_value=True,
+        return_value=False,
     )
-    @patch.object(os.path, "isfile", side_effect=fake_isfile_no_nmconn)
+    @patch.object(os.path, "isfile", side_effect=_fake_isfile_no_nmconn)
     @patch("os.path.exists", return_value=True)
     def test_bring_up_interface_no_nm_conn(
         self, m_exists, m_isfile, m_plugin, m_subp
@@ -388,7 +388,7 @@ class TestNetworkManagerActivatorBringUp:
         "cloudinit.net.network_manager.available_nm_ifcfg_rh",
         return_value=False,
     )
-    @patch.object(os.path, "isfile", side_effect=fake_isfile_no_nmconn)
+    @patch.object(os.path, "isfile", side_effect=_fake_isfile_no_nmconn)
     @patch("os.path.exists", return_value=True)
     def test_bring_up_interface_no_plugin_no_nm_conn(
         self, m_exists, m_isfile, m_plugin, m_subp

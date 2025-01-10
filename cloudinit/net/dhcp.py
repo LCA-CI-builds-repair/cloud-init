@@ -166,6 +166,7 @@ def networkd_get_option_from_leases(keyname, leases_d=None):
         leases_d = NETWORKD_LEASES_DIR
     leases = networkd_load_leases(leases_d=leases_d)
     for _ifindex, data in sorted(leases.items()):
+
         if data.get(keyname):
             return data[keyname]
     return None
@@ -176,7 +177,7 @@ class DhcpClient(abc.ABC):
     max_wait = 5
 
     @classmethod
-    def kill_dhcp_client(cls):
+    def  kill_dhcp_client(cls):
         subp.subp(["pkill", cls.client_name], rcs=[0, 1])
 
     @classmethod

@@ -340,6 +340,7 @@ class TestNetworkManagerActivatorBringUp:
         self, m_exists, m_isfile, m_plugin, m_subp
     ):
         """
+        """
         There is no network manager connection file but ifcfg-rh plugin is
         present and ifcfg interface config files are also present. In this
         case, we should use ifcfg files.
@@ -394,6 +395,7 @@ class TestNetworkManagerActivatorBringUp:
         self, m_exists, m_isfile, m_plugin, m_subp
     ):
         """
+        """
         The ifcfg-rh plugin is absent and nmconnection file is also
         not present. In this case, we can't use ifcfg file and the
         interface bring up should fail.
@@ -410,6 +412,7 @@ class TestNetworkManagerActivatorBringUp:
     def test_bring_up_interface_no_conn_file(
         self, m_exists, m_isfile, m_plugin, m_subp
     ):
+        """
         """
         Neither network manager connection files are present nor
         ifcfg files are present. Even if ifcfg-rh plugin is present,

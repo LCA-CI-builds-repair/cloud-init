@@ -289,7 +289,7 @@ class IscDhclient(DhcpClient):
             interface_dhclient_content = (
                 'interface "%s" '
                 "{send dhcp-client-identifier %s;}"
-                % (interface, dhcp_client_identifier)
+                % (interface, dhcp_client_identifier) 
             )
             tmp_dir = temp_utils.get_tmp_ancestor(needs_exe=True)
             config_file = os.path.join(tmp_dir, interface + "-dhclient.conf")
@@ -304,13 +304,13 @@ class IscDhclient(DhcpClient):
                     interface,
                     config_file,
                 )
-            )
+            )[0:2]  # Assign to _ to indicate intentionally unused
         except subp.ProcessExecutionError as error:
             LOG.debug(
                 "dhclient exited with code: %s stderr: %r stdout: %r",
                 error.exit_code,
                 error.stderr,
-                error.stdout,
+                error.stdout, 
             )
             raise NoDHCPLeaseError from error
 

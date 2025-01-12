@@ -356,7 +356,7 @@ class IscDhclient(DhcpClient):
                 ppid,
                 0.01 * 1000,
             )
-        if dhcp_log_func is not None:
+        if dhcp_log_func is not None and (out or err):
             dhcp_log_func(out, err)
         return self.parse_dhcp_lease_file(lease_file)
 

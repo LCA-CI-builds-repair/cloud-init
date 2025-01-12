@@ -239,8 +239,9 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         uninstalled = []
         for manager in self.package_managers:
             to_try = (
-                packages_by_manager.get(manager.__class__, set())
-                | generic_packages
+                packages_by_manager.get(manager.__class__, set()).union(
+                    generic_packages
+                )
             )
             if not to_try:
                 continue

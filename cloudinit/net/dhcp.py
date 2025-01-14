@@ -192,8 +192,8 @@ class DhcpClient(abc.ABC):
 class IscDhclient(DhcpClient):
     client_name = "dhclient"
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        pass
         self.lease_file = "/run/dhclient.lease"
 
     @staticmethod

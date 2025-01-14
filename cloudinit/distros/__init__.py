@@ -135,8 +135,8 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     default_owner = "root:root"
     init_cmd = ["service"]  # systemctl, service etc
     renderer_configs: Mapping[str, MutableMapping[str, Any]] = {}
-    _preferred_ntp_clients = None
-    networking_cls: Type[Networking] = LinuxNetworking
+    _preferred_ntp_clients: List[str] | None = None 
+    networking_cls = LinuxNetworking
     # This is used by self.shutdown_command(), and can be overridden in
     # subclasses
     shutdown_options_map = {"halt": "-H", "poweroff": "-P", "reboot": "-r"}
@@ -146,9 +146,9 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     prefer_fqdn = False
     resolve_conf_fn = "/etc/resolv.conf"
 
-    osfamily: str
+    osfamily: str | None = None
     dhcp_client_priority = [dhcp.IscDhclient, dhcp.Dhcpcd, dhcp.Udhcpc]
-    # Directory where the distro stores their DHCP leases.
+    # Directory where the distro stores their DHCP leases. 
     # The children classes should override this with their dhcp leases
     # directory
     dhclient_lease_directory: str | None = None

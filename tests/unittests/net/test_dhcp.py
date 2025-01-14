@@ -52,7 +52,35 @@ DHCLIENT = "/sbin/dhclient"
     ),
 )
 class TestParseDHCPServerFromLeaseFile:
-    def test_find_server_address_when_present(
+   
+    def test_parse_static_routes_multple_cidr(self):
+        rfc3442 = "24,192,168,10,192,168,1,1,0,192,168,1,5"
+        self.assertEqual(
+            [("192.168.10.0/24", "192.168.1.1"), ("0.0.0.0/0", "192.168.1.5")],
+            Isdhclient.parse_static_routes(rfc3442),
+        )
+
+    def test_parse_static_routes_classless_multple_cidr(self):
+        classless = "24 192.168.10.0 192.168.1.1 0 192.168.1.5"
+        self.assertEqual(
+            [("192.168.10.0/24", "192.168.1.1"), ("0.0.0.0/0", "192.168.1.5")],
+            Isdhclient.parse_static_routes(classless),
+        )
+
+    def test_parse_static_routes_ignores_malformed(self):
+        rfc3442 = "32,169,254,169,254,130,56,248,255,32,169,254,169"
+        self.assertEqual(
+            [("169.254.169.254/32", "130.56.248.255")],
+            Isdhclient.parse_static_routes(rfc3442),
+        )
+
+    def test_parse_static_routes_classless_ignores_malformed(self):
+        classless = "32 169.254.169.254 130.56.248.255 32 169.254.169"
+        self.assertEqual(
+            [("169.254.169.254/32", "130.56.248.255")],
+            Isdhclient.parse_static_routes(classless),
+        )
+ def test_find_server_address_when_present(
         self, server_address, lease_file_content, tmp_path
     ):
         """Test that we return None in the case of no file or file contains no

@@ -19,7 +19,9 @@ import configobj
 
 from cloudinit import subp, temp_utils, util
 from cloudinit.net import (
-    find_fallback_nic,
+    def __init__(self):
+        # Useless super delegation
+        super(dhcpcd, self).__init__()find_fallback_nic,
     get_devicelist,
     get_ib_interface_hwaddr,
     get_interface_mac,

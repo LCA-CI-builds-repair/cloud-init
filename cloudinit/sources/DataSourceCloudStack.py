@@ -104,7 +104,7 @@ class DataSourceCloudStack(sources.DataSource):
         LOG.debug("Try obtaining domain name from networkd leases")
         domainname = dhcp.networkd_get_option_from_leases("DOMAINNAME")
         if domainname:
-            return domainname
+            return str(domainname)
         LOG.debug(
             "Could not obtain FQDN from networkd leases. "
             "Falling back to ISC dhclient"
@@ -146,7 +146,7 @@ class DataSourceCloudStack(sources.DataSource):
                 LOG.debug("Obtained the following FQDN: %s", fqdn)
                 return sources.DataSourceHostname(fqdn, hostname.is_default)
             LOG.debug(
-                "Could not determine domain name for FQDN. "
+                "Could not determine domain name for %s. "
                 "Fall back to hostname as an FQDN: %s",
                 fqdn,
             )

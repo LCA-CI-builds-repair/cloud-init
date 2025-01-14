@@ -326,8 +326,8 @@ class TestActivatorsBringDown:
 
 
 class TestNetworkManagerActivatorBringUp:
-    def fake_isfile_no_nmconn(filename):
-        return False if filename.endswith(".nmconnection") else True
+    def fake_isfile_no_nmconn(self, filename):
+        return not filename.endswith(".nmconnection")
 
     @patch("cloudinit.subp.subp", return_value=("", ""))
     @patch(

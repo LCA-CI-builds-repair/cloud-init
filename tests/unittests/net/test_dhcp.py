@@ -7,7 +7,7 @@ from textwrap import dedent
 import pytest
 import responses
 
-from cloudinit.net.dhcp import (
+from cloudinit.net.dhcp import(
     InvalidDHCPLeaseFileError,
     IscDhclient,
     NoDHCPLeaseError,

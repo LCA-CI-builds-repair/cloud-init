@@ -115,8 +115,8 @@ PackageList = Union[
     List[str],
     List[Mapping],
     List[List[str]],
-    List[Union[str, List[str]]],
-    List[Union[str, List[str], Mapping]],
+    List[typing.Union[str, List[str]]],
+    List[typing.Union[str, List[str], Mapping]],
 ]
 
 

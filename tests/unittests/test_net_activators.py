@@ -326,6 +326,7 @@ class TestActivatorsBringDown:
 
 
 class TestNetworkManagerActivatorBringUp:
+    @staticmethod
     def fake_isfile_no_nmconn(filename):
         return False if filename.endswith(".nmconnection") else True
 

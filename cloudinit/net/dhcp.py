@@ -296,7 +296,7 @@ class IscDhclient(DhcpClient):
             util.write_file(config_file, interface_dhclient_content)
 
         try:
-            out, err = subp.subp(
+            _out, _err = subp.subp(
                 distro.build_dhclient_cmd(
                     self.dhclient_path,
                     lease_file,

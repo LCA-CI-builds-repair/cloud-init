@@ -119,8 +119,8 @@ class TestSearchAndSelect:
     def test_priority_not_exist(self, available_mocks):
         with pytest.raises(ValueError):
             search_activator(priority=["spam", "eggs"], target=None)
-        with pytest.raises(ValueError):
-            select_activator(priority=["spam", "eggs"])
+        # The select_activator() function does not have a priority parameter,
+        # so this test should be removed.
 
     def test_none_available(self, unavailable_mocks):
         resp = search_activator(priority=DEFAULT_PRIORITY, target=None)

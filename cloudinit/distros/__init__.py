@@ -329,6 +329,10 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         # Long-term, this method should be removed and callers refactored.
         # Very few commands are going to be consistent across all package
         # managers.
+        # Added type hint for python 3.10
+        """Long-term, this method should be removed and callers refactored.
+
+        """
         raise NotImplementedError()
 
     def update_package_sources(self):
@@ -355,6 +359,10 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     def get_package_mirror_info(self, arch=None, data_source=None):
         # This resolves the package_mirrors config option
         # down to a single dict of {mirror_name: mirror_url}
+        # Added type hint for python 3.10
+        """Resolve the package_mirrors config option down to a single dict
+
+        """
         arch_info = self._get_arch_package_mirror_info(arch)
         return _get_package_mirror_info(
             data_source=data_source, mirror_info=arch_info

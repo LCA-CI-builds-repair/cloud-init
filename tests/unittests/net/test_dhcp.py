@@ -54,7 +54,7 @@ DHCLIENT = "/sbin/dhclient"
 class TestParseDHCPServerFromLeaseFile:
     def test_find_server_address_when_present(
         self, server_address, lease_file_content, tmp_path
-    ):
+    ) -> None:
         """Test that we return None in the case of no file or file contains no
         server address, otherwise return the address.
         """

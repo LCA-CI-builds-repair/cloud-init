@@ -305,6 +305,8 @@ class IscDhclient(DhcpClient):
                     config_file,
                 )
             )
+            LOG.debug("DHCP command output: %s", out)
+            LOG.debug("DHCP command error: %s", err)
         except subp.ProcessExecutionError as error:
             LOG.debug(
                 "dhclient exited with code: %s stderr: %r stdout: %r",

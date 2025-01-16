@@ -156,7 +156,8 @@ NETWORKD_AVAILABLE_CALLS = [
 )
 class TestActivatorsAvailable:
     def test_available(self, activator, available_calls, available_mocks):
-        activator.available()
+        # Check that the activator is available
+        assert activator.available()
         assert available_mocks.m_which.call_args_list == available_calls
 
 

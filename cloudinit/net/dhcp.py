@@ -305,6 +305,8 @@ class IscDhclient(DhcpClient):
                     config_file,
                 )
             )
+            if dhcp_log_func is not None:
+                dhcp_log_func(out, err)
         except subp.ProcessExecutionError as error:
             LOG.debug(
                 "dhclient exited with code: %s stderr: %r stdout: %r",
@@ -356,8 +358,6 @@ class IscDhclient(DhcpClient):
                 ppid,
                 0.01 * 1000,
             )
-        if dhcp_log_func is not None:
-            dhcp_log_func(out, err)
         return self.parse_dhcp_lease_file(lease_file)
 
     @staticmethod

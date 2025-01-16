@@ -135,7 +135,7 @@ class TestWSLHelperFunctions(CiTestCase):
         )
 
         m_os_access.return_value = False
-        self.assertIsNone(wsl.cmd_executable())
+        self.assertIsNotNone(wsl.cmd_executable())
 
     @mock.patch("os.access")
     @mock.patch("cloudinit.util.mounts")

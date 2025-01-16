@@ -4,10 +4,8 @@
 #
 # This file is part of cloud-init. See LICENSE file for license information.
 
-import os
-from copy import deepcopy
-from email.mime.multipart import MIMEMultipart
 from typing import Optional, cast
+from email.mime.multipart import MIMEMultipart
 
 from cloudinit import helpers, util
 from cloudinit.sources import DataSourceWSL as wsl

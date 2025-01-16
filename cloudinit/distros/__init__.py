@@ -324,7 +324,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         """Wrapper to report whether this distro uses systemd or sysvinit."""
         return uses_systemd()
 
-    @abc.abstractmethod
+    @abc.abstractmethod 
     def package_command(self, command, args=None, pkgs=None):
         # Long-term, this method should be removed and callers refactored.
         # Very few commands are going to be consistent across all package
@@ -349,7 +349,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     def _get_arch_package_mirror_info(self, arch=None):
         mirror_info = self.get_option("package_mirrors", [])
         if not arch:
-            arch = self.get_primary_arch()
+            arch = self.get_primary_arch() 
         return _get_arch_package_mirror_info(mirror_info, arch)
 
     def get_package_mirror_info(self, arch=None, data_source=None):
@@ -358,7 +358,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
         arch_info = self._get_arch_package_mirror_info(arch)
         return _get_package_mirror_info(
             data_source=data_source, mirror_info=arch_info
-        )
+        ) 
 
     def apply_network(self, settings, bring_up=True):
         """Deprecated. Remove if/when arch and gentoo support renderers."""
@@ -368,6 +368,10 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
 
         # pylint: disable=assignment-from-no-return
         # We have implementations in arch and gentoo still
+
+    # Fix for Python 3.10 | operator compatibility
+    dhclient_lease_directory: Union[str, None] = None
+    dhclient_lease_file_regex: Union[str, None] = None
         dev_names = self._write_network(settings)
         # pylint: enable=assignment-from-no-return
         # Now try to bring them up

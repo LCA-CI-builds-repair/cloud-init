@@ -147,7 +147,7 @@ class Distro(persistence.CloudInitPickleMixin, metaclass=abc.ABCMeta):
     resolve_conf_fn = "/etc/resolv.conf"
 
     osfamily: str
-    dhcp_client_priority = [dhcp.IscDhclient, dhcp.Dhcpcd, dhcp.Udhcpc]
+    dhcp_client_priority = [dhcp.IscDhclient, dhcp.Dhcpcd]
     # Directory where the distro stores their DHCP leases.
     # The children classes should override this with their dhcp leases
     # directory

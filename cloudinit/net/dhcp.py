@@ -374,7 +374,7 @@ class IscDhclient(DhcpClient):
                   first parsing error.
 
         e.g.:
-
+        
         sr=parse_static_routes(\
         "32,169,254,169,254,130,56,248,255,0,130,56,240,1")
         sr=[
@@ -382,6 +382,36 @@ class IscDhclient(DhcpClient):
         ("0.0.0.0/0", "130.56.240.1")
         ]
 
+        return []
+
+class Udhcpc(DhcpClient):
+    client_name = "udhcpc"
+    
+    def __init__(self):
+        self.udhcpc_path = subp.which("udhcpc")
+        if not self.udhcpc_path:
+            LOG.debug(
+                "Skip udhcpc configuration: No udhcpc command found."
+            )
+            raise NoDHCPLeaseMissingUdhcpcError()
+            
+    def dhcp_discovery(
+        self,
+        interface,
+        dhcp_log_func=None,
+        distro=None,
+    ):
+        """Run udhcpc on the interface to discover network settings."""
+        LOG.debug("Performing a dhcp discovery on %s", interface)
+
+        lease_file = "/run/udhcpc.lease"
+
+        try:
+            out, err = subp.subp(
+                ["udhcpc", "-n", "-i", interface, "-O", "staticroutes"]
+            )
+            if dhcp_log_func is not None:
+                dhcp_log_func(out, err)
         sr2 = parse_static_routes(\
         "24.191.168.128 192.168.128.1,0 192.168.128.1")
         sr2 = [

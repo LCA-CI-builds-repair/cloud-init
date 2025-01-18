@@ -309,6 +309,25 @@ class TestDHCPParseStaticRoutes(CiTestCase):
             IscDhclient.parse_static_routes(rfc3442),
         )
 
+    def test_parse_static_routes_centos_format(self):
+        # Centos format static routes
+        rfc3442 = "0 130.56.240.1"
+        self.assertEqual(
+            [("0.0.0.0/0", "130.56.240.1")],
+            IscDhclient.parse_static_routes(rfc3442),
+        )
+
+    def test_parse_static_routes_multiple(self):
+        rfc3442 = "32,169,254,169,254,130,56,248,255,0,130,56,240,1"
+        self.assertEqual(
+            [
+                ("169.254.169.254/32", "130.56.248.255"),
+                ("0.0.0.0/0", "130.56.240.1"),
+            ],
+            IscDhclient.parse_static_routes(rfc3442),
+        )
+
+
     def test_unspecified_gateway(self):
         rfc3442 = "32,169,254,169,254,0,0,0,0"
         self.assertEqual(
